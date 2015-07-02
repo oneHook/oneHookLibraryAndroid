@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AnimatedProgressView">
+        <attr name="vs_progress_color" format="color|reference"/>
+        <attr name="vs_progress_base_color" format="color|reference"/>
+        <attr name="vs_progress_text_color" format="color|reference"/>
+        <attr name="vs_progress" format="float"/>
+    </declare-styleable>
+</resources>
