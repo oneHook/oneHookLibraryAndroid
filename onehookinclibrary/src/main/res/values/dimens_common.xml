@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- common margins -->
+    <dimen name="common_margin_xxsmall">2dp</dimen>
+    <dimen name="common_margin_xsmall">4dp</dimen>
+    <dimen name="common_margin_small">8dp</dimen>
+    <dimen name="common_margin_medium">12dp</dimen>
+    <dimen name="common_margin_large">16dp</dimen>
+    <dimen name="common_margin_xlarge">32dp</dimen>
+    <dimen name="common_margin_xxlarge">64dp</dimen>
+
+</resources>
