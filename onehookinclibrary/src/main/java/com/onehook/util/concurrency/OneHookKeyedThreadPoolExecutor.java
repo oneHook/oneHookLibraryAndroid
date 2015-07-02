@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * a String key associated with it, hence this executor support drop a job by
  * key, and if one job with same key already in the waiting queue, it will be
  * dropped automatically and new job will be added it.
- * 
+ *
  * @author EagleDiao
  */
 public class OneHookKeyedThreadPoolExecutor extends ThreadPoolExecutor {
@@ -36,21 +36,23 @@ public class OneHookKeyedThreadPoolExecutor extends ThreadPoolExecutor {
      * Build a new instance of thread pool executor by given key and
      * configurations. If given key already associated with a executor, it will
      * produce the existing executor.
-     * 
-     * @param key key
+     *
+     * @param key    key
      * @param config config
      * @return instance of a executor
      */
     public static OneHookKeyedThreadPoolExecutor buildInstance(final String key,
-            final OneHookKeyedThreadPoolExecutorConfig config) {
+                                                               final OneHookKeyedThreadPoolExecutorConfig config) {
         /* lazy initialize instance map */
         if (sInstanceMap == null) {
-            sInstanceMap = new HashMap<String, OneHookKeyedThreadPoolExecutor>();
+            sInstanceMap = new HashMap<>();
         }
+
         /* check if there is any existing instance */
         if (sInstanceMap.containsKey(key) && sInstanceMap.get(key) != null) {
             return sInstanceMap.get(key);
         }
+
         /* build new instance */
         final OneHookKeyedThreadPoolExecutor instance = new OneHookKeyedThreadPoolExecutor(
                 config.mCorePoolSize, config.mMaximumPoolSize, config.mAliveTime,
@@ -63,7 +65,7 @@ public class OneHookKeyedThreadPoolExecutor extends ThreadPoolExecutor {
     /**
      * Produce the instance associated with the given key if it exists, null
      * otherwise.
-     * 
+     *
      * @param key key
      * @return the executor instance or null if none exists
      */
@@ -87,23 +89,23 @@ public class OneHookKeyedThreadPoolExecutor extends ThreadPoolExecutor {
 
     /**
      * Initialize a new thread pool executor.
-     * 
-     * @param corePoolSize the number of threads to keep in the pool, even if
-     *            they are idle, unless allowCoreThreadTimeOut is set
+     *
+     * @param corePoolSize    the number of threads to keep in the pool, even if
+     *                        they are idle, unless allowCoreThreadTimeOut is set
      * @param maximumPoolSize the maximum number of threads to allow in the pool
-     * @param keepAliveTime when the number of threads is greater than core,
-     *            this is the maximum time that excess idle threads will wait
-     *            for new tasks before terminating.
-     * @param unit the time unit for the keepAliveTime
-     * @param workQueue the queue to use for holding tasks before they are
-     *            executed. This queue will hold only the Runnable taks
-     *            submitted by the execute method
+     * @param keepAliveTime   when the number of threads is greater than core,
+     *                        this is the maximum time that excess idle threads will wait
+     *                        for new tasks before terminating.
+     * @param unit            the time unit for the keepAliveTime
+     * @param workQueue       the queue to use for holding tasks before they are
+     *                        executed. This queue will hold only the Runnable taks
+     *                        submitted by the execute method
      */
     private OneHookKeyedThreadPoolExecutor(int corePoolSize, int maximumPoolSize,
-            long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
+                                           long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
         mMainThreadHandler = new Handler();
-        mWaitingJobs = new ConcurrentHashMap<Object, Job>();
+        mWaitingJobs = new ConcurrentHashMap<>();
     }
 
     @Override
@@ -113,8 +115,8 @@ public class OneHookKeyedThreadPoolExecutor extends ThreadPoolExecutor {
 
     /**
      * Execute a given command associated with key.
-     * 
-     * @param key key object
+     *
+     * @param key     key object
      * @param command command to run
      */
     public void execute(final Object key, Job command) {
@@ -124,10 +126,10 @@ public class OneHookKeyedThreadPoolExecutor extends ThreadPoolExecutor {
 
     /**
      * Drop a job by given key.
-     * 
+     *
      * @param key
      * @return true if the job is successfully removed, false if it has already
-     *         started
+     * started
      */
     public synchronized boolean dropJob(final Object key) {
         final Job toDrop = mWaitingJobs.remove(key);
@@ -157,8 +159,8 @@ public class OneHookKeyedThreadPoolExecutor extends ThreadPoolExecutor {
      * Check current waiting job to see if the key already exist, if it does,
      * previous job associated with that key will be dropped. either way, new
      * job and new key will be put into the waiting queue.
-     * 
-     * @param key key of new job
+     *
+     * @param key     key of new job
      * @param command new job
      */
     private synchronized void checkCurrentJobs(final Object key, Job command) {
@@ -184,7 +186,7 @@ public class OneHookKeyedThreadPoolExecutor extends ThreadPoolExecutor {
     /**
      * Called when receive callback from core that a particular job will be
      * executed. We need remove this job from our waiting queue.
-     * 
+     *
      * @param r runnable
      */
     private synchronized void startJob(Runnable r) {
@@ -204,14 +206,14 @@ public class OneHookKeyedThreadPoolExecutor extends ThreadPoolExecutor {
         /*
          * Call back to the job.
          */
-        final Job job = (Job)r;
+        final Job job = (Job) r;
         job.onStart();
         super.beforeExecute(t, r);
     }
 
     @Override
     protected void afterExecute(final Runnable r, final Throwable t) {
-        final Job job = (Job)r;
+        final Job job = (Job) r;
         /*
          * Post runnable to main thread.
          */

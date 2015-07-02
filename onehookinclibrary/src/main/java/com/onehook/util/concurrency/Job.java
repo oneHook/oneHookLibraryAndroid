@@ -15,23 +15,23 @@ public interface Job extends Runnable {
      * Will be called before the actual job starts, will be called in the thread
      * that actually execute the run function.
      */
-    public void onStart();
+    void onStart();
 
     /**
      * Will be called after the job finishes, will be called in main thread.
      */
-    public void onFinish();
+    void onFinish();
 
     /**
      * Will be called if this job is canceled(dropped), either by executor or by
      * user. will be called in main thread.
      */
-    public void onDrop();
+    void onDrop();
 
     /**
-     * Will be called if thie job is terminated due to error.Will be called in
+     * Will be called if thie job is terminated due to error. Will be called in
      * main thread.
      */
-    public void onError();
+    void onError();
 
 }

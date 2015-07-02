@@ -61,7 +61,7 @@ public class OneHookKeyedThreadPoolExecutorConfig {
     }
 
     /**
-     * @param keepAliveTime when the number of threads is greater than core,
+     * @param aliveTime when the number of threads is greater than core,
      *            this is the maximum time that excess idle threads will wait
      *            for new tasks before terminating.
      * @return self
