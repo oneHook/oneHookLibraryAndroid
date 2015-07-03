@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
+ * A RecyclerView with top content inset and bottom content inset.
+ *
  * Created by EagleDiao on 14-11-11.
  */
 public class RecyclerViewWithInset extends RecyclerView {
@@ -68,7 +70,7 @@ public class RecyclerViewWithInset extends RecyclerView {
              * find the position of the child, and figure out if the child is at
              * the first row
              */
-            final int position = parent.getChildPosition(view);
+            final int position = parent.getChildAdapterPosition(view);
 
             if (parent.getLayoutManager() instanceof GridLayoutManager) {
                 /*

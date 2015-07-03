@@ -6,6 +6,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 
+import com.onehookinc.androidlib.R;
+
 /**
  * A Flexiable GridLayoutManager that will measure each cell based on the
  * provided sizing information. But All ViewHolder must be extending from
@@ -35,24 +37,24 @@ public class FlexGridLayoutManager extends GridLayoutManager {
          * measuring the height information, either we provide absolute number,
          * or make it square, or leave it to the super.
          */
-//        final Integer sizing = (Integer) child.getTag(R.id.view_sizing_tag_key);
-//        if (sizing != null) {
-//            final int superMeasured = super.getDecoratedMeasuredHeight(child);
-//            final int childMeasured = child.getMeasuredHeight();
-//            final int offset = superMeasured - childMeasured;
-//            /*
-//             * If we wish to make it a square, just use measured width for
-//             * height
-//             */
-//            if (sizing.intValue() == FlexGridViewHolder.SIZE_SQUARE) {
-//                return getDecoratedMeasuredWidth(child) + offset;
-//            } else if (sizing.intValue() > 0) {
-//                /*
-//                 * Absolute height
-//                 */
-//                return sizing.intValue() + offset;
-//            }
-//        }
+        final Integer sizing = (Integer) child.getTag(R.id.view_sizing_tag_key);
+        if (sizing != null) {
+            final int superMeasured = super.getDecoratedMeasuredHeight(child);
+            final int childMeasured = child.getMeasuredHeight();
+            final int offset = superMeasured - childMeasured;
+            /*
+             * If we wish to make it a square, just use measured width for
+             * height
+             */
+            if (sizing.intValue() == FlexGridViewHolder.SIZE_SQUARE) {
+                return getDecoratedMeasuredWidth(child) + offset;
+            } else if (sizing.intValue() > 0) {
+                /*
+                 * Absolute height
+                 */
+                return sizing.intValue() + offset;
+            }
+        }
         /*
          * No sizing information available or sizing info is SIZE_WRAP_CONTENT,
          * leave the measuring to super.
@@ -81,12 +83,12 @@ public class FlexGridLayoutManager extends GridLayoutManager {
 
         public static final int SIZE_WRAP_CONTENT = 0;
 
-//        final int mSizing;
+        final int mSizing;
 
         public FlexGridViewHolder(View view, final int sizing) {
             super(view);
-//            mSizing = sizing;
-//            view.setTag(R.id.view_sizing_tag_key, Integer.valueOf(sizing));
+            mSizing = sizing;
+            view.setTag(R.id.view_sizing_tag_key, Integer.valueOf(sizing));
         }
 
     }

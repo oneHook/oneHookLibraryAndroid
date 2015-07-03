@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.onehook.widget.FlexGridLayoutManager;
+import com.onehookinc.androidlib.R;
+
 /**
  * @param <T>
  * @author EagleDiao
@@ -87,54 +90,53 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-//        if (isLoadingView(position)) {
-//            @SuppressWarnings("unchecked")
-//            final LoadingViewHolder holder = (LoadingViewHolder) viewHolder;
-//
-//            if (mAutoTriggerLoading) {
-//                notifyLoadingStarted(position);
-//            }
-//
-//            if (holder != null) {
-//                if (mAutoTriggerLoading) {
-//                    holder.mProgressBar.setVisibility(View.VISIBLE);
-//                    holder.mLoadMoreText.setVisibility(View.INVISIBLE);
-//                } else {
-//                    holder.mProgressBar.setVisibility(View.INVISIBLE);
-//                    holder.mLoadMoreText.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        } else {
-//            mWrappedAdapter.onBindViewHolder(viewHolder, position);
-//        }
+        if (isLoadingView(position)) {
+            @SuppressWarnings("unchecked")
+            final LoadingViewHolder holder = (LoadingViewHolder) viewHolder;
+
+            if (mAutoTriggerLoading) {
+                notifyLoadingStarted(position);
+            }
+
+            if (holder != null) {
+                if (mAutoTriggerLoading) {
+                    holder.mProgressBar.setVisibility(View.VISIBLE);
+                    holder.mLoadMoreText.setVisibility(View.INVISIBLE);
+                } else {
+                    holder.mProgressBar.setVisibility(View.INVISIBLE);
+                    holder.mLoadMoreText.setVisibility(View.VISIBLE);
+                }
+            }
+        } else {
+            mWrappedAdapter.onBindViewHolder(viewHolder, position);
+        }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if (viewType == TYPE_VIEW_LOADING) {
-//            final LoadingViewHolder holder = new LoadingViewHolder(LayoutInflater.from(
-//                    parent.getContext()).inflate(R.layout.loading_view, parent, false));
-//            holder.itemView.setOnClickListener(this);
-//            return holder;
-//        } else {
-//            return mWrappedAdapter.createViewHolder(parent, viewType);
-//        }
-        return null;
+        if (viewType == TYPE_VIEW_LOADING) {
+            final LoadingViewHolder holder = new LoadingViewHolder(LayoutInflater.from(
+                    parent.getContext()).inflate(R.layout.view_adapter_loading, parent, false));
+            holder.itemView.setOnClickListener(this);
+            return holder;
+        } else {
+            return mWrappedAdapter.createViewHolder(parent, viewType);
+        }
     }
 
-//    private class LoadingViewHolder extends FlexGridViewHolder {
-//
-//        public LoadingViewHolder(View view) {
-//            super(view, FlexGridViewHolder.SIZE_WRAP_CONTENT);
-//            mProgressBar = (ProgressBar) view.findViewById(R.id.view_loading_progress);
-//            mLoadMoreText = (TextView) view.findViewById(R.id.view_loading_load_more_text);
-//            view.setTag(R.id.loading_adapter_view_tag_key, this);
-//        }
-//
-//        private ProgressBar mProgressBar;
-//
-//        private TextView mLoadMoreText;
-//    }
+    private class LoadingViewHolder extends FlexGridLayoutManager.FlexGridViewHolder {
+
+        public LoadingViewHolder(View view) {
+            super(view, FlexGridLayoutManager.FlexGridViewHolder.SIZE_WRAP_CONTENT);
+            mProgressBar = (ProgressBar) view.findViewById(R.id.view_loading_progress);
+            mLoadMoreText = (TextView) view.findViewById(R.id.view_loading_load_more_text);
+            view.setTag(R.id.loading_adapter_view_tag_key, this);
+        }
+
+        private ProgressBar mProgressBar;
+
+        private TextView mLoadMoreText;
+    }
 
     public void setLoading(boolean enabled) {
         mLoadingEnabled = enabled;
@@ -162,18 +164,18 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
 
     @Override
     public void onClick(View v) {
-//        if (!mAutoTriggerLoading) {
-//            notifyLoadingStarted(getItemCount() - 1);
-//            mAutoTriggerLoading = true;
-//            /*
-//             * Start loading state.
-//             */
-//            final ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.view_loading_progress);
-//            final TextView loadMoreText = (TextView) v
-//                    .findViewById(R.id.view_loading_load_more_text);
-//            progressBar.setVisibility(View.VISIBLE);
-//            loadMoreText.setVisibility(View.INVISIBLE);
-//        }
+        if (!mAutoTriggerLoading) {
+            notifyLoadingStarted(getItemCount() - 1);
+            mAutoTriggerLoading = true;
+            /*
+             * Start loading state.
+             */
+            final ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.view_loading_progress);
+            final TextView loadMoreText = (TextView) v
+                    .findViewById(R.id.view_loading_load_more_text);
+            progressBar.setVisibility(View.VISIBLE);
+            loadMoreText.setVisibility(View.INVISIBLE);
+        }
     }
 
     public static interface OnLoadingListener {

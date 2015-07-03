@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;
 
 /**
- * A Wrapper class that wrap a base adapter to provide header.
+ * A Wrapper class that wrap a base adapter to provide header and footer.
  * 
  * @author EagleDiao
  * @param <T> wrapped base recycler view adapter
