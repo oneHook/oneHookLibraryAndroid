@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":oneHookLibrary" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/../../Challenger-Android" external.system.id="GRADLE" external.system.module.group="Challenger-Android" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":oneHookLibrary" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/../../tomore-event-android" external.system.id="GRADLE" external.system.module.group="tomore-event-android" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
         <option name="GRADLE_PROJECT_PATH" value=":oneHookLibrary" />
+      </configuration>
+    </facet>
+    <facet type="java-gradle" name="Java-Gradle">
+      <configuration>
+        <option name="BUILD_FOLDER_PATH" value="$MODULE_DIR$/build" />
+        <option name="BUILDABLE" value="false" />
       </configuration>
     </facet>
     <facet type="android" name="Android">
@@ -92,5 +98,6 @@
     <orderEntry type="library" exported="" name="support-v4-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-22.0.0" level="project" />
   </component>
 </module>
