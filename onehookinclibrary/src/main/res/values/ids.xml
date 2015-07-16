@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="view_sizing_tag_key" type="id"></item>
+    <item name="loading_adapter_view_tag_key" type="id"></item>
+
+</resources>
