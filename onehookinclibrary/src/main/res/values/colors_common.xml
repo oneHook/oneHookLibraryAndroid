@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gray_primary">#4d4d4d</color>
+    <color name="gray_light">#858585</color>
+    <color name="gray_dark">#6e6e70</color>
+    <color name="gray_xlight">#e6e6e6</color>
+    <color name="gray_xxlight">#f2f2f2</color>
+</resources>

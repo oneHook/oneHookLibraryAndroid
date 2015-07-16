@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Styleable">
+        <attr name="OHBackgroundColor" format="color"></attr>
+        <attr name="OHButtonColor" format="color"></attr>
+        <attr name="OHButtonColorPressed" format="color"></attr>
+        <attr name="OHButtonColorDisabled" format="color"></attr>
+    </declare-styleable>
+</resources>
