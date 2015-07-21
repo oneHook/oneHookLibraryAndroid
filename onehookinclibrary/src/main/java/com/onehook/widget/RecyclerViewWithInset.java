@@ -113,4 +113,9 @@ public class RecyclerViewWithInset extends RecyclerView {
         return false;
     }
 
+    @Override
+    protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
+        super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
+        System.out.println("oneHook scroll Y " + scrollY + " , " + "clampedY " + clampedY);
+    }
 }

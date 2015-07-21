@@ -1,6 +1,7 @@
 <translate
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@android:integer/config_shortAnimTime"
+    android:duration="@android:integer/config_mediumAnimTime"
+    android:interpolator="@android:interpolator/overshoot"
     android:fromYDelta="100%p"
     android:toYDelta="0%p">
 </translate>
