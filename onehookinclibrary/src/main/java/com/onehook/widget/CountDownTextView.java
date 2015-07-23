@@ -60,6 +60,9 @@ public class CountDownTextView extends TextView {
         if (mCountDownObjectAnimator != null) {
             throw new RuntimeException("Count down already in progress!");
         }
+        if(this.remainingTime == 0) {
+            return;
+        }
         mCountDownObjectAnimator
                 = ObjectAnimator.ofInt(this, "remainingTime", remainingTime, 0);
         mCountDownObjectAnimator.setInterpolator(new LinearInterpolator());
@@ -67,7 +70,7 @@ public class CountDownTextView extends TextView {
         mCountDownObjectAnimator.addListener(new AnimationEndListener() {
             @Override
             public void onAnimationEndOrCanceled(Animator animation) {
-                if (mCallback != null) {
+                if (mCallback != null && CountDownTextView.this.remainingTime == 0) {
                     mCallback.onCountDownFinished();
                 }
             }
