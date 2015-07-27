@@ -99,10 +99,10 @@ public class AnimatedProgressView extends View {
          */
         if (attrs != null) {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AnimatedProgressView);
-            mProgressBaseColor = a.getColor(R.styleable.AnimatedProgressView_vs_progress_base_color, mProgressBaseColor);
-            mProgressColor = a.getColor(R.styleable.AnimatedProgressView_vs_progress_color, mProgressColor);
-            mProgressTextColor = a.getColor(R.styleable.AnimatedProgressView_vs_progress_text_color, mProgressTextColor);
-            this.progress = a.getFloat(R.styleable.AnimatedProgressView_vs_progress, this.progress);
+            mProgressBaseColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_progress, mProgressBaseColor);
+            mProgressColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_primary_color, mProgressColor);
+            mProgressTextColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_text_color, mProgressTextColor);
+            this.progress = a.getFloat(R.styleable.AnimatedProgressView_oh_progress_view_progress, this.progress);
             a.recycle();
         }
 
