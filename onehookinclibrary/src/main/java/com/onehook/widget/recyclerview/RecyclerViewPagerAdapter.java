@@ -4,20 +4,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.ref.WeakReference;
+
 /**
  * RecyclerViewPagerAdapter </br>
- * Adapter wrapper.
- *
- * @author Green
+ * Adapter wrapper. make sure each page is full screen.
  */
 public class RecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
-    private final RecyclerViewPager mViewPager;
+
+    /**
+     * Parent pager weak ref.
+     */
+    private final WeakReference<RecyclerViewPager> mViewPagerRef;
+
+    /**
+     * Wrapped adapter.
+     */
     RecyclerView.Adapter<VH> mAdapter;
 
 
     public RecyclerViewPagerAdapter(RecyclerViewPager viewPager, RecyclerView.Adapter<VH> adapter) {
         mAdapter = adapter;
-        mViewPager = viewPager;
+        mViewPagerRef = new WeakReference<RecyclerViewPager>(viewPager);
         setHasStableIds(mAdapter.hasStableIds());
     }
 
@@ -42,13 +50,22 @@ public class RecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder> extend
     public void onBindViewHolder(VH holder, int position) {
         mAdapter.onBindViewHolder(holder, position);
         final View itemView = holder.itemView;
-        ViewGroup.LayoutParams lp = itemView.getLayoutParams() == null ? new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT) : itemView.getLayoutParams();
-        if (mViewPager.getLayoutManager().canScrollHorizontally()) {
-            lp.width = mViewPager.getWidth() - mViewPager.getPaddingLeft() - mViewPager.getPaddingRight();
-        } else {
-            lp.height = mViewPager.getHeight() - mViewPager.getPaddingTop() - mViewPager.getPaddingBottom() - 150;
+
+        final RecyclerViewPager pager = mViewPagerRef.get();
+        if (pager != null) {
+            /*
+             * force each item to have the same size of the screen.
+             */
+            ViewGroup.LayoutParams lp = itemView.getLayoutParams() == null ?
+                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT) :
+                    itemView.getLayoutParams();
+            if (pager.getLayoutManager().canScrollHorizontally()) {
+                lp.width = pager.getWidth() - pager.getPaddingLeft() - pager.getPaddingRight();
+            } else {
+                lp.height = pager.getHeight() - pager.getPaddingTop() - pager.getPaddingBottom();
+            }
+            itemView.setLayoutParams(lp);
         }
-        itemView.setLayoutParams(lp);
     }
 
     @Override

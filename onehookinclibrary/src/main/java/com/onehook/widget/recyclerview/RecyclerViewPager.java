@@ -24,48 +24,83 @@ import java.util.List;
 
 /**
  * RecyclerViewPager
- *
- * @author Green
  */
 public class RecyclerViewPager extends RecyclerView {
+
     public static final boolean DEBUG = BuildConfig.DEBUG;
 
+    /**
+     * Adapter wrapper.
+     */
     private RecyclerViewPagerAdapter<?> mViewPagerAdapter;
+
     private float mTriggerOffset = 0.25f;
+
     private float mFlingFactor = 0.15f;
+
     private float mTouchSpan;
+
     private List<OnPageChangedListener> mOnPageChangedListeners;
+
     private int mSmoothScrollTargetPosition = -1;
+
     private int mPositionBeforeScroll = -1;
 
     private boolean mSinglePageFling;
 
     boolean mNeedAdjust;
+
     int mFisrtLeftWhenDragging;
+
     int mFirstTopWhenDragging;
+
     View mCurView;
+
     int mMaxLeftWhenDragging = Integer.MIN_VALUE;
+
     int mMinLeftWhenDragging = Integer.MAX_VALUE;
+
     int mMaxTopWhenDragging = Integer.MIN_VALUE;
+
     int mMinTopWhenDragging = Integer.MAX_VALUE;
+
     private int mPositionOnTouchDown = -1;
+
     private boolean mHasCalledOnPageChanged = true;
+
     private boolean reverseLayout = false;
 
+    /**
+     * @param context
+     */
     public RecyclerViewPager(Context context) {
         this(context, null);
     }
 
+    /**
+     * @param context
+     * @param attrs
+     */
     public RecyclerViewPager(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
+    /**
+     * @param context
+     * @param attrs
+     * @param defStyle
+     */
     public RecyclerViewPager(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initAttrs(context, attrs, defStyle);
         setNestedScrollingEnabled(false);
     }
 
+    /**
+     * @param context
+     * @param attrs
+     * @param defStyle
+     */
     private void initAttrs(Context context, AttributeSet attrs, int defStyle) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RecyclerViewPager, defStyle,
                 0);
@@ -141,6 +176,11 @@ public class RecyclerViewPager extends RecyclerView {
         return null;
     }
 
+    /**
+     * Get the wrapper adapter.
+     *
+     * @return wrapper adapter
+     */
     public RecyclerViewPagerAdapter getWrapperAdapter() {
         return mViewPagerAdapter;
     }
@@ -396,7 +436,9 @@ public class RecyclerViewPager extends RecyclerView {
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        // recording the max/min value in touch track
+        /*
+         * recording the max/min value in touch track
+         */
         if (e.getAction() == MotionEvent.ACTION_MOVE) {
             if (mCurView != null) {
                 mMaxLeftWhenDragging = Math.max(mCurView.getLeft(), mMaxLeftWhenDragging);
