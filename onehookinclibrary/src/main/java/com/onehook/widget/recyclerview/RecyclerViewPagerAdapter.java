@@ -53,16 +53,20 @@ public class RecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder> extend
 
         final RecyclerViewPager pager = mViewPagerRef.get();
         if (pager != null) {
+            int heightOffset = pager.getOverlapOffset();
+            if (position == getItemCount() - 1) {
+                heightOffset = 0;
+            }
             /*
              * force each item to have the same size of the screen.
              */
-            ViewGroup.LayoutParams lp = itemView.getLayoutParams() == null ?
+            final ViewGroup.LayoutParams lp = itemView.getLayoutParams() == null ?
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT) :
                     itemView.getLayoutParams();
             if (pager.getLayoutManager().canScrollHorizontally()) {
                 lp.width = pager.getWidth() - pager.getPaddingLeft() - pager.getPaddingRight();
             } else {
-                lp.height = pager.getHeight() - pager.getPaddingTop() - pager.getPaddingBottom();
+                lp.height = pager.getHeight() - pager.getPaddingTop() - pager.getPaddingBottom() - heightOffset;
             }
             itemView.setLayoutParams(lp);
         }

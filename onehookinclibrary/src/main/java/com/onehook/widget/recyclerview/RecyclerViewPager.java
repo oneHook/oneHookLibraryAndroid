@@ -219,8 +219,10 @@ public class RecyclerViewPager extends RecyclerView {
         }
         mSmoothScrollTargetPosition = position;
         if (getLayoutManager() != null && getLayoutManager() instanceof LinearLayoutManager) {
-            // exclude item decoration
-            LinearSmoothScroller linearSmoothScroller =
+            /*
+             * exclude item decoration
+             */
+            final LinearSmoothScroller linearSmoothScroller =
                     new LinearSmoothScroller(getContext()) {
                         @Override
                         public PointF computeScrollVectorForPosition(int targetPosition) {
@@ -250,9 +252,9 @@ public class RecyclerViewPager extends RecyclerView {
                             if (dy > 0) {
                                 dy = dy - getLayoutManager()
                                         .getTopDecorationHeight(targetView);
-                            } else {
+                            } else if(dy < 0) {
                                 dy = dy + getLayoutManager()
-                                        .getBottomDecorationHeight(targetView);
+                                        .getBottomDecorationHeight(targetView) - getOverlapOffset();
                             }
                             final int distance = (int) Math.sqrt(dx * dx + dy * dy);
                             final int time = calculateTimeForDeceleration(distance);
@@ -270,9 +272,6 @@ public class RecyclerViewPager extends RecyclerView {
 
     @Override
     public void scrollToPosition(int position) {
-        if (DEBUG) {
-            Log.d("@", "scrollToPosition:" + position);
-        }
         mPositionBeforeScroll = getCurrentPosition();
         mSmoothScrollTargetPosition = position;
         super.scrollToPosition(position);
@@ -388,7 +387,7 @@ public class RecyclerViewPager extends RecyclerView {
         int childCount = getChildCount();
         if (childCount > 0) {
             int curPosition = ViewUtils.getCenterYChildPosition(this);
-            int childHeight = getHeight() - getPaddingTop() - getPaddingBottom();
+            int childHeight = getHeight() - getPaddingTop() - getPaddingBottom() - getOverlapOffset();
             int flingCount = getFlingCount(velocityY, childHeight);
             int targetPosition = curPosition + flingCount;
             if (mSinglePageFling) {
@@ -404,10 +403,11 @@ public class RecyclerViewPager extends RecyclerView {
                     || !mSinglePageFling)) {
                 View centerYChild = ViewUtils.getCenterYChild(this);
                 if (centerYChild != null) {
-                    if (mTouchSpan > centerYChild.getHeight() * mTriggerOffset && targetPosition != 0) {
+                    if (mTouchSpan > (centerYChild.getHeight() - getOverlapOffset()) * mTriggerOffset && targetPosition != 0) {
                         if (!reverseLayout) targetPosition--;
                         else targetPosition++;
-                    } else if (mTouchSpan < centerYChild.getHeight() * -mTriggerOffset && targetPosition != mViewPagerAdapter.getItemCount() - 1) {
+                    } else if (mTouchSpan < (centerYChild.getHeight() - getOverlapOffset()) *
+                            -mTriggerOffset && targetPosition != mViewPagerAdapter.getItemCount() - 1) {
                         if (!reverseLayout) targetPosition++;
                         else targetPosition--;
                     }
@@ -448,6 +448,10 @@ public class RecyclerViewPager extends RecyclerView {
             }
         }
         return super.onTouchEvent(e);
+    }
+
+    protected int getOverlapOffset() {
+        return (int) (getMeasuredHeight() * 0.2f);
     }
 
     @Override
@@ -511,7 +515,8 @@ public class RecyclerViewPager extends RecyclerView {
                         }
                     }
                 }
-                smoothScrollToPosition(safeTargetPosition(targetPosition, mViewPagerAdapter.getItemCount()));
+                int toTargetPosition = safeTargetPosition(targetPosition, mViewPagerAdapter.getItemCount());
+                smoothScrollToPosition(toTargetPosition);
                 mCurView = null;
             } else if (mSmoothScrollTargetPosition != mPositionBeforeScroll) {
                 if (DEBUG) {
