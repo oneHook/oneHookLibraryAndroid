@@ -14,4 +14,10 @@
         <attr name="oh_progress_bar_primary_progress" format="float"/>
         <attr name="oh_progress_bar_secondary_progress" format="float"/>
     </declare-styleable>
+
+    <declare-styleable name="RecyclerViewPager">
+        <attr name="rvp_triggerOffset" format="float" />
+        <attr name="rvp_flingFactor" format="float" />
+        <attr name="rvp_singlePageFling" format="boolean" />
+    </declare-styleable>
 </resources>
