@@ -450,8 +450,12 @@ public class RecyclerViewPager extends RecyclerView {
         return super.onTouchEvent(e);
     }
 
-    protected int getOverlapOffset() {
+    public int getOverlapOffset() {
         return (int) (getMeasuredHeight() * 0.2f);
+    }
+
+    public float getOverlapRatio() {
+        return 0.2f;
     }
 
     @Override
