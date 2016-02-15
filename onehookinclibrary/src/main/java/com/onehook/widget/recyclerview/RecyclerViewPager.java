@@ -18,6 +18,7 @@ import android.view.ViewTreeObserver;
 import com.onehookinc.androidlib.BuildConfig;
 import com.onehookinc.androidlib.R;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,20 @@ import java.util.List;
  */
 public class RecyclerViewPager extends RecyclerView {
 
+    public interface IRecyclerViewPagerOnScrollListener {
+        void onPagerScroll(final RecyclerViewPager pager, final float yOffset, final float yDiff);
+    }
+
     public static final boolean DEBUG = BuildConfig.DEBUG;
+
+    private float mCurrentScrollY;
 
     /**
      * Adapter wrapper.
      */
     private RecyclerViewPagerAdapter<?> mViewPagerAdapter;
+
+    private WeakReference<IRecyclerViewPagerOnScrollListener> mPagerScrollListener;
 
     private float mTriggerOffset = 0.25f;
 
@@ -156,10 +165,41 @@ public class RecyclerViewPager extends RecyclerView {
         super.onRestoreInstanceState(state);
     }
 
+    private OnScrollListener mOnScrollListener = new OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if (dy == 0) {
+                final int childHeight = getHeight() - getPaddingTop() - getPaddingBottom() - getOverlapOffset();
+                mCurrentScrollY = getCurrentPosition() * childHeight;
+            } else {
+                mCurrentScrollY += dy;
+            }
+            if (mPagerScrollListener.get() != null) {
+                mPagerScrollListener.get().onPagerScroll(RecyclerViewPager.this, mCurrentScrollY, dy);
+            }
+        }
+    };
+
+
     @Override
     public void setAdapter(Adapter adapter) {
         mViewPagerAdapter = ensureRecyclerViewPagerAdapter(adapter);
         super.setAdapter(mViewPagerAdapter);
+        if (adapter != null) {
+            addOnScrollListener(mOnScrollListener);
+        } else {
+            removeOnScrollListener(mOnScrollListener);
+        }
+    }
+
+    public void setViewPagerOnScrollListener(final IRecyclerViewPagerOnScrollListener listener) {
+        mPagerScrollListener = new WeakReference<IRecyclerViewPagerOnScrollListener>(listener);
     }
 
     @Override
@@ -252,7 +292,7 @@ public class RecyclerViewPager extends RecyclerView {
                             if (dy > 0) {
                                 dy = dy - getLayoutManager()
                                         .getTopDecorationHeight(targetView);
-                            } else if(dy < 0) {
+                            } else if (dy < 0) {
                                 dy = dy + getLayoutManager()
                                         .getBottomDecorationHeight(targetView) - getOverlapOffset();
                             }
