@@ -22,4 +22,12 @@ public class ColorUtility {
                 (int) (fromGreen * step + toGreen * (1 - step)),
                 (int) (fromBlue * step + toBlue * (1 - step)));
     }
+
+    public static int getDarkenColor(int color, float degree) {
+        int r = Color.red(color);
+        int b = Color.blue(color);
+        int g = Color.green(color);
+        degree = 1 - degree;
+        return Color.rgb((int) (r * degree), (int) (g * degree), (int) (b * degree));
+    }
 }
