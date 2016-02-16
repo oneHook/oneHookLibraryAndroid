@@ -180,7 +180,7 @@ public class RecyclerViewPager extends RecyclerView {
             } else {
                 mCurrentScrollY += dy;
             }
-            if (mPagerScrollListener.get() != null) {
+            if (mPagerScrollListener != null && mPagerScrollListener.get() != null) {
                 mPagerScrollListener.get().onPagerScroll(RecyclerViewPager.this, mCurrentScrollY, dy);
             }
         }
