@@ -22,21 +22,25 @@ public class Cheeses {
 
     private static final Random RANDOM = new Random();
 
-//    public static int getRandomCheeseDrawable() {
-//        switch (RANDOM.nextInt(5)) {
-//            default:
-//            case 0:
-//                return R.drawable.cheese_1;
-//            case 1:
-//                return R.drawable.cheese_2;
-//            case 2:
-//                return R.drawable.cheese_3;
-//            case 3:
-//                return R.drawable.cheese_4;
-//            case 4:
-//                return R.drawable.cheese_5;
-//        }
-//    }
+    private static long sID = 0;
+
+    public static String getRandomStringID() {
+        return String.valueOf(getRandomLongID());
+    }
+
+    public static long getRandomLongID() {
+        Cheeses.sID++;
+        return sID;
+    }
+
+    public static String getRandomName() {
+        final int index = RANDOM.nextInt(sCheeseStrings.length);
+        return sCheeseStrings[index];
+    }
+
+    public static String getRandomDescription() {
+        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    }
 
     public static final String[] sCheeseStrings = {
             "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
