@@ -28,12 +28,26 @@ import java.util.List;
  */
 public class RecyclerViewPager extends RecyclerView {
 
+    /**
+     * RecyclerViewPager on Scroll listener.
+     */
     public interface IRecyclerViewPagerOnScrollListener {
+
+        /**
+         * Called when pager is scrolled.
+         *
+         * @param pager   pager
+         * @param yOffset scroll content offset y
+         * @param yDiff   current scroll y diff
+         */
         void onPagerScroll(final RecyclerViewPager pager, final float yOffset, final float yDiff);
     }
 
     public static final boolean DEBUG = BuildConfig.DEBUG;
 
+    /**
+     * Current scroll content offset y.
+     */
     private float mCurrentScrollY;
 
     /**
@@ -41,11 +55,18 @@ public class RecyclerViewPager extends RecyclerView {
      */
     private RecyclerViewPagerAdapter<?> mViewPagerAdapter;
 
+    /**
+     * Listener.
+     */
     private WeakReference<IRecyclerViewPagerOnScrollListener> mPagerScrollListener;
 
     private float mTriggerOffset = 0.25f;
 
     private float mFlingFactor = 0.15f;
+
+    private float mOverlapRatio = 0.10f;
+
+    private float mOverlapAmount = -1;
 
     private float mTouchSpan;
 
@@ -80,24 +101,24 @@ public class RecyclerViewPager extends RecyclerView {
     private boolean reverseLayout = false;
 
     /**
-     * @param context
+     * @param context context
      */
     public RecyclerViewPager(Context context) {
         this(context, null);
     }
 
     /**
-     * @param context
-     * @param attrs
+     * @param context context
+     * @param attrs   attributes
      */
     public RecyclerViewPager(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
     /**
-     * @param context
-     * @param attrs
-     * @param defStyle
+     * @param context  context
+     * @param attrs    attributes
+     * @param defStyle style
      */
     public RecyclerViewPager(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -106,16 +127,18 @@ public class RecyclerViewPager extends RecyclerView {
     }
 
     /**
-     * @param context
-     * @param attrs
-     * @param defStyle
+     * @param context  context
+     * @param attrs    attributes
+     * @param defStyle defined style
      */
     private void initAttrs(Context context, AttributeSet attrs, int defStyle) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RecyclerViewPager, defStyle,
                 0);
-        mFlingFactor = a.getFloat(R.styleable.RecyclerViewPager_rvp_flingFactor, 0.15f);
-        mTriggerOffset = a.getFloat(R.styleable.RecyclerViewPager_rvp_triggerOffset, 0.25f);
-        mSinglePageFling = a.getBoolean(R.styleable.RecyclerViewPager_rvp_singlePageFling, mSinglePageFling);
+        mFlingFactor = a.getFloat(R.styleable.RecyclerViewPager_on_flingFactor, mFlingFactor);
+        mTriggerOffset = a.getFloat(R.styleable.RecyclerViewPager_on_triggerOffset, mTriggerOffset);
+        mSinglePageFling = a.getBoolean(R.styleable.RecyclerViewPager_on_singlePageFling, mSinglePageFling);
+        mOverlapRatio = a.getDimension(R.styleable.RecyclerViewPager_on_overlap_ratio, mOverlapRatio);
+        mOverlapAmount = a.getDimension(R.styleable.RecyclerViewPager_on_overlap_amount, mOverlapAmount);
         a.recycle();
     }
 
@@ -143,6 +166,18 @@ public class RecyclerViewPager extends RecyclerView {
         return mSinglePageFling;
     }
 
+    public int getOverlapOffset() {
+        if (mOverlapAmount > 0) {
+            return (int) mOverlapAmount;
+        } else {
+            return (int) (getMeasuredHeight() * mOverlapRatio);
+        }
+    }
+
+    public float getOverlapRatio() {
+        return mOverlapRatio;
+    }
+
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         try {
@@ -165,6 +200,9 @@ public class RecyclerViewPager extends RecyclerView {
         super.onRestoreInstanceState(state);
     }
 
+    /**
+     * OnScrollListener for present more detailed scroll info through listener.
+     */
     private OnScrollListener mOnScrollListener = new OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -185,7 +223,6 @@ public class RecyclerViewPager extends RecyclerView {
             }
         }
     };
-
 
     @Override
     public void setAdapter(Adapter adapter) {
@@ -254,9 +291,7 @@ public class RecyclerViewPager extends RecyclerView {
 
     @Override
     public void smoothScrollToPosition(int position) {
-        if (DEBUG) {
-            Log.d("@", "smoothScrollToPosition:" + position);
-        }
+        Log.d("@", "smoothScrollToPosition:" + position);
         mSmoothScrollTargetPosition = position;
         if (getLayoutManager() != null && getLayoutManager() instanceof LinearLayoutManager) {
             /*
@@ -278,29 +313,68 @@ public class RecyclerViewPager extends RecyclerView {
                             if (getLayoutManager() == null) {
                                 return;
                             }
-                            int dx = calculateDxToMakeVisible(targetView,
-                                    getHorizontalSnapPreference());
-                            int dy = calculateDyToMakeVisible(targetView,
-                                    getVerticalSnapPreference());
-                            if (dx > 0) {
-                                dx = dx - getLayoutManager()
-                                        .getLeftDecorationWidth(targetView);
+                            final int dx;
+                            final int dy;
+                            if(getLayoutManager().canScrollHorizontally()) {
+                                /* horizontal */
+                                dx = 0;
+                                dy = 0;
                             } else {
-                                dx = dx + getLayoutManager()
-                                        .getRightDecorationWidth(targetView);
+                                dx = 0;
+                                int targetTop = getLayoutManager().getDecoratedTop(targetView);
+                                final int targetBottom = getLayoutManager().getDecoratedBottom(targetView);
+                                final int targetHeight = targetBottom - targetTop;
+//                                System.out.println("Target top : " + targetTop + " Target bottom : " + targetBottom + " , height " + targetHeight);
+                                if(targetTop < 0 && Math.abs(targetTop) / 2 > targetHeight / 2) {
+                                    while(targetTop < 0) {
+                                        targetTop += targetHeight;
+                                    }
+                                }
+                                if(targetTop > 0) {
+                                    while(targetTop > targetHeight) {
+                                        targetTop -= targetHeight;
+                                    }
+                                }
+                                dy = -targetTop;
                             }
-                            if (dy > 0) {
-                                dy = dy - getLayoutManager()
-                                        .getTopDecorationHeight(targetView);
-                            } else if (dy < 0) {
-                                dy = dy + getLayoutManager()
-                                        .getBottomDecorationHeight(targetView) - getOverlapOffset();
-                            }
+
                             final int distance = (int) Math.sqrt(dx * dx + dy * dy);
                             final int time = calculateTimeForDeceleration(distance);
                             if (time > 0) {
                                 action.update(-dx, -dy, time, mDecelerateInterpolator);
                             }
+//
+//                            int dx = calculateDxToMakeVisible(targetView,
+//                                    getHorizontalSnapPreference());
+//
+//                            int snap = getVerticalSnapPreference();
+//                            System.out.println("oneHook snap " + snap);
+//                            int dy = calculateDyToMakeVisible(targetView,
+//                                    getVerticalSnapPreference());
+//
+//                            System.out.println("target view " + getLayoutManager().getDecoratedTop(targetView) + " , "
+//                                    + getLayoutManager().getDecoratedBottom(targetView));
+//
+//                            if (dx > 0) {
+//                                dx = dx - getLayoutManager()
+//                                        .getLeftDecorationWidth(targetView);
+//                            } else {
+//                                dx = dx + getLayoutManager()
+//                                        .getRightDecorationWidth(targetView);
+//                            }
+//                            if (dy > 0) {
+//                                dy = dy - getLayoutManager()
+//                                        .getTopDecorationHeight(targetView);
+//                            } else if (dy < 0) {
+//                                dy = dy + getLayoutManager()
+//                                        .getBottomDecorationHeight(targetView) - getOverlapOffset();
+//                            }
+//                            final int distance = (int) Math.sqrt(dx * dx + dy * dy);
+//                            final int time = calculateTimeForDeceleration(distance);
+//                            if (time > 0) {
+//                                action.update(-dx, -dy, time, mDecelerateInterpolator);
+//                            }
+//                            System.out.println("oneHook distance " + distance + " time : " + time + " dx " + dx + " dy " + dy);
                         }
                     };
             linearSmoothScroller.setTargetPosition(position);
@@ -490,14 +564,6 @@ public class RecyclerViewPager extends RecyclerView {
         return super.onTouchEvent(e);
     }
 
-    public int getOverlapOffset() {
-        return (int) (getMeasuredHeight() * 0.2f);
-    }
-
-    public float getOverlapRatio() {
-        return 0.2f;
-    }
-
     @Override
     public void onScrollStateChanged(int state) {
         super.onScrollStateChanged(state);
@@ -510,9 +576,6 @@ public class RecyclerViewPager extends RecyclerView {
                     // While rvp is scrolling, mPositionBeforeScroll will be previous value.
                     mPositionBeforeScroll = getChildLayoutPosition(mCurView);
                     mHasCalledOnPageChanged = false;
-                }
-                if (DEBUG) {
-                    Log.d("@", "mPositionBeforeScroll:" + mPositionBeforeScroll);
                 }
                 mFisrtLeftWhenDragging = mCurView.getLeft();
                 mFirstTopWhenDragging = mCurView.getTop();
@@ -563,9 +626,6 @@ public class RecyclerViewPager extends RecyclerView {
                 smoothScrollToPosition(toTargetPosition);
                 mCurView = null;
             } else if (mSmoothScrollTargetPosition != mPositionBeforeScroll) {
-                if (DEBUG) {
-                    Log.d("@", "onPageChanged:" + mSmoothScrollTargetPosition);
-                }
                 if (mOnPageChangedListeners != null) {
                     for (OnPageChangedListener onPageChangedListener : mOnPageChangedListeners) {
                         if (onPageChangedListener != null) {
@@ -576,7 +636,6 @@ public class RecyclerViewPager extends RecyclerView {
                 mHasCalledOnPageChanged = true;
                 mPositionBeforeScroll = mSmoothScrollTargetPosition;
             }
-            // reset
             mMaxLeftWhenDragging = Integer.MIN_VALUE;
             mMinLeftWhenDragging = Integer.MAX_VALUE;
             mMaxTopWhenDragging = Integer.MIN_VALUE;

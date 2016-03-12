@@ -25,7 +25,7 @@ public class RecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder> extend
 
     public RecyclerViewPagerAdapter(RecyclerViewPager viewPager, RecyclerView.Adapter<VH> adapter) {
         mAdapter = adapter;
-        mViewPagerRef = new WeakReference<RecyclerViewPager>(viewPager);
+        mViewPagerRef = new WeakReference<>(viewPager);
         setHasStableIds(mAdapter.hasStableIds());
     }
 
