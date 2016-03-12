@@ -28,12 +28,26 @@ import java.util.List;
  */
 public class RecyclerViewPager extends RecyclerView {
 
+    /**
+     * RecyclerViewPager on Scroll listener.
+     */
     public interface IRecyclerViewPagerOnScrollListener {
+
+        /**
+         * Called when pager is scrolled.
+         *
+         * @param pager   pager
+         * @param yOffset scroll content offset y
+         * @param yDiff   current scroll y diff
+         */
         void onPagerScroll(final RecyclerViewPager pager, final float yOffset, final float yDiff);
     }
 
     public static final boolean DEBUG = BuildConfig.DEBUG;
 
+    /**
+     * Current scroll content offset y.
+     */
     private float mCurrentScrollY;
 
     /**
@@ -41,11 +55,18 @@ public class RecyclerViewPager extends RecyclerView {
      */
     private RecyclerViewPagerAdapter<?> mViewPagerAdapter;
 
+    /**
+     * Listener.
+     */
     private WeakReference<IRecyclerViewPagerOnScrollListener> mPagerScrollListener;
 
     private float mTriggerOffset = 0.25f;
 
     private float mFlingFactor = 0.15f;
+
+    private float mOverlapRatio = 0.10f;
+
+    private float mOverlapAmount = -1;
 
     private float mTouchSpan;
 
@@ -80,24 +101,24 @@ public class RecyclerViewPager extends RecyclerView {
     private boolean reverseLayout = false;
 
     /**
-     * @param context
+     * @param context context
      */
     public RecyclerViewPager(Context context) {
         this(context, null);
     }
 
     /**
-     * @param context
-     * @param attrs
+     * @param context context
+     * @param attrs   attributes
      */
     public RecyclerViewPager(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
     /**
-     * @param context
-     * @param attrs
-     * @param defStyle
+     * @param context  context
+     * @param attrs    attributes
+     * @param defStyle style
      */
     public RecyclerViewPager(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -106,16 +127,18 @@ public class RecyclerViewPager extends RecyclerView {
     }
 
     /**
-     * @param context
-     * @param attrs
-     * @param defStyle
+     * @param context  context
+     * @param attrs    attributes
+     * @param defStyle defined style
      */
     private void initAttrs(Context context, AttributeSet attrs, int defStyle) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RecyclerViewPager, defStyle,
                 0);
-        mFlingFactor = a.getFloat(R.styleable.RecyclerViewPager_rvp_flingFactor, 0.15f);
-        mTriggerOffset = a.getFloat(R.styleable.RecyclerViewPager_rvp_triggerOffset, 0.25f);
-        mSinglePageFling = a.getBoolean(R.styleable.RecyclerViewPager_rvp_singlePageFling, mSinglePageFling);
+        mFlingFactor = a.getFloat(R.styleable.RecyclerViewPager_on_flingFactor, mFlingFactor);
+        mTriggerOffset = a.getFloat(R.styleable.RecyclerViewPager_on_triggerOffset, mTriggerOffset);
+        mSinglePageFling = a.getBoolean(R.styleable.RecyclerViewPager_on_singlePageFling, mSinglePageFling);
+        mOverlapRatio = a.getDimension(R.styleable.RecyclerViewPager_on_overlap_ratio, mOverlapRatio);
+        mOverlapAmount = a.getDimension(R.styleable.RecyclerViewPager_on_overlap_amount, mOverlapAmount);
         a.recycle();
     }
 
@@ -143,6 +166,18 @@ public class RecyclerViewPager extends RecyclerView {
         return mSinglePageFling;
     }
 
+    public int getOverlapOffset() {
+        if (mOverlapAmount > 0) {
+            return (int) mOverlapAmount;
+        } else {
+            return (int) (getMeasuredHeight() * mOverlapRatio);
+        }
+    }
+
+    public float getOverlapRatio() {
+        return mOverlapRatio;
+    }
+
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         try {
@@ -165,6 +200,9 @@ public class RecyclerViewPager extends RecyclerView {
         super.onRestoreInstanceState(state);
     }
 
+    /**
+     * OnScrollListener for present more detailed scroll info through listener.
+     */
     private OnScrollListener mOnScrollListener = new OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -185,7 +223,6 @@ public class RecyclerViewPager extends RecyclerView {
             }
         }
     };
-
 
     @Override
     public void setAdapter(Adapter adapter) {
@@ -488,14 +525,6 @@ public class RecyclerViewPager extends RecyclerView {
             }
         }
         return super.onTouchEvent(e);
-    }
-
-    public int getOverlapOffset() {
-        return (int) (getMeasuredHeight() * 0.2f);
-    }
-
-    public float getOverlapRatio() {
-        return 0.2f;
     }
 
     @Override
