@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Adapter;
 
 import com.onehookinc.androidlib.BuildConfig;
 import com.onehookinc.androidlib.R;
@@ -138,7 +137,7 @@ public class RecyclerViewPager extends RecyclerView {
         mFlingFactor = a.getFloat(R.styleable.RecyclerViewPager_oh_flingFactor, mFlingFactor);
         mTriggerOffset = a.getFloat(R.styleable.RecyclerViewPager_oh_triggerOffset, mTriggerOffset);
         mSinglePageFling = a.getBoolean(R.styleable.RecyclerViewPager_oh_singlePageFling, mSinglePageFling);
-        mOverlapRatio = a.getDimension(R.styleable.RecyclerViewPager_oh_overlap_ratio, mOverlapRatio);
+        mOverlapRatio = a.getFloat(R.styleable.RecyclerViewPager_oh_overlap_ratio, mOverlapRatio);
         mOverlapAmount = a.getDimension(R.styleable.RecyclerViewPager_oh_overlap_amount, mOverlapAmount);
         a.recycle();
     }
