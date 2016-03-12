@@ -291,9 +291,7 @@ public class RecyclerViewPager extends RecyclerView {
 
     @Override
     public void smoothScrollToPosition(int position) {
-        if (DEBUG) {
-            Log.d("@", "smoothScrollToPosition:" + position);
-        }
+        Log.d("@", "smoothScrollToPosition:" + position);
         mSmoothScrollTargetPosition = position;
         if (getLayoutManager() != null && getLayoutManager() instanceof LinearLayoutManager) {
             /*
@@ -315,29 +313,68 @@ public class RecyclerViewPager extends RecyclerView {
                             if (getLayoutManager() == null) {
                                 return;
                             }
-                            int dx = calculateDxToMakeVisible(targetView,
-                                    getHorizontalSnapPreference());
-                            int dy = calculateDyToMakeVisible(targetView,
-                                    getVerticalSnapPreference());
-                            if (dx > 0) {
-                                dx = dx - getLayoutManager()
-                                        .getLeftDecorationWidth(targetView);
+                            final int dx;
+                            final int dy;
+                            if(getLayoutManager().canScrollHorizontally()) {
+                                /* horizontal */
+                                dx = 0;
+                                dy = 0;
                             } else {
-                                dx = dx + getLayoutManager()
-                                        .getRightDecorationWidth(targetView);
+                                dx = 0;
+                                int targetTop = getLayoutManager().getDecoratedTop(targetView);
+                                final int targetBottom = getLayoutManager().getDecoratedBottom(targetView);
+                                final int targetHeight = targetBottom - targetTop;
+//                                System.out.println("Target top : " + targetTop + " Target bottom : " + targetBottom + " , height " + targetHeight);
+                                if(targetTop < 0 && Math.abs(targetTop) / 2 > targetHeight / 2) {
+                                    while(targetTop < 0) {
+                                        targetTop += targetHeight;
+                                    }
+                                }
+                                if(targetTop > 0) {
+                                    while(targetTop > targetHeight) {
+                                        targetTop -= targetHeight;
+                                    }
+                                }
+                                dy = -targetTop;
                             }
-                            if (dy > 0) {
-                                dy = dy - getLayoutManager()
-                                        .getTopDecorationHeight(targetView);
-                            } else if (dy < 0) {
-                                dy = dy + getLayoutManager()
-                                        .getBottomDecorationHeight(targetView) - getOverlapOffset();
-                            }
+
                             final int distance = (int) Math.sqrt(dx * dx + dy * dy);
                             final int time = calculateTimeForDeceleration(distance);
                             if (time > 0) {
                                 action.update(-dx, -dy, time, mDecelerateInterpolator);
                             }
+//
+//                            int dx = calculateDxToMakeVisible(targetView,
+//                                    getHorizontalSnapPreference());
+//
+//                            int snap = getVerticalSnapPreference();
+//                            System.out.println("oneHook snap " + snap);
+//                            int dy = calculateDyToMakeVisible(targetView,
+//                                    getVerticalSnapPreference());
+//
+//                            System.out.println("target view " + getLayoutManager().getDecoratedTop(targetView) + " , "
+//                                    + getLayoutManager().getDecoratedBottom(targetView));
+//
+//                            if (dx > 0) {
+//                                dx = dx - getLayoutManager()
+//                                        .getLeftDecorationWidth(targetView);
+//                            } else {
+//                                dx = dx + getLayoutManager()
+//                                        .getRightDecorationWidth(targetView);
+//                            }
+//                            if (dy > 0) {
+//                                dy = dy - getLayoutManager()
+//                                        .getTopDecorationHeight(targetView);
+//                            } else if (dy < 0) {
+//                                dy = dy + getLayoutManager()
+//                                        .getBottomDecorationHeight(targetView) - getOverlapOffset();
+//                            }
+//                            final int distance = (int) Math.sqrt(dx * dx + dy * dy);
+//                            final int time = calculateTimeForDeceleration(distance);
+//                            if (time > 0) {
+//                                action.update(-dx, -dy, time, mDecelerateInterpolator);
+//                            }
+//                            System.out.println("oneHook distance " + distance + " time : " + time + " dx " + dx + " dy " + dy);
                         }
                     };
             linearSmoothScroller.setTargetPosition(position);
@@ -540,9 +577,6 @@ public class RecyclerViewPager extends RecyclerView {
                     mPositionBeforeScroll = getChildLayoutPosition(mCurView);
                     mHasCalledOnPageChanged = false;
                 }
-                if (DEBUG) {
-                    Log.d("@", "mPositionBeforeScroll:" + mPositionBeforeScroll);
-                }
                 mFisrtLeftWhenDragging = mCurView.getLeft();
                 mFirstTopWhenDragging = mCurView.getTop();
             } else {
@@ -592,9 +626,6 @@ public class RecyclerViewPager extends RecyclerView {
                 smoothScrollToPosition(toTargetPosition);
                 mCurView = null;
             } else if (mSmoothScrollTargetPosition != mPositionBeforeScroll) {
-                if (DEBUG) {
-                    Log.d("@", "onPageChanged:" + mSmoothScrollTargetPosition);
-                }
                 if (mOnPageChangedListeners != null) {
                     for (OnPageChangedListener onPageChangedListener : mOnPageChangedListeners) {
                         if (onPageChangedListener != null) {
@@ -605,7 +636,6 @@ public class RecyclerViewPager extends RecyclerView {
                 mHasCalledOnPageChanged = true;
                 mPositionBeforeScroll = mSmoothScrollTargetPosition;
             }
-            // reset
             mMaxLeftWhenDragging = Integer.MIN_VALUE;
             mMinLeftWhenDragging = Integer.MAX_VALUE;
             mMaxTopWhenDragging = Integer.MIN_VALUE;
