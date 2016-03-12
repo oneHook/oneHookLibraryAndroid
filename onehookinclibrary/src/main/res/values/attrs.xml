@@ -16,10 +16,10 @@
     </declare-styleable>
 
     <declare-styleable name="RecyclerViewPager">
-        <attr name="on_triggerOffset" format="float" />
-        <attr name="on_flingFactor" format="float" />
-        <attr name="on_singlePageFling" format="boolean" />
-        <attr name="on_overlap_ratio" format="float" />
-        <attr name="on_overlap_amount" format="dimension" />
+        <attr name="oh_triggerOffset" format="float" />
+        <attr name="oh_flingFactor" format="float" />
+        <attr name="oh_singlePageFling" format="boolean" />
+        <attr name="oh_overlap_ratio" format="float" />
+        <attr name="oh_overlap_amount" format="dimension" />
     </declare-styleable>
 </resources>
