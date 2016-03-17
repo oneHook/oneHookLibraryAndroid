@@ -10,6 +10,4 @@
     <dimen name="common_margin_xlarge">32dp</dimen>
     <dimen name="common_margin_xxlarge">64dp</dimen>
 
-    <dimen name="common_orientation_friendly_padding">8dp</dimen>
-
 </resources>
