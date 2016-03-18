@@ -10,4 +10,13 @@
     <dimen name="common_margin_xlarge">32dp</dimen>
     <dimen name="common_margin_xxlarge">64dp</dimen>
 
+    <dimen name="title_xhuge_font_size">32dp</dimen>
+    <dimen name="title_huge_font_size">24dp</dimen>
+    <dimen name="title_font_size">18dp</dimen>
+    <dimen name="title2_font_size">16dp</dimen>
+    <dimen name="title3_font_size">14dp</dimen>
+    <dimen name="subtitle_font_size">14dp</dimen>
+    <dimen name="subtitle2_font_size">12dp</dimen>
+    <dimen name="subtitle3_font_size">10dp</dimen>
+
 </resources>

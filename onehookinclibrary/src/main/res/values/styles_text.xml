@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TM.FontIcon" parent="android:TextAppearance">
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="TM.FontIcon.Large" parent="TM.FontIcon">
+        <item name="android:textSize">30dp</item>
+    </style>
+
+    <style name="TM.FontIcon.XLarge" parent="TM.FontIcon">
+        <item name="android:textSize">50dp</item>
+    </style>
+
+    <style name="TM.TextAppearance.Title" parent="android:style/TextAppearance">
+        <item name="android:textColor">?colorPrimary</item>
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Title.XHuge" parent="TM.TextAppearance.Title">
+        <item name="android:textSize">@dimen/title_xhuge_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Title.XHuge.Medium" parent="TM.TextAppearance.Title.XHuge">
+    </style>
+
+    <style name="TM.TextAppearance.Title.XHuge.Bold" parent="TM.TextAppearance.Title.XHuge">
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Title.Huge" parent="TM.TextAppearance.Title">
+        <item name="android:textSize">@dimen/title_huge_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Title.Huge.Bold" parent="TM.TextAppearance.Title.Huge">
+    </style>
+
+    <style name="TM.TextAppearance.Title.Huge.Medium" parent="TM.TextAppearance.Title.Huge">
+    </style>
+
+    <!---->
+
+    <style name="TM.TextAppearance.Title.Large" parent="TM.TextAppearance.Title">
+        <item name="android:textSize">@dimen/title_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Title.Large.Bold" parent="TM.TextAppearance.Title.Large">
+    </style>
+
+    <style name="TM.TextAppearance.Title.Large.Medium" parent="TM.TextAppearance.Title.Large">
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Title.Medium" parent="TM.TextAppearance.Title">
+        <item name="android:textSize">@dimen/title2_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Title.Medium.Bold" parent="TM.TextAppearance.Title.Medium">
+    </style>
+
+    <style name="TM.TextAppearance.Title.Medium.Medium" parent="TM.TextAppearance.Title.Medium">
+    </style>
+
+    <!---->
+
+    <style name="TM.TextAppearance.Title.Small" parent="TM.TextAppearance.Title">
+        <item name="android:textSize">@dimen/title3_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Title.Small.Bold" parent="TM.TextAppearance.Title.Small">
+    </style>
+
+    <style name="TM.TextAppearance.Title.Small.Medium" parent="TM.TextAppearance.Title.Small">
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Subtitle" parent="android:style/TextAppearance">
+        <item name="android:textColor">#303030</item>
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Subtitle.Huge" parent="TM.TextAppearance.Subtitle">
+        <item name="android:textSize">@dimen/title_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Subtitle.Huge.Bold" parent="TM.TextAppearance.Subtitle.Huge">
+    </style>
+
+    <!-- -->
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Subtitle.Large" parent="TM.TextAppearance.Subtitle">
+        <item name="android:textSize">@dimen/subtitle_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Subtitle.Large.Bold" parent="TM.TextAppearance.Subtitle.Large">
+    </style>
+
+    <style name="TM.TextAppearance.Subtitle.Large.Medium" parent="TM.TextAppearance.Subtitle.Large">
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Subtitle.Medium" parent="TM.TextAppearance.Subtitle">
+        <item name="android:textSize">@dimen/subtitle2_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Subtitle.Medium.Bold" parent="TM.TextAppearance.Subtitle.Medium">
+    </style>
+
+    <style name="TM.TextAppearance.Subtitle.Medium.Medium" parent="TM.TextAppearance.Subtitle.Medium">
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Subtitle.Small" parent="TM.TextAppearance.Subtitle">
+        <item name="android:textSize">@dimen/subtitle3_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Subtitle.Small.Bold" parent="TM.TextAppearance.Subtitle.Small">
+    </style>
+
+    <style name="TM.TextAppearance.Subtitle.Small.Medium" parent="TM.TextAppearance.Subtitle.Small">
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Text" parent="android:style/TextAppearance">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Text.Huge" parent="TM.TextAppearance.Text">
+        <item name="android:textSize">@dimen/title_huge_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Text.Huge.Bold" parent="TM.TextAppearance.Text.Huge">
+    </style>
+
+    <style name="TM.TextAppearance.Text.Huge.Medium" parent="TM.TextAppearance.Text.Huge">
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Text.Large" parent="TM.TextAppearance.Text">
+        <item name="android:textSize">@dimen/title_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Text.Large.Bold" parent="TM.TextAppearance.Text.Large">
+    </style>
+
+    <style name="TM.TextAppearance.Text.Large.Medium" parent="TM.TextAppearance.Text.Large">
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Text.Medium" parent="TM.TextAppearance.Text">
+        <item name="android:textSize">@dimen/title2_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Text.Medium.Bold" parent="TM.TextAppearance.Text.Medium">
+    </style>
+
+    <style name="TM.TextAppearance.Text.Medium.Medium" parent="TM.TextAppearance.Text.Medium">
+    </style>
+
+    <!-- -->
+
+    <style name="TM.TextAppearance.Text.Small" parent="TM.TextAppearance.Text">
+        <item name="android:textSize">@dimen/title3_font_size</item>
+    </style>
+
+    <style name="TM.TextAppearance.Text.Small.Bold" parent="TM.TextAppearance.Text.Small">
+    </style>
+
+    <style name="TM.TextAppearance.Text.Small.Medium" parent="TM.TextAppearance.Text.Small">
+    </style>
+
+</resources>
