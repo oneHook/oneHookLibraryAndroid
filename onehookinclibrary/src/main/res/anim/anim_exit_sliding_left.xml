@@ -2,5 +2,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="@android:integer/config_shortAnimTime"
     android:fromXDelta="0%p"
-    android:toXDelta="-50%p">
+    android:toXDelta="-100%p">
 </translate>
