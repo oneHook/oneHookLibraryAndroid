@@ -12,7 +12,7 @@ import android.widget.TextView;
  */
 public class AnimatedNumberTextView extends TextView {
 
-    private int number;
+    protected int number;
 
     public AnimatedNumberTextView(Context context) {
         super(context);
@@ -42,7 +42,15 @@ public class AnimatedNumberTextView extends TextView {
      */
     public void setNumber(final int newNumber) {
         this.number = newNumber;
-        setText(String.valueOf(newNumber));
+        renderNumber(this.number);
+    }
+
+    /**
+     * Child class can override this function to render the textview differently.
+     * @param numberToRender number to render
+     */
+    protected void renderNumber(final int numberToRender) {
+        setText(String.valueOf(numberToRender));
     }
 
     public ValueAnimator createAnimation(final int fromNumber, final int toNumber, final long duration) {
