@@ -69,6 +69,11 @@ public class AnimatedProgressView extends View {
      */
     private float mRadius;
 
+    /**
+     * Whether or not render center percentage.
+     */
+    private boolean mShouldShowPercentage;
+
     public AnimatedProgressView(Context context) {
         super(context);
         commonInit(context, null);
@@ -94,9 +99,11 @@ public class AnimatedProgressView extends View {
          * Default value.
          */
         this.progress = 0.5f;
+        this.bottomRingProgress = 1.0f;
         mProgressBaseColor = Color.RED;
         mProgressColor = Color.GREEN;
         mProgressTextColor = Color.BLUE;
+        mShouldShowPercentage = true;
 
         /*
          * Load from style if any.
@@ -107,6 +114,8 @@ public class AnimatedProgressView extends View {
             mProgressColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_primary_color, mProgressColor);
             mProgressTextColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_text_color, mProgressTextColor);
             this.progress = a.getFloat(R.styleable.AnimatedProgressView_oh_progress_view_progress, this.progress);
+            this.bottomRingProgress = a.getFloat(R.styleable.AnimatedProgressView_oh_progress_view_bottom_ring_progress, this.bottomRingProgress);
+            mShouldShowPercentage = a.getBoolean(R.styleable.AnimatedProgressView_oh_progress_view_show_percentage, mShouldShowPercentage);
             a.recycle();
         }
 
@@ -161,12 +170,14 @@ public class AnimatedProgressView extends View {
         mPaint.setColor(mProgressColor);
         canvas.drawArc(mProgressRect, -90, 360 * this.progress, false, mPaint);
 
-        /* generate progress text and measure it */
-        final String progressText = String.format("%d%%", (int) (this.progress * 100));
-        mTextPaint.getTextBounds(progressText, 0, progressText.length(), mTextRect);
-        canvas.drawText(progressText, getMeasuredWidth() / 2 - (mTextRect.right - mTextRect.left) / 2,
-                getMeasuredHeight() / 2 + (mTextRect.bottom - mTextRect.top) / 2,
-                mTextPaint);
+        if (mShouldShowPercentage) {
+            /* generate progress text and measure it */
+            final String progressText = String.format("%d%%", (int) (this.progress * 100));
+            mTextPaint.getTextBounds(progressText, 0, progressText.length(), mTextRect);
+            canvas.drawText(progressText, getMeasuredWidth() / 2 - (mTextRect.right - mTextRect.left) / 2,
+                    getMeasuredHeight() / 2 + (mTextRect.bottom - mTextRect.top) / 2,
+                    mTextPaint);
+        }
     }
 
     public void setProgress(final float progress) {

@@ -5,6 +5,8 @@
         <attr name="oh_progress_view_base_color" format="color|reference"/>
         <attr name="oh_progress_view_text_color" format="color|reference"/>
         <attr name="oh_progress_view_progress" format="float"/>
+        <attr name="oh_progress_view_bottom_ring_progress" format="float"/>
+        <attr name="oh_progress_view_show_percentage" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="AnimatedProgressBar">
