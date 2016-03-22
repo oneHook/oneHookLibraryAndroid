@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -33,17 +32,17 @@ public class AnimatedProgressView extends View {
     /**
      * Progress bar base color (drawn underneath actual progress).
      */
-    private int mProgressBaseColor;
+    private int mProgressBaseColor = Color.RED;
 
     /**
      * Progress color.
      */
-    private int mProgressColor;
+    private int mProgressColor = Color.GREEN;
 
     /**
      * Progress Text color.
      */
-    private int mProgressTextColor;
+    private int mProgressTextColor = Color.BLACK;
 
     /**
      * RectF for drawing progress bar(ARC).
@@ -86,6 +85,11 @@ public class AnimatedProgressView extends View {
     }
 
     private void commonInit(final Context context, AttributeSet attrs) {
+
+        /*
+         * CUSTOM DRAWING!!
+         */
+        setWillNotDraw(false);
         /*
          * Default value.
          */
@@ -99,7 +103,7 @@ public class AnimatedProgressView extends View {
          */
         if (attrs != null) {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AnimatedProgressView);
-            mProgressBaseColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_progress, mProgressBaseColor);
+            mProgressBaseColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_base_color, mProgressBaseColor);
             mProgressColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_primary_color, mProgressColor);
             mProgressTextColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_text_color, mProgressTextColor);
             this.progress = a.getFloat(R.styleable.AnimatedProgressView_oh_progress_view_progress, this.progress);
@@ -117,16 +121,10 @@ public class AnimatedProgressView extends View {
 
         mProgressRect = new RectF();
         mTextPaint = new Paint();
-        Typeface textFont = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Bold.ttf");
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setTypeface(textFont);
         mTextPaint.setColor(mProgressTextColor);
         mTextRect = new Rect();
 
-        /*
-         * CUSTOM DRAWING!!
-         */
-        setWillNotDraw(false);
     }
 
     @Override
