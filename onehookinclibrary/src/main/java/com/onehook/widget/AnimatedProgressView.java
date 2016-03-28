@@ -45,6 +45,11 @@ public class AnimatedProgressView extends View {
     private int mProgressTextColor = Color.BLACK;
 
     /**
+     * Ratio to determine how thick is the ring.
+     */
+    private float mProgressRingStrokeRatio;
+
+    /**
      * RectF for drawing progress bar(ARC).
      */
     private RectF mProgressRect;
@@ -100,6 +105,7 @@ public class AnimatedProgressView extends View {
          */
         this.progress = 0.5f;
         this.bottomRingProgress = 1.0f;
+        mProgressRingStrokeRatio = 0.05f;
         mProgressBaseColor = Color.RED;
         mProgressColor = Color.GREEN;
         mProgressTextColor = Color.BLUE;
@@ -116,6 +122,7 @@ public class AnimatedProgressView extends View {
             this.progress = a.getFloat(R.styleable.AnimatedProgressView_oh_progress_view_progress, this.progress);
             this.bottomRingProgress = a.getFloat(R.styleable.AnimatedProgressView_oh_progress_view_bottom_ring_progress, this.bottomRingProgress);
             mShouldShowPercentage = a.getBoolean(R.styleable.AnimatedProgressView_oh_progress_view_show_percentage, mShouldShowPercentage);
+            mProgressRingStrokeRatio = a.getFloat(R.styleable.AnimatedProgressView_oh_progress_view_stroke_ratio, mProgressRingStrokeRatio);
             a.recycle();
         }
 
@@ -140,7 +147,7 @@ public class AnimatedProgressView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         final float length = Math.min(w, h);
-        final float strokeWidth = length / 24;
+        final float strokeWidth = length * mProgressRingStrokeRatio;
         mRadius = length / 2 - strokeWidth;
         final float textSize = mRadius / 2;
 
