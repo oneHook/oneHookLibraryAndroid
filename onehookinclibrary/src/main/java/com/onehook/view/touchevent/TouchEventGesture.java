@@ -21,12 +21,25 @@ public abstract class TouchEventGesture implements View.OnTouchListener {
 
     private VelocityTracker mVelocityTracker = null;
 
-
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        final float x = motionEvent.getX();
-        final float y = motionEvent.getY();
-        System.out.println("oneHook MOTION EVENT:  " + motionEvent.getAction() + " y " + motionEvent.getY());
+        final float x = motionEvent.getRawX();
+        final float y = motionEvent.getRawY();
+
+        /* hack ! */
+        motionEvent.setLocation(x, y);
+
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+              /* setup velocity tracker */
+            if (mVelocityTracker == null) {
+                mVelocityTracker = VelocityTracker.obtain();
+            } else {
+                mVelocityTracker.clear();
+            }
+        } else {
+            mVelocityTracker.addMovement(motionEvent);
+        }
+
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mStartX = x;
@@ -34,34 +47,21 @@ public abstract class TouchEventGesture implements View.OnTouchListener {
                 mLastX = x;
                 mLastY = y;
                 mTotalDisplacement = 0;
-
-                /* setup velocity tracker */
-                if (mVelocityTracker == null) {
-                    mVelocityTracker = VelocityTracker.obtain();
-                } else {
-                    mVelocityTracker.clear();
-                }
-                mVelocityTracker.addMovement(motionEvent);
                 break;
             case MotionEvent.ACTION_MOVE:
-                mVelocityTracker.addMovement(motionEvent);
-
                 final float xDelta = x - mLastX;
                 final float yDelta = y - mLastY;
-                final float xOffset = x - mStartX;
-                final float yOffset = y - mStartY;
                 mLastX = x;
                 mLastY = y;
                 mTotalDisplacement += Math.sqrt(xDelta * xDelta + yDelta * yDelta);
-                onDrag(mStartX, mStartY, x, y, xOffset, yOffset);
+                onDrag(mStartX, mStartY, x, y, xDelta, yDelta);
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                mVelocityTracker.addMovement(motionEvent);
                 mVelocityTracker.computeCurrentVelocity(1000);
                 if (mTotalDisplacement < 25) {
-                            /* treat as a click */
-                    onClicked(motionEvent.getX(), motionEvent.getY());
+                    /* treat as a click */
+                    onClicked(x, y);
                 } else {
                     onDragUp(mStartX, mStartY, x, y, x - mStartX, y - mStartY, mVelocityTracker.getXVelocity(), mVelocityTracker.getYVelocity());
                 }
@@ -73,11 +73,11 @@ public abstract class TouchEventGesture implements View.OnTouchListener {
     }
 
 
-    public abstract void onDrag(final float startX, final float startY, final float currentX,
-                                final float currentY, final float xOffset, final float yOffset);
+    public abstract void onDrag(final float startX, final float startY, final float rawX,
+                                final float rawY, final float xDelta, final float yDelta);
 
     public abstract void onClicked(final float clickX, final float clickY);
 
-    public abstract void onDragUp(final float startX, final float startY, final float currentX, final float currentY,
+    public abstract void onDragUp(final float startX, final float startY, final float rawX, final float rawY,
                                   final float xOffset, final float yOffset, final float velocityX, final float velocityY);
 }
