@@ -78,7 +78,7 @@ public class ProgressDialogFragment extends DialogFragment {
             dialog.setMessage(message);
         }
         dialog.setIndeterminate(true);
-        dialog.setCancelable(cancelable);
+        setCancelable(cancelable);
         return dialog;
     }
 }
