@@ -45,6 +45,11 @@ public class AnimatedProgressView extends View {
     private int mProgressTextColor = Color.BLACK;
 
     /**
+     * Circle background color.
+     */
+    private int mCircleBackgroundColor = Color.WHITE;
+
+    /**
      * Ratio to determine how thick is the ring.
      */
     private float mProgressRingStrokeRatio;
@@ -123,6 +128,7 @@ public class AnimatedProgressView extends View {
             this.bottomRingProgress = a.getFloat(R.styleable.AnimatedProgressView_oh_progress_view_bottom_ring_progress, this.bottomRingProgress);
             mShouldShowPercentage = a.getBoolean(R.styleable.AnimatedProgressView_oh_progress_view_show_percentage, mShouldShowPercentage);
             mProgressRingStrokeRatio = a.getFloat(R.styleable.AnimatedProgressView_oh_progress_view_stroke_ratio, mProgressRingStrokeRatio);
+            mCircleBackgroundColor = a.getColor(R.styleable.AnimatedProgressView_oh_progress_view_circile_background_color, mCircleBackgroundColor);
             a.recycle();
         }
 
@@ -165,7 +171,7 @@ public class AnimatedProgressView extends View {
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
 
         mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(mCircleBackgroundColor);
         canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, mRadius, mPaint);
 
         /* Draw base first */

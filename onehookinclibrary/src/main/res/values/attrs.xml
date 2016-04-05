@@ -4,6 +4,7 @@
         <attr name="oh_progress_view_primary_color" format="color|reference"/>
         <attr name="oh_progress_view_base_color" format="color|reference"/>
         <attr name="oh_progress_view_text_color" format="color|reference"/>
+        <attr name="oh_progress_view_circile_background_color" format="color|reference"/>
         <attr name="oh_progress_view_progress" format="float"/>
         <attr name="oh_progress_view_bottom_ring_progress" format="float"/>
         <attr name="oh_progress_view_stroke_ratio" format="float"/>
