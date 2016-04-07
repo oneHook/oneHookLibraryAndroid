@@ -39,6 +39,14 @@ public class TextDrawable extends Drawable {
         mPaint.setAntiAlias(true);
     }
 
+    public TextDrawable(String text, final Typeface typeFace, final int color) {
+        mText = text;
+        mPaint = new Paint();
+        mPaint.setColor(color);
+        mPaint.setTypeface(typeFace);
+        mPaint.setAntiAlias(true);
+    }
+
     @Override
     public void draw(Canvas canvas) {
         canvas.save();
@@ -47,7 +55,6 @@ public class TextDrawable extends Drawable {
         mPaint.setTextSize(canvas.getWidth() / 2);
         mPaint.getTextBounds(mText, 0, mText.length(), sTextRect);
         canvas.translate(-sValues[2] - sTextRect.left, -sValues[2] - sTextRect.bottom);
-//        System.out.println("oneHook " + sTextRect.left + " , " + sTextRect.right + " , " + sTextRect.top + " , " + sTextRect.bottom);
         canvas.drawText(mText,
                 canvas.getWidth() / 2 - sTextRect.width() / 2,
                 canvas.getHeight() / 2 + sTextRect.height() / 2,

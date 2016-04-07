@@ -2,7 +2,6 @@ package com.onehook.view.confetti;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -33,7 +32,7 @@ public class ConfettiViewCell extends ImageView {
     }
 
     private void commonInit() {
-        setBackgroundColor(Color.WHITE);
+//        setBackgroundColor(Color.WHITE);
     }
 
 }

@@ -32,7 +32,7 @@ public class ConfettiView extends ViewGroup {
 
     private static final int DEFAULT_CONFETTI_DELAY_RATIO = 8;
 
-    private static final int DEFAULT_CONFETTI_SIZE = 148;
+    private static final int DEFAULT_CONFETTI_SIZE = 300;
 
     public interface IConfettiViewCustomizationListener {
 
