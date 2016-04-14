@@ -39,6 +39,11 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         }
 
         @Override
+        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+            notifyItemRangeChanged(positionStart, itemCount, payload);
+        }
+
+        @Override
         public void onItemRangeChanged(int positionStart, int itemCount) {
             notifyItemRangeChanged(positionStart, itemCount);
         }
@@ -59,10 +64,8 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
      */
     public RecyclerViewLoadingAdapter(T wrappedAdapter) {
         super(wrappedAdapter);
-
         mLoadingEnabled = true;
         mAutoTriggerLoading = true;
-
         setDataObserver(mObserver);
     }
 
