@@ -4,18 +4,16 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
-import java.lang.ref.WeakReference;
-
 /**
  * Created by eaglediaotomore on 2016-04-14.
  */
 public class SquareGridLayoutManager extends GridLayoutManager {
 
     public interface ISquareGridLayoutSizeOffsetLookup {
-        public int getOffsetForView(final View view, final int adapterPosition);
+        int getOffsetForView(final View view, final int adapterPosition);
     }
 
-    private WeakReference<ISquareGridLayoutSizeOffsetLookup> mOffsetLookup;
+    private ISquareGridLayoutSizeOffsetLookup mOffsetLookup;
 
     public SquareGridLayoutManager(Context context, int spanCount, int orientation,
                                    boolean reverseLayout) {
@@ -23,7 +21,7 @@ public class SquareGridLayoutManager extends GridLayoutManager {
     }
 
     public void setSizeOffsetLookup(final ISquareGridLayoutSizeOffsetLookup lookup) {
-        mOffsetLookup = new WeakReference<>(lookup);
+        mOffsetLookup = lookup;
     }
 
 
@@ -42,8 +40,8 @@ public class SquareGridLayoutManager extends GridLayoutManager {
         }
 
         int offset = 0;
-        if(mOffsetLookup != null && mOffsetLookup.get() != null) {
-            offset = mOffsetLookup.get().getOffsetForView(child, index);
+        if(mOffsetLookup != null) {
+            offset = mOffsetLookup.getOffsetForView(child, index);
         }
 
         final int height = getDecoratedMeasuredWidth(child);
