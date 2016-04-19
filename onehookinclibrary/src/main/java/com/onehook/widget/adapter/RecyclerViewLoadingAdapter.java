@@ -142,8 +142,13 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
     }
 
     public void setLoading(boolean enabled) {
+        boolean before = mLoadingEnabled;
         mLoadingEnabled = enabled;
-        notifyDataSetChanged();
+        if (before && before != enabled) {
+            notifyItemRemoved(getItemCount() - 1);
+        } else {
+            notifyDataSetChanged();
+        }
     }
 
     public void setAutoLoading(boolean autoLoading) {
