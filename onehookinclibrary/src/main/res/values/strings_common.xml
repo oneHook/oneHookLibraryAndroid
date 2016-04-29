@@ -3,6 +3,7 @@
     <string name="facebook_app_id">1708983012712744</string>
 
     <string name="common_load_more">Load More</string>
+    <string name="common_loading_adapter_load_more_text">Click to load</string>
     <string name="common_search">Search</string>
 
 </resources>

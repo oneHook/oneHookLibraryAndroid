@@ -6,12 +6,12 @@ import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
-public class OneHookProgressDialogFragment extends DialogFragment {
+public class OHProgressDialogFragment extends DialogFragment {
 
     private static final String ARG_TITLE_RES = "argTitleRes";
 
-    public static OneHookProgressDialogFragment newInstance(final int titleRes) {
-        final OneHookProgressDialogFragment frag = new OneHookProgressDialogFragment();
+    public static OHProgressDialogFragment newInstance(final int titleRes) {
+        final OHProgressDialogFragment frag = new OHProgressDialogFragment();
         final Bundle args = new Bundle();
         args.putInt(ARG_TITLE_RES, titleRes);
         frag.setArguments(args);

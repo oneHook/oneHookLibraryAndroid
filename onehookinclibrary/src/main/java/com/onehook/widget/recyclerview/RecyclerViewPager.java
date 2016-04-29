@@ -291,6 +291,9 @@ public class RecyclerViewPager extends RecyclerView {
 
     @Override
     public void smoothScrollToPosition(int position) {
+        if (position >= getAdapter().getItemCount() || position < 0) {
+            return;
+        }
         mSmoothScrollTargetPosition = position;
         if (getLayoutManager() != null && getLayoutManager() instanceof LinearLayoutManager) {
             /*
@@ -314,7 +317,7 @@ public class RecyclerViewPager extends RecyclerView {
                             }
                             final int dx;
                             final int dy;
-                            if(getLayoutManager().canScrollHorizontally()) {
+                            if (getLayoutManager().canScrollHorizontally()) {
                                 /* horizontal */
                                 dx = 0;
                                 dy = 0;
@@ -324,13 +327,13 @@ public class RecyclerViewPager extends RecyclerView {
                                 final int targetBottom = getLayoutManager().getDecoratedBottom(targetView);
                                 final int targetHeight = targetBottom - targetTop;
 //                                System.out.println("Target top : " + targetTop + " Target bottom : " + targetBottom + " , height " + targetHeight);
-                                if(targetTop < 0 && Math.abs(targetTop) / 2 > targetHeight / 2) {
-                                    while(targetTop < 0) {
+                                if (targetTop < 0 && Math.abs(targetTop) / 2 > targetHeight / 2) {
+                                    while (targetTop < 0) {
                                         targetTop += targetHeight;
                                     }
                                 }
-                                if(targetTop > 0) {
-                                    while(targetTop > targetHeight) {
+                                if (targetTop > 0) {
+                                    while (targetTop > targetHeight) {
                                         targetTop -= targetHeight;
                                     }
                                 }
@@ -342,38 +345,6 @@ public class RecyclerViewPager extends RecyclerView {
                             if (time > 0) {
                                 action.update(-dx, -dy, time, mDecelerateInterpolator);
                             }
-//
-//                            int dx = calculateDxToMakeVisible(targetView,
-//                                    getHorizontalSnapPreference());
-//
-//                            int snap = getVerticalSnapPreference();
-//                            System.out.println("oneHook snap " + snap);
-//                            int dy = calculateDyToMakeVisible(targetView,
-//                                    getVerticalSnapPreference());
-//
-//                            System.out.println("target view " + getLayoutManager().getDecoratedTop(targetView) + " , "
-//                                    + getLayoutManager().getDecoratedBottom(targetView));
-//
-//                            if (dx > 0) {
-//                                dx = dx - getLayoutManager()
-//                                        .getLeftDecorationWidth(targetView);
-//                            } else {
-//                                dx = dx + getLayoutManager()
-//                                        .getRightDecorationWidth(targetView);
-//                            }
-//                            if (dy > 0) {
-//                                dy = dy - getLayoutManager()
-//                                        .getTopDecorationHeight(targetView);
-//                            } else if (dy < 0) {
-//                                dy = dy + getLayoutManager()
-//                                        .getBottomDecorationHeight(targetView) - getOverlapOffset();
-//                            }
-//                            final int distance = (int) Math.sqrt(dx * dx + dy * dy);
-//                            final int time = calculateTimeForDeceleration(distance);
-//                            if (time > 0) {
-//                                action.update(-dx, -dy, time, mDecelerateInterpolator);
-//                            }
-//                            System.out.println("oneHook distance " + distance + " time : " + time + " dx " + dx + " dy " + dy);
                         }
                     };
             linearSmoothScroller.setTargetPosition(position);
