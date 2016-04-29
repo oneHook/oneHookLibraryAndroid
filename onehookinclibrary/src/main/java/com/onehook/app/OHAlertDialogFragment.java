@@ -234,6 +234,9 @@ public class OHAlertDialogFragment extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if (mCallback == null) {
+                            return;
+                        }
                         mCallback.onAlertDialogFragmentButton1Clicked(getTag(), attachedObject);
                     }
                 });
@@ -242,6 +245,9 @@ public class OHAlertDialogFragment extends DialogFragment {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    if (mCallback == null) {
+                        return;
+                    }
                     mCallback.onAlertDialogFragmentButton2Clicked(getTag(), attachedObject);
                 }
             });
@@ -255,6 +261,9 @@ public class OHAlertDialogFragment extends DialogFragment {
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
+        if (mCallback == null) {
+            return;
+        }
         final Object attachedObject;
         if (getArguments().containsKey(ARG_OBJECT_S)) {
             attachedObject = getArguments().getSerializable(ARG_OBJECT_S);
