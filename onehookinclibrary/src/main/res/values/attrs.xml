@@ -26,4 +26,9 @@
         <attr name="oh_overlap_ratio" format="float" />
         <attr name="oh_overlap_amount" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="OHIconProgressView">
+        <attr name="oh_icon_progress_view_icons" format="reference"></attr>
+
+    </declare-styleable>
 </resources>
