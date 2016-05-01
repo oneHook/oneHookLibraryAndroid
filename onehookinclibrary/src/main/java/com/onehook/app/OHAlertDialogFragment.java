@@ -130,15 +130,16 @@ public class OHAlertDialogFragment extends DialogFragment {
      *                     event
      * @param cancelable   is dialog is cancelable when tapped outside
      */
-    public static void showAlertDialog(final Context context, final FragmentManager fm,
-                                       final String tag, final int titleResID, final int messageResID, final int button1ResID,
-                                       final int button2ResID, final Object object, final boolean cancelable) {
-        final DialogFragment newFragment = OHAlertDialogFragment.newInstance(tag, context
+    public static OHAlertDialogFragment showAlertDialog(final Context context, final FragmentManager fm,
+                                                 final String tag, final int titleResID, final int messageResID, final int button1ResID,
+                                                 final int button2ResID, final Object object, final boolean cancelable) {
+        final OHAlertDialogFragment newFragment = OHAlertDialogFragment.newInstance(tag, context
                         .getResources().getString(titleResID),
                 context.getResources().getString(messageResID),
                 context.getResources().getString(button1ResID),
                 context.getResources().getString(button2ResID), object, cancelable);
         newFragment.show(fm, tag);
+        return newFragment;
     }
 
     /**
