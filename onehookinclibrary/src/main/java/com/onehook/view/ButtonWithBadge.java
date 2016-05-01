@@ -67,7 +67,7 @@ public class ButtonWithBadge extends Button {
             final float width = canvas.getWidth();
             final float height = canvas.getHeight();
             final float length = Math.min(width, height);
-            final float radius = length / 3;
+            final float radius = length * 0.3f;
 
             canvas.drawCircle(width - radius, radius, radius, mPaint);
 
