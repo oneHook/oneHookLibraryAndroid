@@ -33,14 +33,9 @@ public class RecyclerViewPager extends RecyclerView {
      */
     public interface IRecyclerViewPagerOnScrollListener {
 
-        /**
-         * Called when pager is scrolled.
-         *
-         * @param pager   pager
-         * @param yOffset scroll content offset y
-         * @param yDiff   current scroll y diff
-         */
-        void onPagerScroll(final RecyclerViewPager pager, final float yOffset, final float yDiff);
+        void onRecyclerViewPagerScroll(final RecyclerViewPager pager, final float yOffset, final int currentChildIndex, final float progress);
+
+        void onRecyclerViewPagerScrollEnd(final RecyclerViewPager pager, final float yOffset, final int currentChildIndex, final float progress);
     }
 
     public static final boolean DEBUG = BuildConfig.DEBUG;
@@ -207,19 +202,32 @@ public class RecyclerViewPager extends RecyclerView {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
+            if (newState == SCROLL_STATE_IDLE) {
+                final int childHeight = getHeight() - getPaddingTop() - getPaddingBottom() - getOverlapOffset();
+                final float currentChildIndexRaw = mCurrentScrollY / childHeight;
+                final int currentChildIndex = (int) currentChildIndexRaw;
+                final float progress = currentChildIndexRaw - currentChildIndex;
+                if (mPagerScrollListener != null && mPagerScrollListener.get() != null) {
+                    mPagerScrollListener.get().onRecyclerViewPagerScrollEnd(RecyclerViewPager.this, mCurrentScrollY, currentChildIndex, progress);
+                }
+            }
         }
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
+            final int childHeight = getHeight() - getPaddingTop() - getPaddingBottom() - getOverlapOffset();
             if (dy == 0) {
-                final int childHeight = getHeight() - getPaddingTop() - getPaddingBottom() - getOverlapOffset();
                 mCurrentScrollY = getCurrentPosition() * childHeight;
             } else {
                 mCurrentScrollY += dy;
             }
+
+            final float currentChildIndexRaw = mCurrentScrollY / childHeight;
+            final int currentChildIndex = (int) currentChildIndexRaw;
+            final float progress = currentChildIndexRaw - currentChildIndex;
             if (mPagerScrollListener != null && mPagerScrollListener.get() != null) {
-                mPagerScrollListener.get().onPagerScroll(RecyclerViewPager.this, mCurrentScrollY, dy);
+                mPagerScrollListener.get().onRecyclerViewPagerScroll(RecyclerViewPager.this, mCurrentScrollY, currentChildIndex, progress);
             }
         }
     };
@@ -236,7 +244,7 @@ public class RecyclerViewPager extends RecyclerView {
     }
 
     public void setViewPagerOnScrollListener(final IRecyclerViewPagerOnScrollListener listener) {
-        mPagerScrollListener = new WeakReference<IRecyclerViewPagerOnScrollListener>(listener);
+        mPagerScrollListener = new WeakReference<>(listener);
     }
 
     @Override
