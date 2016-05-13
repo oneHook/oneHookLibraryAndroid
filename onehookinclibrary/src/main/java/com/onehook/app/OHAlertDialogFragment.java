@@ -1,8 +1,8 @@
 package com.onehook.app;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
@@ -27,8 +27,6 @@ public class OHAlertDialogFragment extends DialogFragment {
         void onAlertDialogFragmentCanceled(final String tag, final Object payload);
     }
 
-    private static final String INVALID_RES = null;
-
     private static final String ARG_TITLE = "title";
 
     private static final String ARG_BUTTON1 = "button1";
@@ -44,6 +42,113 @@ public class OHAlertDialogFragment extends DialogFragment {
     private static final String ARG_OBJECT_P = "objectP";
 
     private static final String ARG_CANCELLABLE = "cancelable";
+
+    public static class OHAlertDialogFragmentBuilder {
+
+        private Resources mRes;
+
+        String mFragmentTag;
+
+        String mButton1Text;
+
+        String mButton2Text;
+
+        String mTitle;
+
+        String mMesssage;
+
+        Serializable mObjectS;
+
+        Parcelable mObjectP;
+
+        boolean mCancelable;
+
+        public OHAlertDialogFragmentBuilder(final Resources res) {
+            mRes = res;
+            mFragmentTag = null;
+            mButton1Text = null;
+            mButton2Text = null;
+            mTitle = null;
+            mMesssage = null;
+            mObjectS = null;
+            mObjectP = null;
+            mCancelable = false;
+        }
+
+        public OHAlertDialogFragmentBuilder fragmentTag(final String tag) {
+            mFragmentTag = tag;
+            return this;
+        }
+
+
+        public OHAlertDialogFragmentBuilder button1Text(final String text) {
+            mButton1Text = text;
+            return this;
+        }
+
+        public OHAlertDialogFragmentBuilder button1Text(final int res) {
+            mButton1Text = mRes.getString(res);
+            return this;
+        }
+
+        public OHAlertDialogFragmentBuilder button2Text(final String text) {
+            mButton2Text = text;
+            return this;
+        }
+
+        public OHAlertDialogFragmentBuilder button2Text(final int res) {
+            mButton2Text = mRes.getString(res);
+            return this;
+        }
+
+        public OHAlertDialogFragmentBuilder title(final String text) {
+            mTitle = text;
+            return this;
+        }
+
+        public OHAlertDialogFragmentBuilder title(final int res) {
+            mTitle = mRes.getString(res);
+            return this;
+        }
+
+        public OHAlertDialogFragmentBuilder message(final String text) {
+            mMesssage = text;
+            return this;
+        }
+
+        public OHAlertDialogFragmentBuilder message(final int res) {
+            mMesssage = mRes.getString(res);
+            return this;
+        }
+
+
+        public OHAlertDialogFragmentBuilder object(final Serializable object) {
+            mObjectS = object;
+            return this;
+        }
+
+        public OHAlertDialogFragmentBuilder object(final Parcelable object) {
+            mObjectP = object;
+            return this;
+        }
+
+        public OHAlertDialogFragmentBuilder cancelable(final boolean cancelable) {
+            mCancelable = cancelable;
+            return this;
+        }
+
+        public OHAlertDialogFragment show(FragmentManager manager) {
+            final OHAlertDialogFragment fragment;
+            if (mObjectP == null) {
+                fragment = OHAlertDialogFragment.newInstance(mFragmentTag, mTitle, mMesssage, mButton1Text, mButton2Text, mObjectS, mCancelable);
+            } else {
+                fragment = OHAlertDialogFragment.newInstance(mFragmentTag, mTitle, mMesssage, mButton1Text, mButton2Text, mObjectP, mCancelable);
+            }
+            fragment.show(manager, mFragmentTag);
+            return fragment;
+        }
+    }
+
 
     /**
      * @param tag        tag of this dialog. can be used to identify the dialog
@@ -80,136 +185,6 @@ public class OHAlertDialogFragment extends DialogFragment {
         return frag;
     }
 
-    /**
-     * @param tag        tag of this dialog. can be used to identify the dialog
-     * @param title      title res id
-     * @param text       message res id
-     * @param button     button 1 text res id (on the right)
-     * @param object     additional serialized object
-     * @param cancelable is dialog is cancelable when tapped outside
-     * @return a new alert dialog fragment
-     */
-    private static OHAlertDialogFragment newInstance(final String tag, final String title,
-                                                     final String text, final String button, final Object object,
-                                                     final boolean cancelable) {
-        final OHAlertDialogFragment frag = new OHAlertDialogFragment();
-        final Bundle args = new Bundle();
-        frag.setCancelable(true);
-        args.putString(ARG_TAG, tag);
-        args.putString(ARG_TITLE, title);
-        args.putString(ARG_BUTTON1, button);
-        args.putString(ARG_BUTTON2, null);
-        args.putString(ARG_TEXT, text);
-        if (object != null) {
-            if (object instanceof Parcelable) {
-                args.putParcelable(ARG_OBJECT_P, (Parcelable) object);
-            } else if (object instanceof Serializable) {
-                args.putSerializable(ARG_OBJECT_S, (Serializable) object);
-            } else {
-                throw new RuntimeException("Attached object can only be parcelable or serializable");
-            }
-        }
-        args.putBoolean(ARG_CANCELLABLE, cancelable);
-        frag.setArguments(args);
-        return frag;
-    }
-
-    /**
-     * Creating and immediately show a new alert dialog with title, message and
-     * two possible options. The caller must already subscribe to event bus in
-     * order to receive callback.
-     *
-     * @param context      application context
-     * @param fm           fragment manager
-     * @param tag          string tag of this dialog. use this to identify your dialog.
-     * @param titleResID   title text res id
-     * @param messageResID message text res id
-     * @param button1ResID button 1 text res id (on the right)
-     * @param button2ResID button 2 text res id (on the left)
-     * @param object       additional Serializable data, will be attached to call back
-     *                     event
-     * @param cancelable   is dialog is cancelable when tapped outside
-     */
-    public static OHAlertDialogFragment showAlertDialog(final Context context, final FragmentManager fm,
-                                                 final String tag, final int titleResID, final int messageResID, final int button1ResID,
-                                                 final int button2ResID, final Object object, final boolean cancelable) {
-        final OHAlertDialogFragment newFragment = OHAlertDialogFragment.newInstance(tag, context
-                        .getResources().getString(titleResID),
-                context.getResources().getString(messageResID),
-                context.getResources().getString(button1ResID),
-                context.getResources().getString(button2ResID), object, cancelable);
-        newFragment.show(fm, tag);
-        return newFragment;
-    }
-
-    /**
-     * Creating and immediately show a new alert dialog with title, message and
-     * two possible options. The caller must already subscribe to event bus in
-     * order to receive callback.
-     *
-     * @param fm         fragment manager
-     * @param tag        string tag of this dialog. use this to identify your dialog.
-     * @param title      title text
-     * @param message    message text res id
-     * @param button1    button 1 text
-     * @param button2    button 2 text
-     * @param object     additional Serializable data, will be attached to call back
-     *                   event
-     * @param cancelable is dialog is cancelable when tapped outside
-     */
-    public static void showAlertDialog(final FragmentManager fm, final String tag,
-                                       final String title, final String message, final String button1, final String button2,
-                                       final Object object, final boolean cancelable) {
-        final DialogFragment newFragment = OHAlertDialogFragment.newInstance(tag, title,
-                message, button1, button2, object, cancelable);
-        newFragment.show(fm, tag);
-    }
-
-    /**
-     * Creating and immediately show a new alert dialog with title, message and
-     * only one possible option. The caller must already subscribe to event bus
-     * in order to receive callback.
-     *
-     * @param fm           fragment manager
-     * @param tag          string tag of this dialog. use this to identify your dialog.
-     * @param titleResID   title text res id
-     * @param messageResID message text res id
-     * @param object       additional Serializable data, will be attached to call back
-     *                     event
-     * @param cancelable   is dialog is cancelable when tapped outside
-     */
-    public static void showAlertDialog(final Context context, final FragmentManager fm,
-                                       final String tag, final int titleResID, final int messageResID, final int buttonResID,
-                                       final Object object, final boolean cancelable) {
-        final DialogFragment newFragment = OHAlertDialogFragment.newInstance(tag, context
-                        .getResources().getString(titleResID),
-                context.getResources().getString(messageResID),
-                context.getResources().getString(buttonResID), object, cancelable);
-        newFragment.show(fm, tag);
-    }
-
-    /**
-     * Creating and immediately show a new alert dialog with title, message and
-     * only one possible option. The caller must already subscribe to event bus
-     * in order to receive callback.
-     *
-     * @param fm         fragment manager
-     * @param tag        string tag of this dialog. use this to identify your dialog.
-     * @param title      title text
-     * @param message    message text
-     * @param button     button text (single button)
-     * @param object     additional Serializable data, will be attached to call back
-     *                   event
-     * @param cancelable is dialog is cancelable when tapped outside
-     */
-    public static void showAlertDialog(final FragmentManager fm, final String tag,
-                                       final String title, final String message, final String button,
-                                       final Object object, final boolean cancelable) {
-        final DialogFragment newFragment = OHAlertDialogFragment.newInstance(tag, title,
-                message, button, object, cancelable);
-        newFragment.show(fm, tag);
-    }
-
     private IOHAlertDialogFragmentCallback mCallback;
 
     public void setCallback(final IOHAlertDialogFragmentCallback callback) {
@@ -241,7 +216,7 @@ public class OHAlertDialogFragment extends DialogFragment {
                         mCallback.onAlertDialogFragmentButton1Clicked(getTag(), attachedObject);
                     }
                 });
-        if (button2 != INVALID_RES) {
+        if (button2 != null) {
             builder.setNegativeButton(button2, new DialogInterface.OnClickListener() {
 
                 @Override

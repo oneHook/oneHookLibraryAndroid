@@ -1,6 +1,8 @@
 <resources>
 
     <string name="facebook_app_id">1708983012712744</string>
+    <string name="google_oauth_web_client_id">647187018277-ke5354c9ujr6lrdm4cceurrktgt1ns3n.apps.googleusercontent.com</string>
+
 
     <string name="common_load_more">Load More</string>
     <string name="common_retry">RETRY</string>
