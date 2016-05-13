@@ -47,8 +47,6 @@ public class OHAlertDialogFragment extends DialogFragment {
 
         private Resources mRes;
 
-        String mFragmentTag;
-
         String mButton1Text;
 
         String mButton2Text;
@@ -65,7 +63,6 @@ public class OHAlertDialogFragment extends DialogFragment {
 
         public OHAlertDialogFragmentBuilder(final Resources res) {
             mRes = res;
-            mFragmentTag = null;
             mButton1Text = null;
             mButton2Text = null;
             mTitle = null;
@@ -74,12 +71,6 @@ public class OHAlertDialogFragment extends DialogFragment {
             mObjectP = null;
             mCancelable = false;
         }
-
-        public OHAlertDialogFragmentBuilder fragmentTag(final String tag) {
-            mFragmentTag = tag;
-            return this;
-        }
-
 
         public OHAlertDialogFragmentBuilder button1Text(final String text) {
             mButton1Text = text;
@@ -137,14 +128,14 @@ public class OHAlertDialogFragment extends DialogFragment {
             return this;
         }
 
-        public OHAlertDialogFragment show(FragmentManager manager) {
+        public OHAlertDialogFragment show(FragmentManager manager, final String tag) {
             final OHAlertDialogFragment fragment;
             if (mObjectP == null) {
-                fragment = OHAlertDialogFragment.newInstance(mFragmentTag, mTitle, mMesssage, mButton1Text, mButton2Text, mObjectS, mCancelable);
+                fragment = OHAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text, mObjectS, mCancelable);
             } else {
-                fragment = OHAlertDialogFragment.newInstance(mFragmentTag, mTitle, mMesssage, mButton1Text, mButton2Text, mObjectP, mCancelable);
+                fragment = OHAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text, mObjectP, mCancelable);
             }
-            fragment.show(manager, mFragmentTag);
+            fragment.show(manager, tag);
             return fragment;
         }
     }
