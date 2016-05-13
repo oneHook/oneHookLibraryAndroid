@@ -204,8 +204,8 @@ public class OHAlertDialogFragment extends DialogFragment {
             attachedObject = getArguments().getParcelable(ARG_OBJECT_P);
         }
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setIcon(R.drawable.ic_close_black_18dp).setTitle(title)
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.OHAlertDialogStyle)
+                .setTitle(title)
                 .setPositiveButton(button1, new DialogInterface.OnClickListener() {
 
                     @Override
