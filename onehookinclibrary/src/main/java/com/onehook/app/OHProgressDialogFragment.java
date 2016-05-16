@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import com.onehookinc.androidlib.R;
+
 public class OHProgressDialogFragment extends DialogFragment {
 
     private static final String ARG_TITLE_RES = "argTitleRes";
@@ -23,7 +25,7 @@ public class OHProgressDialogFragment extends DialogFragment {
         final Bundle args = getArguments();
         final int titleRes = args.getInt(ARG_TITLE_RES);
 
-        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        final ProgressDialog dialog = new ProgressDialog(getActivity(), R.style.OHProgressDialogStyle);
         dialog.setMessage(getString(titleRes));
         dialog.setIndeterminate(true);
         setCancelable(false);

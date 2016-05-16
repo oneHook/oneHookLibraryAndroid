@@ -7,4 +7,10 @@
         <item name="android:background">#5fa3d0</item>
     </style>
 
+    <style name="OHProgressDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#FFCC00</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">#5fa3d0</item>
+    </style>
+
 </resources>
