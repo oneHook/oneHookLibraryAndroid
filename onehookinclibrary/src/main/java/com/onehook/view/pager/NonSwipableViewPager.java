@@ -1,4 +1,4 @@
-package com.onehook.view;
+package com.onehook.view.pager;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
