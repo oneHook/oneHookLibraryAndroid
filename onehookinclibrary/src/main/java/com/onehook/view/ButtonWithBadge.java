@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.Button;
 
 /**
@@ -64,11 +65,12 @@ public class ButtonWithBadge extends Button {
         super.onDraw(canvas);
 
         if (mText.length() > 0) {
-            final float width = canvas.getWidth();
-            final float height = canvas.getHeight();
+            final float width = getMeasuredWidth();
+            final float height = getMeasuredHeight();
             final float length = Math.min(width, height);
             final float radius = length * 0.3f;
 
+            Log.d("OptimityBadge", "should draw badge " + mText + " width " + width + " , height " + height);
             canvas.drawCircle(width - radius, radius, radius, mPaint);
 
             mTextPaint.setTextSize(radius);
