@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 
 import com.onehook.util.animator.AnimationEndListener;
-import com.onehookinc.androidlib.R;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -88,12 +87,12 @@ public class ConfettiView extends ViewGroup {
 
         final int width = getMeasuredWidth();
         final int height = getMeasuredHeight();
-
-        System.out.println("oneHook " + width + " , " + height);
+        mConfettiSize = Math.min(width, height) / 10;
 
         for (int i = 0; i < mConfettiCellCount; i++) {
             final ConfettiViewCell cell = new ConfettiViewCell(getContext());
-            cell.setImageResource(R.drawable.ic_close_black_48dp);
+            cell.measure(MeasureSpec.makeMeasureSpec(mConfettiSize, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(mConfettiSize, MeasureSpec.EXACTLY));
             cell.layout(width / 2 - mConfettiSize / 2, -mConfettiSize, width / 2 + mConfettiSize / 2, 0);
             addView(cell);
             mConfettiViewCells.add(cell);
@@ -112,9 +111,6 @@ public class ConfettiView extends ViewGroup {
             final int controlX = (endingX > width / 2) ? width : 0;
             final int endingY = height + mConfettiSize;
             final int controlY = (int) (Math.random() * endingY);
-
-            System.out.println("oneHook index " + i + " duration " + duration + "  ending x " + endingX);
-
 
             final Path path = new Path();
             path.moveTo(width / 2, -mConfettiSize);
@@ -151,7 +147,6 @@ public class ConfettiView extends ViewGroup {
         allSets.addListener(new AnimationEndListener() {
             @Override
             public void onAnimationEndOrCanceled(Animator animation) {
-                System.out.println("oneHook it's over!!!");
                 for (View view : mConfettiViewCells) {
                     removeView(view);
                 }
