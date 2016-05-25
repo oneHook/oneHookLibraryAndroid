@@ -49,6 +49,25 @@ public class TextDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
+//        canvas.drawColor(Color.BLACK);
+//        Rect r = getBounds();
+//        int count = canvas.save();
+//        canvas.translate(r.left, r.top);
+//
+//        final int cwidth = canvas.getWidth();
+//        final int cheight = canvas.getHeight();
+//
+//        // draw text
+//        int width = cwidth < 0 ? r.width() : cwidth;
+//        int height = cheight < 0 ? r.height() : cheight;
+//        int fontSize = (width / 2);
+//        mPaint.setTextSize(fontSize);
+//        canvas.drawText(mText, width / 2, height / 2 - ((mPaint.descent() + mPaint.ascent()) / 2), mPaint);
+//
+//        canvas.restoreToCount(count);
+
+
+//        canvas.drawColor(Color.RED);
         canvas.save();
         canvas.getMatrix(sMatrix);
         sMatrix.getValues(sValues);

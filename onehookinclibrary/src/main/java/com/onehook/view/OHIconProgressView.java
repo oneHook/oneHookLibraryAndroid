@@ -81,6 +81,7 @@ public class OHIconProgressView extends TextView {
     private Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
+            removeCallbacks(mRunnable);
             mIndex = (mIndex + 1) % mIcons.length;
             startAnimating();
         }
