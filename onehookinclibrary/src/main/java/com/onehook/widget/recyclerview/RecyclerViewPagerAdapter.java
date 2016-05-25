@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.onehookinc.androidlib.R;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -62,6 +64,25 @@ public class RecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder> extend
                     itemView.getLayoutParams();
 
 
+            /* find original bottom padding */
+            int bottomPadding = itemView.getPaddingBottom();
+            if (itemView.getTag(R.id.recycler_view_pager_original_bottom_padding_key) != null) {
+                final Integer savedBottomPadding = (Integer) itemView.getTag(R.id.recycler_view_pager_original_bottom_padding_key);
+                bottomPadding = savedBottomPadding.intValue();
+            } else {
+                /*
+                 * No original padding saved, save it.
+                 */
+                itemView.setTag(R.id.recycler_view_pager_original_bottom_padding_key, Integer.valueOf(bottomPadding));
+            }
+
+            /* reset the view to use original padding */
+            itemView.setPadding(
+                    itemView.getPaddingLeft(),
+                    itemView.getPaddingTop(),
+                    itemView.getPaddingRight(),
+                    bottomPadding);
+
             /* if it is the last item */
             if (position == getItemCount() - 1) {
                 /*
@@ -76,12 +97,12 @@ public class RecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder> extend
                 /* last item will take over whole screen */
                     heightOffset = 0;
                 } else {
-                /* use padding to fill */
+                    /* use padding to fill */
                     itemView.setPadding(
                             itemView.getPaddingLeft(),
                             itemView.getPaddingTop(),
                             itemView.getPaddingRight(),
-                            itemView.getPaddingBottom() + heightOffset);
+                            bottomPadding + heightOffset);
                     heightOffset = 0;
                 }
             }
