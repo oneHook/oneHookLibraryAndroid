@@ -65,6 +65,8 @@ public class RecyclerViewPager extends RecyclerView {
 
     private float mTouchSpan;
 
+    private boolean mShouldFillLastItem = false;
+
     private List<OnPageChangedListener> mOnPageChangedListeners;
 
     private int mSmoothScrollTargetPosition = -1;
@@ -134,6 +136,7 @@ public class RecyclerViewPager extends RecyclerView {
         mSinglePageFling = a.getBoolean(R.styleable.RecyclerViewPager_oh_singlePageFling, mSinglePageFling);
         mOverlapRatio = a.getFloat(R.styleable.RecyclerViewPager_oh_overlap_ratio, mOverlapRatio);
         mOverlapAmount = a.getDimension(R.styleable.RecyclerViewPager_oh_overlap_amount, mOverlapAmount);
+        mShouldFillLastItem = a.getBoolean(R.styleable.RecyclerViewPager_oh_last_item_fully_fill, mShouldFillLastItem);
         a.recycle();
     }
 
@@ -652,4 +655,7 @@ public class RecyclerViewPager extends RecyclerView {
         void OnPageChanged(int oldPosition, int newPosition);
     }
 
+    public boolean shouldFillLastItem() {
+        return mShouldFillLastItem;
+    }
 }
