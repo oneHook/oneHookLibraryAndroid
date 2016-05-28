@@ -217,4 +217,12 @@ public class AnimatedProgressView extends View {
         mProgressTextColor = progressTextColor;
         invalidate();
     }
+
+    public float getBottomRingProgress() {
+        return bottomRingProgress;
+    }
+
+    public float getProgress() {
+        return progress;
+    }
 }
