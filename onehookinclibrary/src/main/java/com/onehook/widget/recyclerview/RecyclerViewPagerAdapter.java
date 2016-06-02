@@ -1,6 +1,7 @@
 package com.onehook.widget.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -112,6 +113,9 @@ public class RecyclerViewPagerAdapter<VH extends RecyclerView.ViewHolder> extend
             } else {
                 lp.height = pager.getHeight() - pager.getPaddingTop() - pager.getPaddingBottom() - heightOffset;
             }
+
+            Log.d("oneHook", "View pager meausred width " + lp.width + " , " + lp.height + " , pager height " + pager.getHeight());
+
             itemView.setLayoutParams(lp);
         }
     }

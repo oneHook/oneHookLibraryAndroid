@@ -10,7 +10,7 @@ import android.view.View;
 
 /**
  * A RecyclerView with top content inset and bottom content inset.
- *
+ * <p>
  * Created by EagleDiao on 14-11-11.
  */
 public class RecyclerViewWithInset extends RecyclerView {
@@ -116,6 +116,5 @@ public class RecyclerViewWithInset extends RecyclerView {
     @Override
     protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
         super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
-        System.out.println("oneHook scroll Y " + scrollY + " , " + "clampedY " + clampedY);
     }
 }
