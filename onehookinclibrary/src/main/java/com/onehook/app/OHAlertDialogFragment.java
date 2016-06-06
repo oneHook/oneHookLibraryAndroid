@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 
 import com.onehookinc.androidlib.R;
@@ -135,7 +136,22 @@ public class OHAlertDialogFragment extends DialogFragment {
             } else {
                 fragment = OHAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text, mObjectP, mCancelable);
             }
-            fragment.show(manager, tag);
+            final FragmentTransaction ft = manager.beginTransaction();
+            ft.add(fragment, tag);
+            ft.commit();
+            return fragment;
+        }
+
+        public OHAlertDialogFragment showAllowingStateLoss(FragmentManager manager, final String tag) {
+            final OHAlertDialogFragment fragment;
+            if (mObjectP == null) {
+                fragment = OHAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text, mObjectS, mCancelable);
+            } else {
+                fragment = OHAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text, mObjectP, mCancelable);
+            }
+            final FragmentTransaction ft = manager.beginTransaction();
+            ft.add(fragment, tag);
+            ft.commitAllowingStateLoss();
             return fragment;
         }
     }

@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 /**
  * ParallaxOnScrollListener. This Parallax on scroll listener will apply
  * parallax effect on the first N view items of the RecyclerView. N will be
- * provided by user. If user wish to show the header with parallax effect half
+ * provided by user. If user wish to showAllowingStateLoss the header with parallax effect half
  * revealed when covered by following items, user also have to override the
  * getBottomDecorationHeight in LayoutManager class to *extend* the view height.
  * so that the view with parallax will not be recycled(removed from view parent)
