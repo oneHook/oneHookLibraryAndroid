@@ -35,10 +35,30 @@ public class BitmapUtility {
         }
     }
 
-    public static Bitmap getRotatedBitmap(final File file) {
+    public static void rotatePhotoFile(final File file, int rotation) {
+        final Bitmap rotated = getRotatedBitmap(file, rotation);
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+            rotated.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static int getBitmapFileRotation(final File file) {
         int rotate = 0;
         try {
             File imageFile = file;
+
             ExifInterface exif = new ExifInterface(
                     imageFile.getAbsolutePath());
             int orientation = exif.getAttributeInt(
@@ -56,14 +76,27 @@ public class BitmapUtility {
                     rotate = 90;
                     break;
             }
-            Log.v("oneHook", "Exif orientation: " + orientation);
-            Bitmap rotattedBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-            Matrix matrix = new Matrix();
-            matrix.postRotate(rotate);
-            return Bitmap.createBitmap(rotattedBitmap, 0, 0, rotattedBitmap.getWidth(), rotattedBitmap.getHeight(), matrix, true);
+            Log.v("OptimityDebug", "ONLY GET Exif orientation: " + orientation + " rotate " + rotate);
+            return rotate;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
+    }
+
+    public static Bitmap getRotatedBitmap(final File file, final int rotation) {
+        Bitmap originalBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        Matrix matrix = new Matrix();
+        matrix.postRotate(rotation);
+        final Bitmap rv = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(), matrix, true);
+        if(rv != originalBitmap) {
+            originalBitmap.recycle();
+        }
+        return rv;
+    }
+
+    public static Bitmap getRotatedBitmap(final File file) {
+        int rotation = getBitmapFileRotation(file);
+        return getRotatedBitmap(file, rotation);
     }
 }
