@@ -38,6 +38,11 @@ public class BitmapUtility {
     }
 
     public static void rotatePhotoFile(final File file, int rotation) {
+        final long startTime = System.currentTimeMillis();
+        if(rotation == 0) {
+            /* do not do rotation if nothing to be rotated */
+            return;
+        }
         final Bitmap rotated = getRotatedBitmap(file, rotation);
         FileOutputStream out = null;
         try {
@@ -49,6 +54,9 @@ public class BitmapUtility {
             try {
                 if (out != null) {
                     out.close();
+                }
+                if(DEBUG_TAG != null) {
+                    Log.d(DEBUG_TAG, "rotate photo file takes " + (System.currentTimeMillis() - startTime) + " ms");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
