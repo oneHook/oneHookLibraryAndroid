@@ -16,6 +16,8 @@ import java.io.IOException;
 
 public class BitmapUtility {
 
+    public static String DEBUG_TAG = null;
+
     public static void rotatePhotoFile(final File file) {
         final Bitmap rotated = getRotatedBitmap(file);
         FileOutputStream out = null;
@@ -55,6 +57,7 @@ public class BitmapUtility {
     }
 
     public static int getBitmapFileRotation(final File file) {
+        final long startTime = System.currentTimeMillis();
         int rotate = 0;
         try {
             File imageFile = file;
@@ -76,12 +79,19 @@ public class BitmapUtility {
                     rotate = 90;
                     break;
             }
-            Log.v("OptimityDebug", "ONLY GET Exif orientation: " + orientation + " rotate " + rotate);
+            if (DEBUG_TAG != null) {
+                Log.d(DEBUG_TAG, "Exif orientation: " + orientation + " rotate " + rotate);
+                Log.d(DEBUG_TAG, "Time spent to get exif info " + (System.currentTimeMillis() - startTime) + " ms");
+            }
             return rotate;
         } catch (Exception e) {
             e.printStackTrace();
+            if (DEBUG_TAG != null) {
+                Log.d(DEBUG_TAG, "Failed to retrieve Exif orientation");
+            }
+        } finally {
+            return rotate;
         }
-        return 0;
     }
 
     public static Bitmap getRotatedBitmap(final File file, final int rotation) {
@@ -89,7 +99,7 @@ public class BitmapUtility {
         Matrix matrix = new Matrix();
         matrix.postRotate(rotation);
         final Bitmap rv = Bitmap.createBitmap(originalBitmap, 0, 0, originalBitmap.getWidth(), originalBitmap.getHeight(), matrix, true);
-        if(rv != originalBitmap) {
+        if (rv != originalBitmap) {
             originalBitmap.recycle();
         }
         return rv;
