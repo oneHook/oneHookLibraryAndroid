@@ -75,6 +75,14 @@ public abstract class FullImageViewFragment extends Fragment {
         mLoadingView.setLayoutParams(lp);
         view.addView(mLoadingView);
         doLoadImage();
+
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
+
         return view;
     }
 
