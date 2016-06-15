@@ -9,4 +9,6 @@
     <string name="common_loading_adapter_load_more_text">Click to load</string>
     <string name="common_search">Search</string>
 
+    <string name="fragment_menu_header_rank_text">Rank %1$d</string>
+
 </resources>
