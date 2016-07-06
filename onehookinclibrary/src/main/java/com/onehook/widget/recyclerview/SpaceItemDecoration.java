@@ -8,23 +8,41 @@ import android.view.View;
  * Created by eaglediaotomore on 2016-03-12.
  */
 public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
-    private int space;
 
+    private int mSpaceTop;
+
+    private int mSpaceBottom;
+
+    private int mSpaceLeft;
+
+    private int mSpaceRight;
+
+    /**
+     * @param space for top, right, left, bottom
+     */
     public SpaceItemDecoration(int space) {
-        this.space = space;
+        this(space, space, space, space);
+    }
+
+    /**
+     * @param spaceTop
+     * @param spaceBottom
+     * @param spaceLeft
+     * @param spaceRight
+     */
+    public SpaceItemDecoration(int spaceTop, int spaceBottom, int spaceLeft, int spaceRight) {
+        this.mSpaceTop = spaceTop;
+        this.mSpaceBottom = spaceBottom;
+        this.mSpaceLeft = spaceLeft;
+        this.mSpaceRight = spaceRight;
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view,
                                RecyclerView parent, RecyclerView.State state) {
-        outRect.left = space;
-        outRect.right = space;
-        outRect.bottom = space;
-
-        if (parent.getChildLayoutPosition(view) == 0) {
-            outRect.top = space;
-        } else {
-            outRect.top = 0;
-        }
+        outRect.left = mSpaceLeft;
+        outRect.right = mSpaceRight;
+        outRect.bottom = mSpaceBottom;
+        outRect.top = mSpaceTop;
     }
 }
