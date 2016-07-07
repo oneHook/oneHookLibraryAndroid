@@ -2,7 +2,7 @@
 package com.onehook.util.concurrency;
 
 /**
- * The SimpleJob that leave implementations of onStart onDrop and onError empty
+ * The SimpleJob that leave implementations of onResume onDrop and onError empty
  * so user only need to implement run and onFinish()
  * 
  * @author EagleDiao
