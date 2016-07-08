@@ -15,23 +15,23 @@ public abstract class BaseWrappedRecyclerViewAdapter<T extends BaseRecyclerViewA
         mWrappedAdapter = adapter;
     }
 
-    final public void onStart() {
+    final public void onResume() {
         if (mWrappedAdapter != null && mObserver != null) {
             mWrappedAdapter.registerAdapterDataObserver(mObserver);
         }
 
         if (mWrappedAdapter != null && mWrappedAdapter instanceof BaseWrappedRecyclerViewAdapter) {
-            ((BaseWrappedRecyclerViewAdapter) mWrappedAdapter).onStart();
+            ((BaseWrappedRecyclerViewAdapter) mWrappedAdapter).onResume();
         }
     }
 
-    final public void onStop() {
+    final public void onPause() {
         if (mWrappedAdapter != null && mObserver != null) {
             mWrappedAdapter.unregisterAdapterDataObserver(mObserver);
         }
 
         if (mWrappedAdapter != null && mWrappedAdapter instanceof BaseWrappedRecyclerViewAdapter) {
-            ((BaseWrappedRecyclerViewAdapter) mWrappedAdapter).onStop();
+            ((BaseWrappedRecyclerViewAdapter) mWrappedAdapter).onPause();
         }
     }
 
