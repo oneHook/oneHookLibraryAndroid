@@ -87,6 +87,7 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
              */
             notifyItemChanged(getItemCount() - 1);
         }
+
     };
 
     /**
