@@ -131,12 +131,12 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
 
         public LoadingViewHolder(View view) {
             super(view, FlexGridLayoutManager.FlexGridViewHolder.SIZE_WRAP_CONTENT);
-            mProgressBar = (ProgressBar) view.findViewById(R.id.view_loading_progress);
+            mProgressBar = view.findViewById(R.id.view_loading_progress);
             mLoadMoreText = (TextView) view.findViewById(R.id.view_loading_load_more_text);
             view.setTag(R.id.loading_adapter_view_tag_key, this);
         }
 
-        private ProgressBar mProgressBar;
+        private View mProgressBar;
 
         private TextView mLoadMoreText;
     }
@@ -186,7 +186,7 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         }
     }
 
-    public static interface OnLoadingListener {
+    public interface OnLoadingListener {
         void onLoadNextPage(int position);
     }
 }
