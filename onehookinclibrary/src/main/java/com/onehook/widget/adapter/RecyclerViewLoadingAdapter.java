@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.onehook.widget.FlexGridLayoutManager;
@@ -20,6 +19,9 @@ import com.onehookinc.androidlib.R;
 public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> extends
         BaseWrappedRecyclerViewAdapter<T> implements OnClickListener {
 
+    /**
+     * Is loading enabled.
+     */
     private boolean mLoadingEnabled;
 
     /**
@@ -32,6 +34,14 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
      */
     private OnLoadingListener mOnLoadingListener;
 
+    /**
+     *
+     */
+    private String mCustomLoadMoreTextMessage;
+
+    /**
+     * Observer for wrapped adapter.
+     */
     final RecyclerView.AdapterDataObserver mObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
@@ -41,21 +51,41 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
             notifyItemRangeChanged(positionStart, itemCount, payload);
+            /*
+             * for handling edge case that page size is small, make sure the bind view on loading
+             * view is triggered.
+             */
+            notifyItemChanged(getItemCount() - 1);
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount) {
             notifyItemRangeChanged(positionStart, itemCount);
+            /*
+             * for handling edge case that page size is small, make sure the bind view on loading
+             * view is triggered.
+             */
+            notifyItemChanged(getItemCount() - 1);
         }
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
             notifyItemRangeInserted(positionStart, itemCount);
+            /*
+             * for handling edge case that page size is small, make sure the bind view on loading
+             * view is triggered.
+             */
+            notifyItemChanged(getItemCount() - 1);
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
             notifyItemRangeRemoved(positionStart, itemCount);
+            /*
+             * for handling edge case that page size is small, make sure the bind view on loading
+             * view is triggered.
+             */
+            notifyItemChanged(getItemCount() - 1);
         }
     };
 
@@ -78,17 +108,19 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         }
     }
 
+    /**
+     * Check if given position is the loading view.
+     *
+     * @param position adapter position
+     * @return true if it is the loading view, false otherwise
+     */
     private boolean isLoadingView(int position) {
-        return mLoadingEnabled && (position == getItemCount() - 1);
+        return position == getItemCount() - 1;
     }
 
     @Override
     public int getItemCount() {
-        if (mLoadingEnabled) {
-            return mWrappedAdapter.getItemCount() + 1;
-        } else {
-            return mWrappedAdapter.getItemCount();
-        }
+        return mWrappedAdapter.getItemCount() + 1;
     }
 
     @Override
@@ -96,7 +128,6 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         if (isLoadingView(position)) {
             @SuppressWarnings("unchecked")
             final LoadingViewHolder holder = (LoadingViewHolder) viewHolder;
-
             if (mAutoTriggerLoading) {
                 notifyLoadingStarted(position);
             }
@@ -108,6 +139,10 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
                 } else {
                     holder.mProgressBar.setVisibility(View.INVISIBLE);
                     holder.mLoadMoreText.setVisibility(View.VISIBLE);
+                }
+
+                if (mCustomLoadMoreTextMessage != null) {
+                    holder.mLoadMoreText.setText(mCustomLoadMoreTextMessage);
                 }
             }
         } else {
@@ -127,6 +162,9 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         }
     }
 
+    /**
+     * Loading view holder.
+     */
     private class LoadingViewHolder extends FlexGridLayoutManager.FlexGridViewHolder {
 
         public LoadingViewHolder(View view) {
@@ -141,29 +179,66 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         private TextView mLoadMoreText;
     }
 
+    /**
+     * Set true if there is more to load.
+     *
+     * @param enabled
+     */
     public void setLoading(boolean enabled) {
         boolean before = mLoadingEnabled;
         mLoadingEnabled = enabled;
         if (before && before != enabled) {
-            notifyItemRemoved(getItemCount() - 1);
-        } else {
-            notifyDataSetChanged();
+            notifyItemChanged(getItemCount() - 1);
         }
     }
 
-    public void setAutoLoading(boolean autoLoading) {
-        mAutoTriggerLoading = autoLoading;
-        notifyDataSetChanged();
+    /**
+     * @param message
+     */
+    public void setLoadMoreText(final String message) {
+        mCustomLoadMoreTextMessage = message;
+        notifyItemChanged(getItemCount() - 1);
     }
 
+    /**
+     * Set should start auto loading.
+     *
+     * @param autoLoading should auto loading
+     */
+    public void setAutoLoading(boolean autoLoading) {
+        mAutoTriggerLoading = autoLoading;
+        notifyItemChanged(getItemCount() - 1);
+    }
+
+    /**
+     * @param customMessage
+     */
+    public void setEndOfPage(final String customMessage) {
+        mAutoTriggerLoading = false;
+        mLoadingEnabled = false;
+        mCustomLoadMoreTextMessage = customMessage;
+        notifyItemChanged(getItemCount() - 1);
+    }
+
+    /**
+     * @param onLoadingListener
+     */
     public void setOnLoadingListener(OnLoadingListener onLoadingListener) {
         mOnLoadingListener = onLoadingListener;
     }
 
+    /**
+     * Return on loading listener.
+     *
+     * @return on loading listener
+     */
     public OnLoadingListener getOnLoadingListener() {
         return mOnLoadingListener;
     }
 
+    /**
+     * @param position
+     */
     private void notifyLoadingStarted(int position) {
         if (mOnLoadingListener != null) {
             mOnLoadingListener.onLoadNextPage(position);
@@ -172,13 +247,16 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
 
     @Override
     public void onClick(View v) {
+        if (v.getVisibility() != View.VISIBLE) {
+            return;
+        }
         if (!mAutoTriggerLoading) {
             notifyLoadingStarted(getItemCount() - 1);
             mAutoTriggerLoading = true;
             /*
              * Start loading state.
              */
-            final ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.view_loading_progress);
+            final View progressBar = v.findViewById(R.id.view_loading_progress);
             final TextView loadMoreText = (TextView) v
                     .findViewById(R.id.view_loading_load_more_text);
             progressBar.setVisibility(View.VISIBLE);

@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/common_load_more"
+        android:text="@string/common_loading_adapter_load_more_text"
         android:visibility="gone" />
 
 </FrameLayout>

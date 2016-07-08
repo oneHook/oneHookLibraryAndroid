@@ -38,7 +38,6 @@ public class OHIconProgressView extends TextView {
     private void commonInit(final Context context, final AttributeSet attrs) {
         setGravity(Gravity.CENTER);
 
-
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.OHIconProgressView);
         final int resID = a.getResourceId(R.styleable.OHIconProgressView_oh_icon_progress_view_icons, 0);
         if (resID == 0) {
@@ -54,13 +53,6 @@ public class OHIconProgressView extends TextView {
         a.recycle();
 
         setVisibility(getVisibility());
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        final int length = Math.min(w, h);
-        setTextSize(length * 0.2f);
     }
 
     @Override
