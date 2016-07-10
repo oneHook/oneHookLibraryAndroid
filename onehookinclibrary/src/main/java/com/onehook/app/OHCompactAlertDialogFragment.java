@@ -277,7 +277,6 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
                 }
             });
         }
-
         /* selectable items are optional */
         if (selectableItems != null) {
             builder.setItems(selectableItems, new DialogInterface.OnClickListener() {
