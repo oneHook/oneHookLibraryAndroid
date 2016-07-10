@@ -6,4 +6,5 @@
     <string name="date_format_year">yyyy年M月d日</string>
     <string name="date_format_default">M月d日</string>
 
+    <string name="time_interval_string">%1$s 到 %2$s</string>
 </resources>

@@ -6,4 +6,6 @@
     <string name="date_format_year">MMM d, yyyy</string>
     <string name="date_format_default">MMM d</string>
 
+    <string name="time_interval_string">%1$s - %2$s</string>
+
 </resources>

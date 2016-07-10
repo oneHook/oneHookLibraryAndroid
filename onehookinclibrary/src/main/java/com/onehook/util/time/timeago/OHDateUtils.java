@@ -6,6 +6,7 @@ import android.text.format.DateUtils;
 import com.onehookinc.androidlib.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -35,7 +36,25 @@ public class OHDateUtils extends DateUtils {
         } else {
             formatter.applyPattern(context.getString(R.string.date_format_default));
         }
-
         return formatter.format(date);
+    }
+
+    public static String getTimeString(final Context context, final long time) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        final int min = calendar.get(Calendar.MINUTE);
+        final SimpleDateFormat formatter = getFormatter();
+        if (min == 0) {
+            formatter.applyPattern("h a");
+        } else {
+            formatter.applyPattern("h:m a");
+        }
+        return formatter.format(new Date(time));
+    }
+
+    public static String getTimeIntervalString(final Context context, final long startTime, final long endTime) {
+        final String start = getTimeString(context, startTime);
+        final String end = getTimeString(context, endTime);
+        return context.getString(R.string.time_interval_string, start, end);
     }
 }
