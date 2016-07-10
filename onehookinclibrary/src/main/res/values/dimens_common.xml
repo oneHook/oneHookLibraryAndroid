@@ -9,6 +9,7 @@
     <dimen name="common_margin_large">16dp</dimen>
     <dimen name="common_margin_xlarge">32dp</dimen>
     <dimen name="common_margin_xxlarge">64dp</dimen>
+    <dimen name="common_margin_xxxlarge">128dp</dimen>
 
     <dimen name="title_xhuge_font_size">32dp</dimen>
     <dimen name="title_huge_font_size">24dp</dimen>

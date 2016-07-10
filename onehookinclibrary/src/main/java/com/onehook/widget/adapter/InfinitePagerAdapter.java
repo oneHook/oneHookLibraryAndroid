@@ -66,9 +66,9 @@ public class InfinitePagerAdapter<T extends PagerAdapter> extends PagerAdapter {
     }
 
     public int getMidPosition() {
-        if (mWrappedAdapter.getCount() == 1) {
+        if (mWrappedAdapterItemCount == 1) {
             return 0;
         }
-        return mWrappedAdapter.getCount() * (Integer.MAX_VALUE / mWrappedAdapter.getCount() / 2);
+        return mWrappedAdapterItemCount * (Integer.MAX_VALUE / mWrappedAdapterItemCount / 2);
     }
 }
