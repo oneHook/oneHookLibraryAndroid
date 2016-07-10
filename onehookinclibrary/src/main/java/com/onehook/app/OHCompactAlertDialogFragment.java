@@ -258,6 +258,7 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
                         return;
                     }
                     mCallback.onAlertDialogFragmentButtonClicked(BUTTON_1_INDEX, getTag(), attachedObject);
+                    mCallback = null;
                 }
             });
         }
@@ -272,6 +273,7 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
                         return;
                     }
                     mCallback.onAlertDialogFragmentButtonClicked(BUTTON_2_INDEX, getTag(), attachedObject);
+                    mCallback = null;
                 }
             });
         }
@@ -281,7 +283,11 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
             builder.setItems(selectableItems, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    if (mCallback == null) {
+                        return;
+                    }
                     mCallback.onAlertDialogFragmentButtonClicked(i, getTag(), attachedObject);
+                    mCallback = null;
                 }
             });
         }
@@ -309,6 +315,7 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
             attachedObject = getArguments().getParcelable(ARG_OBJECT_P);
         }
         mCallback.onAlertDialogFragmentButtonClicked(BUTTON_CANCEL_INDEX, getTag(), attachedObject);
+        mCallback = null;
     }
 
 }
