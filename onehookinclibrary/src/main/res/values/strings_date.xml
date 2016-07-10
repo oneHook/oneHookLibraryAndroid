@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="date_format_week_year">EEEE, MMM d, yyyy</string>
+    <string name="date_format_week">EEEE, MMM d</string>
+    <string name="date_format_year">MMM d, yyyy</string>
+    <string name="date_format_default">MMM d</string>
+
+</resources>

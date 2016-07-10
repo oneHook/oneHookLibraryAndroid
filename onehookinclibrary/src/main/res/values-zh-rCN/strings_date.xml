@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="date_format_week_year">yyyy年M月d日 EEEE</string>
+    <string name="date_format_week">M月d日 EEEE</string>
+    <string name="date_format_year">yyyy年M月d日</string>
+    <string name="date_format_default">M月d日</string>
+
+</resources>
