@@ -73,15 +73,6 @@ public class OHPagerIndicator extends LinearLayout implements ViewPager.OnPageCh
             mDefaultDotColor = a.getColor(R.styleable.OHPagerIndicator_oh_pager_indicator_default_color, Color.WHITE);
             mSelectedDotColor = a.getColor(R.styleable.OHPagerIndicator_oh_pager_indicator_selected_color, Color.RED);
         }
-
-        if (isInEditMode()) {
-            for (int i = 0; i < 3; i++) {
-                final View view = new View(getContext());
-                view.setBackground((i == 0 ? new DotDrawable(mSelectedDotColor) : new DotDrawable(mDefaultDotColor)));
-                view.setLayoutParams(obtainLayoutParams());
-                addView(view);
-            }
-        }
     }
 
     public void setViewPager(final ViewPager viewPager) {
@@ -105,7 +96,6 @@ public class OHPagerIndicator extends LinearLayout implements ViewPager.OnPageCh
                 view.setLayoutParams(obtainLayoutParams());
                 addView(view);
             }
-            System.out.println("oneHook set view pager");
         }
     }
 
