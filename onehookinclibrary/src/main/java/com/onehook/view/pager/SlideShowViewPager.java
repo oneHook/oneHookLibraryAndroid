@@ -1,13 +1,7 @@
 package com.onehook.view.pager;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
-import android.widget.Scroller;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by eaglediaotomore on 2016-07-10.
@@ -41,29 +35,9 @@ public class SlideShowViewPager extends NonSwipableViewPager {
     }
 
     private void commonInit() {
-        try {
-            Field scroller = ViewPager.class.getDeclaredField("mScroller");
-            scroller.setAccessible(true);
-            scroller.set(this, new CustomScroller(getContext(), new LinearInterpolator(), 800));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ViewPagerUtility.setViewPagerSmoothScrollDuration(800, this);
     }
 
-    public class CustomScroller extends Scroller {
-
-        private int mDuration;
-
-        public CustomScroller(Context context, Interpolator interpolator, int duration) {
-            super(context, interpolator);
-            mDuration = duration;
-        }
-
-        @Override
-        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-            super.startScroll(startX, startY, dx, dy, mDuration);
-        }
-    }
 
     public void startSlideShow() {
         removeCallbacks(mToNextPageRunnable);
