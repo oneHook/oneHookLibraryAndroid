@@ -6,6 +6,15 @@
     <string name="date_format_year">MMM d, yyyy</string>
     <string name="date_format_default">MMM d</string>
 
+    <string name="meridiem_field_before_5">AM</string>
+    <string name="meridiem_field_before_12">AM</string>
+    <string name="meridiem_field_before_14">PM</string>
+    <string name="meridiem_field_before_18">PM</string>
+    <string name="meridiem_field_after_18">PM</string>
+
+    <string name="time_format_no_min">h %1$s</string>
+    <string name="time_format_with_min">h:mm %1$s</string>
+
     <string name="time_interval_string">%1$s - %2$s</string>
 
 </resources>
