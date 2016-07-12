@@ -43,11 +43,25 @@ public class OHDateUtils extends DateUtils {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time);
         final int min = calendar.get(Calendar.MINUTE);
+        final int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        final String meridiumString;
+        if (hourOfDay < 5) {
+            meridiumString = context.getString(R.string.meridiem_field_before_5);
+        } else if (hourOfDay < 12) {
+            meridiumString = context.getString(R.string.meridiem_field_before_12);
+        } else if (hourOfDay < 14) {
+            meridiumString = context.getString(R.string.meridiem_field_before_14);
+        } else if (hourOfDay < 18) {
+            meridiumString = context.getString(R.string.meridiem_field_before_18);
+        } else {
+            meridiumString = context.getString(R.string.meridiem_field_after_18);
+        }
+
         final SimpleDateFormat formatter = getFormatter();
         if (min == 0) {
-            formatter.applyPattern("h a");
+            formatter.applyPattern(context.getString(R.string.time_format_no_min, "\'" + meridiumString + "\'"));
         } else {
-            formatter.applyPattern("h:m a");
+            formatter.applyPattern(context.getString(R.string.time_format_with_min, "\'" + meridiumString + "\'"));
         }
         return formatter.format(new Date(time));
     }

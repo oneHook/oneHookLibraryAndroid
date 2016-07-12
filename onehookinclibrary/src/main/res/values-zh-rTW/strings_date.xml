@@ -6,5 +6,14 @@
     <string name="date_format_year">yyyy年M月d日</string>
     <string name="date_format_default">M月d日</string>
 
+    <string name="meridiem_field_before_5">淩晨</string>
+    <string name="meridiem_field_before_12">早上</string>
+    <string name="meridiem_field_before_14">中午</string>
+    <string name="meridiem_field_before_18">下午</string>
+    <string name="meridiem_field_after_18">晚上</string>
+
+    <string name="time_format_no_min">%1$sh点</string>
+    <string name="time_format_with_min">%1$sh点m分</string>
+
     <string name="time_interval_string">%1$s 到 %2$s</string>
 </resources>
