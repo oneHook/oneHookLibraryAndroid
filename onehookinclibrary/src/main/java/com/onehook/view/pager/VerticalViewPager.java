@@ -19,7 +19,12 @@ public class VerticalViewPager extends ViewPager {
 
     public VerticalViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setPageTransformer(false, new DefaultTransformer());
+        super.setPageTransformer(false, new DefaultTransformer());
+    }
+
+    @Override
+    public void setPageTransformer(boolean reverseDrawingOrder, PageTransformer transformer) {
+        throw new RuntimeException("Cannot change page transformer for vertical view pager");
     }
 
     private MotionEvent swapTouchEvent(MotionEvent event) {

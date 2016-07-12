@@ -38,7 +38,11 @@ public class PagerIndicator extends LinearLayout implements ViewPager.OnPageChan
     }
 
     private LinearLayout.LayoutParams obtainLayoutParams() {
-        final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        final int size = (int) getContext().getResources().getDimension(R.dimen.pager_indicator_default_length);
+        final int margin = (int) getContext().getResources().getDimension(R.dimen.common_margin_xsmall);
+        final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size, size);
+        lp.topMargin = margin;
+        lp.bottomMargin = margin;
         if (getOrientation() == LinearLayout.HORIZONTAL) {
             lp.gravity = Gravity.CENTER_VERTICAL;
         } else {
@@ -73,6 +77,7 @@ public class PagerIndicator extends LinearLayout implements ViewPager.OnPageChan
                 view.setLayoutParams(obtainLayoutParams());
                 addView(view);
             }
+            System.out.println("oneHook set view pager");
         }
     }
 
