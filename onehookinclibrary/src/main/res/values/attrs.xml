@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <declare-styleable name="OHPagerIndicator">
+        <attr name="oh_pager_indicator_selected_color" format="color|reference"></attr>
+        <attr name="oh_pager_indicator_default_color" format="color|reference"></attr>
+    </declare-styleable>
+
     <declare-styleable name="AnimatedProgressView">
-        <attr name="oh_progress_view_primary_color" format="color|reference"/>
-        <attr name="oh_progress_view_base_color" format="color|reference"/>
-        <attr name="oh_progress_view_text_color" format="color|reference"/>
-        <attr name="oh_progress_view_circile_background_color" format="color|reference"/>
-        <attr name="oh_progress_view_progress" format="float"/>
-        <attr name="oh_progress_view_bottom_ring_progress" format="float"/>
-        <attr name="oh_progress_view_stroke_ratio" format="float"/>
-        <attr name="oh_progress_view_show_percentage" format="boolean"/>
+        <attr name="oh_progress_view_primary_color" format="color|reference" />
+        <attr name="oh_progress_view_base_color" format="color|reference" />
+        <attr name="oh_progress_view_text_color" format="color|reference" />
+        <attr name="oh_progress_view_circile_background_color" format="color|reference" />
+        <attr name="oh_progress_view_progress" format="float" />
+        <attr name="oh_progress_view_bottom_ring_progress" format="float" />
+        <attr name="oh_progress_view_stroke_ratio" format="float" />
+        <attr name="oh_progress_view_show_percentage" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="AnimatedProgressBar">
-        <attr name="oh_progress_bar_primary_progress_color" format="color|reference"/>
-        <attr name="oh_progress_bar_secondary_progress_color" format="color|reference"/>
-        <attr name="oh_progress_bar_progress_base_color" format="color|reference"/>
-        <attr name="oh_progress_bar_primary_progress" format="float"/>
-        <attr name="oh_progress_bar_secondary_progress" format="float"/>
+        <attr name="oh_progress_bar_primary_progress_color" format="color|reference" />
+        <attr name="oh_progress_bar_secondary_progress_color" format="color|reference" />
+        <attr name="oh_progress_bar_progress_base_color" format="color|reference" />
+        <attr name="oh_progress_bar_primary_progress" format="float" />
+        <attr name="oh_progress_bar_secondary_progress" format="float" />
     </declare-styleable>
 
     <declare-styleable name="RecyclerViewPager">
