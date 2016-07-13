@@ -10,6 +10,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.onehook.util.color.ColorUtility;
+import com.onehook.widget.adapter.InfinitePagerAdapter;
 import com.onehookinc.androidlib.R;
 
 /**
@@ -50,17 +52,20 @@ public class OHPagerIndicator extends LinearLayout implements ViewPager.OnPageCh
     private DotDrawable[] mDotDrawables;
     private int mDefaultDotColor;
     private int mSelectedDotColor;
+    private int mRealItemCount;
 
     private LinearLayout.LayoutParams obtainLayoutParams() {
         final int size = (int) getContext().getResources().getDimension(R.dimen.pager_indicator_default_length);
         final int margin = (int) getContext().getResources().getDimension(R.dimen.common_margin_xsmall);
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size, size);
-        lp.topMargin = margin;
-        lp.bottomMargin = margin;
         if (getOrientation() == LinearLayout.HORIZONTAL) {
             lp.gravity = Gravity.CENTER_VERTICAL;
+            lp.leftMargin = margin;
+            lp.rightMargin = margin;
         } else {
             lp.gravity = Gravity.CENTER_HORIZONTAL;
+            lp.topMargin = margin;
+            lp.bottomMargin = margin;
         }
         return lp;
     }
@@ -81,7 +86,14 @@ public class OHPagerIndicator extends LinearLayout implements ViewPager.OnPageCh
             if (viewPager.getAdapter() == null) {
                 throw new RuntimeException("Set View pager's adapter before you call setViewPager");
             }
-            final int itemCount = viewPager.getAdapter().getCount();
+            final PagerAdapter adapter = viewPager.getAdapter();
+            if (adapter instanceof InfinitePagerAdapter<?>) {
+                mRealItemCount = ((InfinitePagerAdapter<?>) adapter).getWrappedPagerAdapter().getCount();
+            } else {
+                mRealItemCount = adapter.getCount();
+            }
+
+            final int itemCount = mRealItemCount;
             mDotDrawables = new DotDrawable[itemCount];
             mDots = new View[itemCount];
             for (int i = 0; i < itemCount; i++) {
@@ -111,13 +123,15 @@ public class OHPagerIndicator extends LinearLayout implements ViewPager.OnPageCh
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        final int adapterPosition = position;
+        position = position % mRealItemCount;
         mCurrentPage = position;
         mCurrentOffset = positionOffset;
         for (int i = 0; i < mDotDrawables.length; i++) {
             final boolean colorChanged;
             if (i == mCurrentPage) {
                 colorChanged = mDotDrawables[i].setColor(ColorUtility.getTransitionColor(mSelectedDotColor, mDefaultDotColor, 1 - mCurrentOffset));
-            } else if (i == mCurrentPage + 1) {
+            } else if (i == mCurrentPage + 1 || ((adapterPosition > mRealItemCount) && (i == (mCurrentPage + 1) % mRealItemCount))) {
                 colorChanged = mDotDrawables[i].setColor(ColorUtility.getTransitionColor(mSelectedDotColor, mDefaultDotColor, mCurrentOffset));
             } else {
                 colorChanged = mDotDrawables[i].setColor(mDefaultDotColor);

@@ -22,6 +22,10 @@ public class InfinitePagerAdapter<T extends PagerAdapter> extends PagerAdapter {
         mWrappedAdapterItemCount = mWrappedAdapter.getCount();
     }
 
+    public PagerAdapter getWrappedPagerAdapter() {
+        return mWrappedAdapter;
+    }
+
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return mWrappedAdapter.isViewFromObject(view, object);
