@@ -98,7 +98,6 @@ public class OHFlowLayout extends ViewGroup {
                 currentLineMaxHeight = 0;
                 currentLineX = 0;
             }
-
         }
 
         if (currentLineChildren.size() > 0) {
