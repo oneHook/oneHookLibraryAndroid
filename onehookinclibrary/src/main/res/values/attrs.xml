@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <declare-styleable name="OHPagerIndicator">
         <attr name="oh_pager_indicator_selected_color" format="color|reference"></attr>
         <attr name="oh_pager_indicator_default_color" format="color|reference"></attr>

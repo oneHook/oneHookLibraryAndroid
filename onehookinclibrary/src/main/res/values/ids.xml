@@ -2,6 +2,7 @@
 <resources>
 
     <item name="view_sizing_tag_key" type="id"></item>
+    <item name="view_layout_info_tag_key" type="id"></item>
     <item name="loading_adapter_view_tag_key" type="id"></item>
     <item name="recycler_view_pager_original_bottom_padding_key" type="id"></item>
 
