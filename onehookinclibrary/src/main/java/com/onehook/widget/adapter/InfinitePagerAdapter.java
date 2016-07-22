@@ -75,4 +75,11 @@ public class InfinitePagerAdapter<T extends PagerAdapter> extends PagerAdapter {
         }
         return mWrappedAdapterItemCount * (Integer.MAX_VALUE / mWrappedAdapterItemCount / 2);
     }
+
+    public int getMidPosition(final int index) {
+        if (mWrappedAdapterItemCount == 1) {
+            return 0;
+        }
+        return mWrappedAdapterItemCount * (Integer.MAX_VALUE / mWrappedAdapterItemCount / 2) + index;
+    }
 }

@@ -67,7 +67,6 @@ public class OHFlowLayout extends ViewGroup {
                     MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.UNSPECIFIED));
         }
         mMaximumWidth = MeasureSpec.getSize(widthMeasureSpec);
-        System.out.println("oneHook maximum width " + mMaximumWidth + " , " + this);
         calculateLayout();
 
     }
@@ -84,10 +83,6 @@ public class OHFlowLayout extends ViewGroup {
             final View child = getChildAt(i);
             final float childWidth = child.getMeasuredWidth();
             final float childHeight = child.getMeasuredHeight();
-
-
-            System.out.println("oneHook measured child width " + childWidth + " , height " + childHeight + " view " + child);
-
             if (currentLineX + mHorizontalSpacing + childWidth < mMaximumWidth || currentLineChildren.size() == 0) {
                 /* still in the same line */
                 currentLineMaxHeight = Math.max(currentLineMaxHeight, childHeight);
@@ -115,8 +110,6 @@ public class OHFlowLayout extends ViewGroup {
         } else {
             currentLineY -= mVerticalSpacing;
         }
-
-        System.out.println("oneHook measure width " + mMaximumWidth + " measured height " + currentLineY);
         setMeasuredDimension(mMaximumWidth, (int) currentLineY);
     }
 
