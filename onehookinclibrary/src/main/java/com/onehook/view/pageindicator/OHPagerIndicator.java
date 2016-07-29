@@ -77,6 +77,7 @@ public class OHPagerIndicator extends LinearLayout implements ViewPager.OnPageCh
             final TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.OHPagerIndicator);
             mDefaultDotColor = a.getColor(R.styleable.OHPagerIndicator_oh_pager_indicator_default_color, Color.WHITE);
             mSelectedDotColor = a.getColor(R.styleable.OHPagerIndicator_oh_pager_indicator_selected_color, Color.RED);
+            a.recycle();
         }
     }
 

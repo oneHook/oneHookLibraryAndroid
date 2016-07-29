@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <declare-styleable name="OHFlowLayout">
+        <attr name="oh_flow_layout_horizontal_margin" format="dimension|reference"></attr>
+        <attr name="oh_flow_layout_vertical_margin" format="dimension|reference"></attr>
+        <attr name="oh_flow_layout_align_type" format="enum">
+            <enum name="center" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="top" value="2" />
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="OHPagerIndicator">
         <attr name="oh_pager_indicator_selected_color" format="color|reference"></attr>
         <attr name="oh_pager_indicator_default_color" format="color|reference"></attr>

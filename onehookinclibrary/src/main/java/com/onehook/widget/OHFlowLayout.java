@@ -2,6 +2,7 @@ package com.onehook.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
@@ -57,6 +58,24 @@ public class OHFlowLayout extends ViewGroup {
         mAlignType = AlignType.CENTER;
         mHorizontalSpacing = 24;
         mVerticalSpacing = 24;
+        if (attrs != null) {
+            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.OHFlowLayout);
+            mHorizontalSpacing = (int) a.getDimension(R.styleable.OHFlowLayout_oh_flow_layout_horizontal_margin, mHorizontalSpacing);
+            mVerticalSpacing = (int) a.getDimension(R.styleable.OHFlowLayout_oh_flow_layout_vertical_margin, mVerticalSpacing);
+            final int type = a.getInt(R.styleable.OHFlowLayout_oh_flow_layout_align_type, 0);
+            switch (type) {
+                case 0:
+                    mAlignType = AlignType.CENTER;
+                    break;
+                case 1:
+                    mAlignType = AlignType.BOTTOM;
+                    break;
+                default:
+                    mAlignType = AlignType.TOP;
+                    break;
+            }
+            a.recycle();
+        }
     }
 
     @Override

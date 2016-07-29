@@ -129,15 +129,17 @@ public class RecyclerViewPager extends RecyclerView {
      * @param defStyle defined style
      */
     private void initAttrs(Context context, AttributeSet attrs, int defStyle) {
-        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RecyclerViewPager, defStyle,
-                0);
-        mFlingFactor = a.getFloat(R.styleable.RecyclerViewPager_oh_flingFactor, mFlingFactor);
-        mTriggerOffset = a.getFloat(R.styleable.RecyclerViewPager_oh_triggerOffset, mTriggerOffset);
-        mSinglePageFling = a.getBoolean(R.styleable.RecyclerViewPager_oh_singlePageFling, mSinglePageFling);
-        mOverlapRatio = a.getFloat(R.styleable.RecyclerViewPager_oh_overlap_ratio, mOverlapRatio);
-        mOverlapAmount = a.getDimension(R.styleable.RecyclerViewPager_oh_overlap_amount, mOverlapAmount);
-        mShouldFillLastItem = a.getBoolean(R.styleable.RecyclerViewPager_oh_last_item_fully_fill, mShouldFillLastItem);
-        a.recycle();
+        if(attrs != null) {
+            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RecyclerViewPager, defStyle,
+                    0);
+            mFlingFactor = a.getFloat(R.styleable.RecyclerViewPager_oh_flingFactor, mFlingFactor);
+            mTriggerOffset = a.getFloat(R.styleable.RecyclerViewPager_oh_triggerOffset, mTriggerOffset);
+            mSinglePageFling = a.getBoolean(R.styleable.RecyclerViewPager_oh_singlePageFling, mSinglePageFling);
+            mOverlapRatio = a.getFloat(R.styleable.RecyclerViewPager_oh_overlap_ratio, mOverlapRatio);
+            mOverlapAmount = a.getDimension(R.styleable.RecyclerViewPager_oh_overlap_amount, mOverlapAmount);
+            mShouldFillLastItem = a.getBoolean(R.styleable.RecyclerViewPager_oh_last_item_fully_fill, mShouldFillLastItem);
+            a.recycle();
+        }
     }
 
     public void setFlingFactor(float flingFactor) {
