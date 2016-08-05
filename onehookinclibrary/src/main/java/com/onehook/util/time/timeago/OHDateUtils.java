@@ -71,4 +71,36 @@ public class OHDateUtils extends DateUtils {
         final String end = getTimeString(context, endTime);
         return context.getString(R.string.time_interval_string, start, end);
     }
+
+    public static int getTodayWeekdayNormalized() {
+        final Calendar calendar = Calendar.getInstance();
+        final int weekday = calendar.get(Calendar.DAY_OF_WEEK);
+        switch (weekday) {
+            case Calendar.SUNDAY:
+                return 0;
+            case Calendar.MONDAY:
+                return 1;
+            case Calendar.TUESDAY:
+                return 2;
+            case Calendar.WEDNESDAY:
+                return 3;
+            case Calendar.THURSDAY:
+                return 4;
+            case Calendar.FRIDAY:
+                return 5;
+            case Calendar.SATURDAY:
+                return 6;
+            default:
+                return 0;
+        }
+    }
+
+    private static String[] sWeekdayStrings = null;
+
+    public static final String getWeekdayString(final int normalizedWeekday, final Context context) {
+        if (sWeekdayStrings == null) {
+            sWeekdayStrings = context.getResources().getStringArray(R.array.date_weekdays);
+        }
+        return sWeekdayStrings[normalizedWeekday];
+    }
 }

@@ -17,4 +17,14 @@
 
     <string name="time_interval_string">%1$s - %2$s</string>
 
+    <string-array name="date_weekdays">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
 </resources>
