@@ -20,11 +20,6 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         BaseWrappedRecyclerViewAdapter<T> implements OnClickListener {
 
     /**
-     * Is loading enabled.
-     */
-    private boolean mLoadingEnabled;
-
-    /**
      * If the loading is triggered by clicking or auto.
      */
     private boolean mAutoTriggerLoading;
@@ -95,7 +90,6 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
      */
     public RecyclerViewLoadingAdapter(T wrappedAdapter) {
         super(wrappedAdapter);
-        mLoadingEnabled = true;
         mAutoTriggerLoading = true;
         setDataObserver(mObserver);
     }
@@ -181,19 +175,6 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
     }
 
     /**
-     * Set true if there is more to load.
-     *
-     * @param enabled
-     */
-    public void setLoading(boolean enabled) {
-        boolean before = mLoadingEnabled;
-        mLoadingEnabled = enabled;
-        if (before && before != enabled) {
-            notifyItemChanged(getItemCount() - 1);
-        }
-    }
-
-    /**
      * @param message
      */
     public void setLoadMoreText(final String message) {
@@ -216,7 +197,6 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
      */
     public void setEndOfPage(final String customMessage) {
         mAutoTriggerLoading = false;
-        mLoadingEnabled = false;
         mCustomLoadMoreTextMessage = customMessage;
         notifyItemChanged(getItemCount() - 1);
     }
