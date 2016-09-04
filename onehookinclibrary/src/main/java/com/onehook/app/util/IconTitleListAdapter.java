@@ -1,5 +1,6 @@
 package com.onehook.app.util;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,11 @@ public class IconTitleListAdapter extends BaseAdapter {
 
     private CharSequence[] mTitles;
 
-    public IconTitleListAdapter(final int[] drawables, final int[] titles) {
+    /**
+     * @param drawables
+     * @param titles
+     */
+    public IconTitleListAdapter(@NonNull final int[] drawables, @NonNull final int[] titles) {
         mDrawablesRes = drawables;
         mTitlesRes = titles;
         mTitles = null;
@@ -58,7 +63,11 @@ public class IconTitleListAdapter extends BaseAdapter {
     }
 
 
-    public IconTitleListAdapter(final int[] drawables, final CharSequence[] titles) {
+    /**
+     * @param drawables
+     * @param titles
+     */
+    public IconTitleListAdapter(@NonNull final int[] drawables, @NonNull final CharSequence[] titles) {
         mDrawablesRes = drawables;
         mTitles = titles;
         mTitlesRes = null;
