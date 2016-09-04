@@ -35,15 +35,33 @@ public class IconTitleListAdapter extends BaseAdapter {
             mTitleView.setText(titleRes);
         }
 
+        public void bind(final int drawableRes, final CharSequence title) {
+            mIconView.setImageResource(drawableRes);
+            mTitleView.setText(title);
+        }
+
     }
 
     private int[] mDrawablesRes;
 
     private int[] mTitlesRes;
 
+    private CharSequence[] mTitles;
+
     public IconTitleListAdapter(final int[] drawables, final int[] titles) {
         mDrawablesRes = drawables;
         mTitlesRes = titles;
+        mTitles = null;
+        if (drawables.length != titles.length) {
+            throw new RuntimeException("Two array must be equal length");
+        }
+    }
+
+
+    public IconTitleListAdapter(final int[] drawables, final CharSequence[] titles) {
+        mDrawablesRes = drawables;
+        mTitles = titles;
+        mTitlesRes = null;
         if (drawables.length != titles.length) {
             throw new RuntimeException("Two array must be equal length");
         }
@@ -72,7 +90,11 @@ public class IconTitleListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        holder.bind(mDrawablesRes[i], mTitlesRes[i]);
+        if (mTitles == null) {
+            holder.bind(mDrawablesRes[i], mTitlesRes[i]);
+        } else {
+            holder.bind(mDrawablesRes[i], mTitles[i]);
+        }
         return holder.itemView;
     }
 }

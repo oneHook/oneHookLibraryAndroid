@@ -280,7 +280,6 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
 
         /* button 1 is optinal */
         if (button1 != null) {
-
             builder.setPositiveButton(button1, new DialogInterface.OnClickListener() {
 
                 @Override
@@ -308,9 +307,23 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
                 }
             });
         }
-        /* selectable items are optional */
-        if (selectableItems != null) {
-            builder.setItems(selectableItems, new DialogInterface.OnClickListener() {
+        if (selectableItems != null && selectableItemIconsRes != null) {
+            /* has strings and icons */
+            builder.setAdapter(new IconTitleListAdapter(selectableItemIconsRes, selectableItems),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (mCallback == null) {
+                                return;
+                            }
+                            mCallback.onAlertDialogFragmentButtonClicked(i, getTag(), attachedObject);
+                            mCallback = null;
+                        }
+                    });
+        } else if (selectableItemIconsRes != null && selectableItemsRes != null) {
+        /* selectable items res and icons are optional */
+            builder.setAdapter(new IconTitleListAdapter(selectableItemIconsRes, selectableItemsRes),
+                    new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (mCallback == null) {
@@ -320,9 +333,9 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
                     mCallback = null;
                 }
             });
-        } else if (selectableItemIconsRes != null && selectableItemsRes != null) {
-        /* selectable items res and icons are optional */
-            builder.setAdapter(new IconTitleListAdapter(selectableItemsRes, selectableItemIconsRes), new DialogInterface.OnClickListener() {
+        } else if (selectableItems != null) {
+            /* only strings */
+            builder.setItems(selectableItems, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (mCallback == null) {
