@@ -69,7 +69,7 @@ public class IconTitleListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mTitlesRes.length;
+        return mDrawablesRes.length;
     }
 
     @Override
