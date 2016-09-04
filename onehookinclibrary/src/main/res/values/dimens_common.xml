@@ -4,8 +4,9 @@
     <dimen name="pager_indicator_default_length">8dp</dimen>
 
     <!-- Common margins -->
-    <dimen name="common_margin_xxsmall">2dp</dimen>
-    <dimen name="common_margin_xsmall">4dp</dimen>
+    <dimen name="common_margin_xxxsmall">2dp</dimen>
+    <dimen name="common_margin_xxsmall">4dp</dimen>
+    <dimen name="common_margin_xsmall">6dp</dimen>
     <dimen name="common_margin_small">8dp</dimen>
     <dimen name="common_margin_medium">12dp</dimen>
     <dimen name="common_margin_large">16dp</dimen>

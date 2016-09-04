@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 
+import com.onehook.app.util.IconTitleListAdapter;
 import com.onehookinc.androidlib.R;
 
 import java.io.Serializable;
@@ -51,6 +52,10 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
 
     private static final String ARG_SELECTABLE_ITEMS = "selectableItems";
 
+    private static final String ARG_SELECTABLE_ITEM_ICONS_RES = "selectableItemIconsRes";
+
+    private static final String ARG_SELECTABLE_ITEMS_RES = "selectableItemsRes";
+
     private static final String ARG_OBJECT_S = "objectS";
 
     private static final String ARG_OBJECT_P = "objectP";
@@ -75,6 +80,10 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
         Serializable mObjectS;
 
         Parcelable mObjectP;
+
+        int[] mSelectableItemsRes;
+
+        int[] mSelectableItemIconsRes;
 
         CharSequence[] mSelectableItems;
 
@@ -108,6 +117,16 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
 
         public OHCompactAlertDialogFragmentBuilder button2Text(final int res) {
             mButton2Text = mRes.getString(res);
+            return this;
+        }
+
+        public OHCompactAlertDialogFragmentBuilder selectableItemIconsRes(final int[] icons) {
+            mSelectableItemIconsRes = icons;
+            return this;
+        }
+
+        public OHCompactAlertDialogFragmentBuilder selectableItemsRes(final int[] items) {
+            mSelectableItemsRes = items;
             return this;
         }
 
@@ -168,9 +187,11 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
         private OHCompactAlertDialogFragment show(FragmentManager manager, final String tag, final boolean allowStateLoss) {
             final OHCompactAlertDialogFragment fragment;
             if (mObjectP == null) {
-                fragment = OHCompactAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text, mSelectableItems, mObjectS, mCancelable);
+                fragment = OHCompactAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text,
+                        mSelectableItems, mSelectableItemsRes, mSelectableItemIconsRes, mObjectS, mCancelable);
             } else {
-                fragment = OHCompactAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text, mSelectableItems, mObjectP, mCancelable);
+                fragment = OHCompactAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text,
+                        mSelectableItems, mSelectableItemsRes, mSelectableItemIconsRes, mObjectP, mCancelable);
             }
             final FragmentTransaction ft = manager.beginTransaction();
             ft.add(fragment, tag);
@@ -185,18 +206,23 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
 
 
     /**
-     * @param tag        tag of this dialog. can be used to identify the dialog
-     * @param title      title res id
-     * @param text       message res id
-     * @param button1    button 1 text res id (on the right)
-     * @param button2    button 2 text res id (on the left)
-     * @param object     additional serialized  object
-     * @param cancelable is dialog is cancelable when tapped outside
+     * @param tag                    tag of this dialog. can be used to identify the dialog
+     * @param title                  title res id
+     * @param text                   message res id
+     * @param button1                button 1 text res id (on the right)
+     * @param button2                button 2 text res id (on the left)
+     * @param selectableItems
+     * @param selectableItemsRes
+     * @param selectableItemIconsRes
+     * @param object                 additional serialized  object
+     * @param cancelable             is dialog is cancelable when tapped outside
      * @return a new alert dialog fragment
      */
     private static OHCompactAlertDialogFragment newInstance(final String tag, final String title,
                                                             final String text, final String button1, final String button2,
                                                             final CharSequence[] selectableItems,
+                                                            final int[] selectableItemsRes,
+                                                            final int[] selectableItemIconsRes,
                                                             final Object object, final boolean cancelable) {
         final OHCompactAlertDialogFragment frag = new OHCompactAlertDialogFragment();
         frag.setCancelable(true);
@@ -207,6 +233,8 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
         args.putString(ARG_BUTTON2, button2);
         args.putString(ARG_TEXT, text);
         args.putCharSequenceArray(ARG_SELECTABLE_ITEMS, selectableItems);
+        args.putIntArray(ARG_SELECTABLE_ITEM_ICONS_RES, selectableItemIconsRes);
+        args.putIntArray(ARG_SELECTABLE_ITEMS_RES, selectableItemsRes);
         if (object != null) {
             if (object instanceof Parcelable) {
                 args.putParcelable(ARG_OBJECT_P, (Parcelable) object);
@@ -229,11 +257,14 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final String title = getArguments().getString(ARG_TITLE);
-        final String button1 = getArguments().getString(ARG_BUTTON1);
-        final String button2 = getArguments().getString(ARG_BUTTON2);
-        final String text = getArguments().getString(ARG_TEXT);
-        final CharSequence[] selectableItems = getArguments().getCharSequenceArray(ARG_SELECTABLE_ITEMS);
+        final Bundle arguments = getArguments();
+        final String title = arguments.getString(ARG_TITLE);
+        final String button1 = arguments.getString(ARG_BUTTON1);
+        final String button2 = arguments.getString(ARG_BUTTON2);
+        final String text = arguments.getString(ARG_TEXT);
+        final CharSequence[] selectableItems = arguments.getCharSequenceArray(ARG_SELECTABLE_ITEMS);
+        final int[] selectableItemsRes = arguments.getIntArray(ARG_SELECTABLE_ITEMS_RES);
+        final int[] selectableItemIconsRes = arguments.getIntArray(ARG_SELECTABLE_ITEM_ICONS_RES);
         final Object attachedObject;
         if (getArguments().containsKey(ARG_OBJECT_S)) {
             attachedObject = getArguments().getSerializable(ARG_OBJECT_S);
@@ -280,6 +311,18 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
         /* selectable items are optional */
         if (selectableItems != null) {
             builder.setItems(selectableItems, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (mCallback == null) {
+                        return;
+                    }
+                    mCallback.onAlertDialogFragmentButtonClicked(i, getTag(), attachedObject);
+                    mCallback = null;
+                }
+            });
+        } else if (selectableItemIconsRes != null && selectableItemsRes != null) {
+        /* selectable items res and icons are optional */
+            builder.setAdapter(new IconTitleListAdapter(selectableItemsRes, selectableItemIconsRes), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (mCallback == null) {
