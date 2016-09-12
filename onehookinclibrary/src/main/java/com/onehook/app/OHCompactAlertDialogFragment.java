@@ -177,11 +177,17 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
         }
 
         public OHCompactAlertDialogFragment show(FragmentManager manager, final String tag) {
-            return show(manager, tag, false);
+            if(manager.findFragmentByTag(tag) == null) {
+                return show(manager, tag, false);
+            }
+            return (OHCompactAlertDialogFragment) manager.findFragmentByTag(tag);
         }
 
         public OHCompactAlertDialogFragment showAllowingStateLoss(FragmentManager manager, final String tag) {
-            return show(manager, tag, true);
+            if(manager.findFragmentByTag(tag) == null) {
+                return show(manager, tag, true);
+            }
+            return (OHCompactAlertDialogFragment) manager.findFragmentByTag(tag);
         }
 
         private OHCompactAlertDialogFragment show(FragmentManager manager, final String tag, final boolean allowStateLoss) {
