@@ -6,6 +6,7 @@ import android.graphics.PointF;
 import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,8 @@ public class RecyclerViewPager extends RecyclerView {
         void onRecyclerViewPagerScroll(final RecyclerViewPager pager, final float yOffset, final int currentChildIndex, final float progress);
 
         void onRecyclerViewPagerScrollEnd(final RecyclerViewPager pager, final float yOffset, final int currentChildIndex, final float progress);
+
+        void onRecyclerViewOverScroll(final RecyclerViewPager pager, final float overScrollYOffset, final boolean scrollScrollEnd);
     }
 
     public static final boolean DEBUG = BuildConfig.DEBUG;
@@ -43,7 +46,7 @@ public class RecyclerViewPager extends RecyclerView {
     /**
      * Current scroll content offset y.
      */
-    private float mCurrentScrollY;
+    private float mCurrentScrollY = 0;
 
     /**
      * Adapter wrapper.
@@ -76,6 +79,8 @@ public class RecyclerViewPager extends RecyclerView {
     private boolean mSinglePageFling;
 
     boolean mNeedAdjust;
+
+    private float mVerticalOverScrollStartY;
 
     int mFisrtLeftWhenDragging;
 
@@ -121,6 +126,7 @@ public class RecyclerViewPager extends RecyclerView {
         super(context, attrs, defStyle);
         initAttrs(context, attrs, defStyle);
         setNestedScrollingEnabled(false);
+        mVerticalOverScrollStartY = Float.MIN_VALUE;
     }
 
     /**
@@ -129,7 +135,7 @@ public class RecyclerViewPager extends RecyclerView {
      * @param defStyle defined style
      */
     private void initAttrs(Context context, AttributeSet attrs, int defStyle) {
-        if(attrs != null) {
+        if (attrs != null) {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RecyclerViewPager, defStyle,
                     0);
             mFlingFactor = a.getFloat(R.styleable.RecyclerViewPager_oh_flingFactor, mFlingFactor);
@@ -208,9 +214,12 @@ public class RecyclerViewPager extends RecyclerView {
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == SCROLL_STATE_IDLE) {
+
                 final int childHeight = getHeight() - getPaddingTop() - getPaddingBottom() - getOverlapOffset();
+                mCurrentScrollY = getCurrentPosition() * childHeight;
                 final float currentChildIndexRaw = mCurrentScrollY / childHeight;
                 final int currentChildIndex = (int) currentChildIndexRaw;
+
                 final float progress = currentChildIndexRaw - currentChildIndex;
                 if (mPagerScrollListener != null && mPagerScrollListener.get() != null) {
                     mPagerScrollListener.get().onRecyclerViewPagerScrollEnd(RecyclerViewPager.this, mCurrentScrollY, currentChildIndex, progress);
@@ -222,15 +231,11 @@ public class RecyclerViewPager extends RecyclerView {
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             final int childHeight = getHeight() - getPaddingTop() - getPaddingBottom() - getOverlapOffset();
-            if (dy == 0) {
-                mCurrentScrollY = getCurrentPosition() * childHeight;
-            } else {
-                mCurrentScrollY += dy;
-            }
-
+            mCurrentScrollY += dy;
             final float currentChildIndexRaw = mCurrentScrollY / childHeight;
             final int currentChildIndex = (int) currentChildIndexRaw;
             final float progress = currentChildIndexRaw - currentChildIndex;
+
             if (mPagerScrollListener != null && mPagerScrollListener.get() != null) {
                 mPagerScrollListener.get().onRecyclerViewPagerScroll(RecyclerViewPager.this, mCurrentScrollY, currentChildIndex, progress);
             }
@@ -531,6 +536,7 @@ public class RecyclerViewPager extends RecyclerView {
         return super.dispatchTouchEvent(ev);
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         /*
@@ -544,7 +550,60 @@ public class RecyclerViewPager extends RecyclerView {
                 mMinTopWhenDragging = Math.min(mCurView.getTop(), mMinTopWhenDragging);
             }
         }
+
+        final int action = e.getAction();
+        final float currentY = e.getY();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (!canChildScrollDown()) {
+                    if (mVerticalOverScrollStartY == Float.MIN_VALUE) {
+                        mVerticalOverScrollStartY = e.getY();
+                    }
+
+                    if (mPagerScrollListener != null && mPagerScrollListener.get() != null) {
+                        mPagerScrollListener.get().onRecyclerViewOverScroll(this, (currentY - mVerticalOverScrollStartY), false);
+                    }
+                } else if (mVerticalOverScrollStartY != Float.MIN_VALUE) {
+                    if (mPagerScrollListener != null && mPagerScrollListener.get() != null) {
+                        mPagerScrollListener.get().onRecyclerViewOverScroll(this, (currentY - mVerticalOverScrollStartY), true);
+                    }
+                    mVerticalOverScrollStartY = Float.MIN_VALUE;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                if (mVerticalOverScrollStartY != Float.MIN_VALUE) {
+                    if (mPagerScrollListener != null && mPagerScrollListener.get() != null) {
+                        mPagerScrollListener.get().onRecyclerViewOverScroll(this, (currentY - mVerticalOverScrollStartY), true);
+                    }
+                }
+                mVerticalOverScrollStartY = Float.MIN_VALUE;
+                break;
+        }
         return super.onTouchEvent(e);
+    }
+
+    /**
+     * @return Whether it is possible for the child view of this layout to
+     * scroll down. Override this if the child view is a custom view.
+     */
+    public boolean canChildScrollDown() {
+        return ViewCompat.canScrollVertically(this, 1);
+    }
+
+    /**
+     * @return Whether it is possible for the child view of this layout to
+     * scroll up. Override this if the child view is a custom view.
+     */
+    public boolean canChildScrollUp() {
+        return ViewCompat.canScrollVertically(this, -1);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent e) {
+        return super.onInterceptTouchEvent(e);
     }
 
     @Override

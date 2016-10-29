@@ -2,6 +2,8 @@ package com.onehook.util.device;
 
 import android.os.Build;
 
+import java.util.UUID;
+
 /**
  * Created by EagleDiao on 2016-06-15.
  */
@@ -19,6 +21,10 @@ public class DeviceUtility {
 
     private DeviceUtility() {
 
+    }
+
+    public String generateDeviceID() {
+        return UUID.randomUUID().toString();
     }
 
     public String getDeviceName() {
