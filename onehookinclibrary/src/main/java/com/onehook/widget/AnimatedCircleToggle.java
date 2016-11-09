@@ -1,5 +1,6 @@
 package com.onehook.widget;
 
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -18,6 +19,8 @@ public class AnimatedCircleToggle extends View {
      * Main paint. for drawing progress base, and progress bar.
      */
     private Paint mPaint;
+
+    private float progress;
 
     public AnimatedCircleToggle(Context context) {
         super(context);
@@ -71,8 +74,27 @@ public class AnimatedCircleToggle extends View {
 
         mPaint.setStyle(Paint.Style.FILL);
 
-        canvas.drawCircle(width / 2, height / 2, selectionDotRadius, mPaint);
+        canvas.drawCircle(width / 2, height / 2, selectionDotRadius * progress, mPaint);
+    }
 
+    public void setToogleOn(final boolean toogleOn, final boolean animated) {
+        if (animated) {
+            final ObjectAnimator animation = ObjectAnimator.ofFloat(this, "progress", this.progress, toogleOn ? 1f : 0);
+            animation.setDuration(200);
+            animation.start();
+        } else {
+            this.progress = toogleOn ? 1 : 0;
+            invalidate();
+        }
+    }
+
+    public void setProgress(final float progress) {
+        this.progress = progress;
+        invalidate();
+    }
+
+    public float getProgress() {
+        return this.progress;
     }
 
 }
