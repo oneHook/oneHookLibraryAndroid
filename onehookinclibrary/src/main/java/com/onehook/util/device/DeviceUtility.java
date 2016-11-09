@@ -32,5 +32,4 @@ public class DeviceUtility {
     public String getDevicePlatformVersion() {
         return String.format("%s (%d)", Build.VERSION.CODENAME, Build.VERSION.SDK_INT);
     }
-
 }

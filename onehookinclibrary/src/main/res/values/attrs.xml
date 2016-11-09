@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="VerticalSeekBar">
+        <attr name="onlyThumb" format="boolean"/>
+        <attr name="customThumb" format="reference"/>
+    </declare-styleable>
+
+
     <declare-styleable name="OHFlowLayout">
         <attr name="oh_flow_layout_horizontal_margin" format="dimension|reference"></attr>
         <attr name="oh_flow_layout_vertical_margin" format="dimension|reference"></attr>

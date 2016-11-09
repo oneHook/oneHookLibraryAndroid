@@ -59,4 +59,11 @@ public class StringUtil {
         return isValid;
     }
 
+    public static String capitalize(final String str) {
+        if (StringUtil.isEmpty(str)) {
+            return "";
+        }
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
 }
