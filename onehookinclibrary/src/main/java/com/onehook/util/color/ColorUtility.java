@@ -30,4 +30,10 @@ public class ColorUtility {
         degree = 1 - degree;
         return Color.rgb((int) (r * degree), (int) (g * degree), (int) (b * degree));
     }
+
+    public static int getWhiteColor(final float degree) {
+        int comp = (int) (255 * degree);
+        return Color.rgb(comp, comp, comp);
+    }
+
 }
