@@ -61,8 +61,14 @@ public class FlipperView extends FrameLayout {
                 0, 0);
 
         int viewRes = customAttr.getResourceId(R.styleable.FlipperView_viewRes, 0);
+        mBottomTranslationY = customAttr.getDimension(R.styleable.FlipperView_bottomPageTranslationY, 0);
+        mBottomScale = customAttr.getFloat(R.styleable.FlipperView_bottomPageScale, 1);
         commonInit(viewRes);
     }
+
+    private float mBottomTranslationY;
+
+    private float mBottomScale;
 
     private View mFrontPage;
 
@@ -77,9 +83,9 @@ public class FlipperView extends FrameLayout {
         addView(mBottomPage);
         addView(mFrontPage);
 
-        mBottomPage.setTranslationY(25);
-        mBottomPage.setScaleX(0.98f);
-        mBottomPage.setScaleY(0.98f);
+        mBottomPage.setTranslationY(mBottomTranslationY);
+        mBottomPage.setScaleX(mBottomScale);
+        mBottomPage.setScaleY(mBottomScale);
     }
 
     public void setCallback(final FlipperViewCallback callback) {
@@ -124,9 +130,9 @@ public class FlipperView extends FrameLayout {
     private void doFlip() {
         mBottomPage.bringToFront();
         mFrontPage.setTranslationX(0);
-        ObjectAnimator bottomMoveDownAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationY", 25);
-        ObjectAnimator bottomScaleXAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleX", 0.98f);
-        ObjectAnimator bottomScaleYAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleY", 0.98f);
+        ObjectAnimator bottomMoveDownAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationY", mBottomTranslationY);
+        ObjectAnimator bottomScaleXAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleX", mBottomScale);
+        ObjectAnimator bottomScaleYAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleY", mBottomScale);
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(bottomMoveDownAnimator, bottomScaleXAnimator, bottomScaleYAnimator);
         animatorSet.setDuration(ANIMATION_DURATION);
