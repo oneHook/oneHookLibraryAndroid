@@ -80,9 +80,9 @@ public class AnimatedProgressBar extends View {
     protected void onDraw(final Canvas canvas) {
         final float width = getMeasuredWidth();
         final float height = getMeasuredHeight();
-        final float baseThickness = height * 0.9f;
-        final float progressThickness = height * 0.7f;
-        final float progressXOffset = height * 0.1f;
+        final float baseThickness = height * 0.85f;
+        final float progressThickness = height * 0.6f;
+        final float progressXOffset = height * 0.15f;
 
         mPaint.setColor(Color.TRANSPARENT);
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);

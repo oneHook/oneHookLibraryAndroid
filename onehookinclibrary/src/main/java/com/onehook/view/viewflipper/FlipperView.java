@@ -101,8 +101,6 @@ public class FlipperView extends FrameLayout {
     }
 
     public void flipPage() {
-        System.out.println("OptimityDebug FLIP PAGE");
-
         ObjectAnimator frontMoveLeftAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationX", -mFrontPage.getMeasuredWidth());
         ObjectAnimator bottomMoveUpAnimator = ObjectAnimator.ofFloat(mBottomPage, "translationY", 0);
         ObjectAnimator bottomScaleXAnimator = ObjectAnimator.ofFloat(mBottomPage, "scaleX", 1);
@@ -113,13 +111,10 @@ public class FlipperView extends FrameLayout {
         animatorSet.addListener(new AnimationEndListener() {
             @Override
             public void onAnimationEndOrCanceled(Animator animation) {
-
-                System.out.println("OptimityDebug Page flipped");
-
                 if (mCallback != null) {
                     final boolean hasNextPage = mCallback.onWillPresentNextBottomPage(mFrontPage);
                     if (hasNextPage) {
-                        doFlip();
+                        doSwap();
                     }
                 }
             }
@@ -127,7 +122,7 @@ public class FlipperView extends FrameLayout {
         animatorSet.start();
     }
 
-    private void doFlip() {
+    private void doSwap() {
         mBottomPage.bringToFront();
         mFrontPage.setTranslationX(0);
         ObjectAnimator bottomMoveDownAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationY", mBottomTranslationY);

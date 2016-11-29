@@ -138,7 +138,7 @@ public class AnimatedProgressView extends View {
         mPaint = new Paint();
         mPaint.setColor(mProgressColor);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setStrokeCap(Paint.Cap.SQUARE);
         mPaint.setAntiAlias(true);
 
         mProgressRect = new RectF();
@@ -152,17 +152,22 @@ public class AnimatedProgressView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+
+        System.out.println("OptimityDebug onsize changed " + w + " , " + h);
+
         final float length = Math.min(w, h);
         final float strokeWidth = length * mProgressRingStrokeRatio;
         mRadius = length / 2 - strokeWidth;
         final float textSize = mRadius / 2;
 
         mPaint.setStrokeWidth(strokeWidth);
-        mProgressRect.left = w / 2 - mRadius;
-        mProgressRect.top = h / 2 - mRadius;
-        mProgressRect.right = w / 2 + mRadius;
-        mProgressRect.bottom = h / 2 + mRadius;
+        mProgressRect.left = length / 2 -  mRadius - strokeWidth / 2;
+        mProgressRect.top = length / 2 - mRadius - strokeWidth / 2;
+        mProgressRect.right = length / 2 + mRadius + strokeWidth / 2;
+        mProgressRect.bottom = length / 2 + mRadius + strokeWidth / 2;
         mTextPaint.setTextSize(textSize);
+
+        invalidate();
     }
 
     @Override
@@ -172,7 +177,7 @@ public class AnimatedProgressView extends View {
 
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mCircleBackgroundColor);
-        canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, mRadius, mPaint);
+        canvas.drawCircle(getMeasuredWidth(), getMeasuredHeight(), mRadius, mPaint);
 
         /* Draw base first */
         mPaint.setStyle(Paint.Style.STROKE);
