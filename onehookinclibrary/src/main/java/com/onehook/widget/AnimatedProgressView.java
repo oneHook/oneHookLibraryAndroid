@@ -161,10 +161,10 @@ public class AnimatedProgressView extends View {
         final float textSize = mRadius / 2;
 
         mPaint.setStrokeWidth(strokeWidth);
-        mProgressRect.left = length / 2 -  mRadius - strokeWidth / 2;
-        mProgressRect.top = length / 2 - mRadius - strokeWidth / 2;
-        mProgressRect.right = length / 2 + mRadius + strokeWidth / 2;
-        mProgressRect.bottom = length / 2 + mRadius + strokeWidth / 2;
+        mProgressRect.left = w / 2 -  mRadius - strokeWidth / 2;
+        mProgressRect.top = h / 2 - mRadius - strokeWidth / 2;
+        mProgressRect.right = w / 2 + mRadius + strokeWidth / 2;
+        mProgressRect.bottom = h / 2 + mRadius + strokeWidth / 2;
         mTextPaint.setTextSize(textSize);
 
         invalidate();
@@ -177,7 +177,7 @@ public class AnimatedProgressView extends View {
 
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mCircleBackgroundColor);
-        canvas.drawCircle(getMeasuredWidth(), getMeasuredHeight(), mRadius, mPaint);
+        canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, mRadius, mPaint);
 
         /* Draw base first */
         mPaint.setStyle(Paint.Style.STROKE);
