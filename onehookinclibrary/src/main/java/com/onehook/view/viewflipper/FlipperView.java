@@ -100,8 +100,8 @@ public class FlipperView extends FrameLayout {
         return mBottomPage;
     }
 
-    public void flipPage() {
-        ObjectAnimator frontMoveLeftAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationX", -mFrontPage.getMeasuredWidth());
+    public void flipPage(final boolean swipeLeft) {
+        ObjectAnimator frontMoveLeftAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationX", swipeLeft ? -mFrontPage.getMeasuredWidth() : mFrontPage.getMeasuredWidth());
         ObjectAnimator bottomMoveUpAnimator = ObjectAnimator.ofFloat(mBottomPage, "translationY", 0);
         ObjectAnimator bottomScaleXAnimator = ObjectAnimator.ofFloat(mBottomPage, "scaleX", 1);
         ObjectAnimator bottomScaleYAnimator = ObjectAnimator.ofFloat(mBottomPage, "scaleY", 1);
@@ -116,6 +116,8 @@ public class FlipperView extends FrameLayout {
                     if (hasNextPage) {
                         doSwap();
                     }
+                } else {
+                    doSwap();
                 }
             }
         });
