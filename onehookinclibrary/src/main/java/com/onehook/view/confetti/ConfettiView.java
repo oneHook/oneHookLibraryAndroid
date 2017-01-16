@@ -23,7 +23,7 @@ import java.util.Collection;
  */
 public class ConfettiView extends ViewGroup {
 
-    private static final long MINIMUM_DURATION = 2000;
+    private static final long MINIMUM_DURATION = 1500;
 
     private static final long MAXIMUM_DURATION = 3000;
 
@@ -161,7 +161,7 @@ public class ConfettiView extends ViewGroup {
     }
 
     private long generateRandomDelay(final int index) {
-        return (long) ((index / mConfettiDelayRatio) * 500);
+        return (long) ((Math.random()* mConfettiDelayRatio) * 500);
     }
 
     private int generateEndingX() {
