@@ -235,7 +235,6 @@ public class RecyclerViewPager extends RecyclerView {
             final float currentChildIndexRaw = mCurrentScrollY / childHeight;
             final int currentChildIndex = (int) currentChildIndexRaw;
             final float progress = currentChildIndexRaw - currentChildIndex;
-
             if (mPagerScrollListener != null && mPagerScrollListener.get() != null) {
                 mPagerScrollListener.get().onRecyclerViewPagerScroll(RecyclerViewPager.this, mCurrentScrollY, currentChildIndex, progress);
             }
