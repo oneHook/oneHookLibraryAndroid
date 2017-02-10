@@ -9,6 +9,7 @@
     <dimen name="common_margin_xsmall">6dp</dimen>
     <dimen name="common_margin_small">8dp</dimen>
     <dimen name="common_margin_medium">12dp</dimen>
+    <dimen name="common_margin_medium_plus">18dp</dimen>
     <dimen name="common_margin_large">16dp</dimen>
     <dimen name="common_margin_xlarge">32dp</dimen>
     <dimen name="common_margin_xxlarge">64dp</dimen>
