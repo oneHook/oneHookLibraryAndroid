@@ -19,13 +19,20 @@ import java.util.List;
 
 public class OHFlowLayout extends ViewGroup {
 
-    public enum AlignType {
+    public enum VerticalAlignType {
         TOP,
         BOTTOM,
         CENTER
     }
 
-    private AlignType mAlignType;
+    public enum HorizontalAlignType {
+        LEFT,
+        CENTER
+    }
+
+    private VerticalAlignType mVerticalAlignType;
+
+    private HorizontalAlignType mHorizontalAlignType;
 
     private int mHorizontalSpacing;
 
@@ -55,23 +62,33 @@ public class OHFlowLayout extends ViewGroup {
     }
 
     private void commonInit(final Context context, final AttributeSet attrs) {
-        mAlignType = AlignType.CENTER;
+        mVerticalAlignType = VerticalAlignType.CENTER;
+        mHorizontalAlignType = HorizontalAlignType.LEFT;
         mHorizontalSpacing = 24;
         mVerticalSpacing = 24;
         if (attrs != null) {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.OHFlowLayout);
             mHorizontalSpacing = (int) a.getDimension(R.styleable.OHFlowLayout_oh_flow_layout_horizontal_margin, mHorizontalSpacing);
             mVerticalSpacing = (int) a.getDimension(R.styleable.OHFlowLayout_oh_flow_layout_vertical_margin, mVerticalSpacing);
-            final int type = a.getInt(R.styleable.OHFlowLayout_oh_flow_layout_align_type, 0);
+            final int type = a.getInt(R.styleable.OHFlowLayout_oh_flow_layout_vertical_align_type, 0);
             switch (type) {
                 case 0:
-                    mAlignType = AlignType.CENTER;
+                    mVerticalAlignType = VerticalAlignType.CENTER;
                     break;
                 case 1:
-                    mAlignType = AlignType.BOTTOM;
+                    mVerticalAlignType = VerticalAlignType.BOTTOM;
                     break;
                 default:
-                    mAlignType = AlignType.TOP;
+                    mVerticalAlignType = VerticalAlignType.TOP;
+                    break;
+            }
+            final int hType = a.getInt(R.styleable.OHFlowLayout_oh_flow_layout_horizontal_align_type, 0);
+            switch (hType) {
+                case 1:
+                    mHorizontalAlignType = HorizontalAlignType.CENTER;
+                    break;
+                default:
+                    mHorizontalAlignType = HorizontalAlignType.LEFT;
                     break;
             }
             a.recycle();
@@ -133,12 +150,24 @@ public class OHFlowLayout extends ViewGroup {
 
     private void assignLayoutForLine(final List<View> children, final float yStart, final float maxHeight) {
         float xStart = 0;
+
+        if (mHorizontalAlignType == HorizontalAlignType.CENTER) {
+            float widthNeeded = 0;
+            for (int i = 0; i < children.size(); i++) {
+                final View child = children.get(i);
+                final float childWidth = child.getMeasuredWidth();
+                widthNeeded += childWidth + mHorizontalSpacing;
+            }
+            xStart = (mMaximumWidth - widthNeeded) / 2;
+        }
+
+
         for (int i = 0; i < children.size(); i++) {
             final View child = children.get(i);
             final float childWidth = child.getMeasuredWidth();
             final float childHeight = child.getMeasuredHeight();
 
-            switch (mAlignType) {
+            switch (mVerticalAlignType) {
                 case CENTER:
                     child.setTag(R.id.view_layout_info_tag_key, new RectF(xStart,
                             yStart + (maxHeight - childHeight) / 2,
