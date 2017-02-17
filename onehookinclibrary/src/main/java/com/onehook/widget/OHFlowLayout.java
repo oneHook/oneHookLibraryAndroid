@@ -117,6 +117,12 @@ public class OHFlowLayout extends ViewGroup {
         int i = 0;
         while (i < childCount) {
             final View child = getChildAt(i);
+
+            /* Ignore gone child */
+            if (child.getVisibility() == View.GONE) {
+                i++;
+                continue;
+            }
             final float childWidth = child.getMeasuredWidth();
             final float childHeight = child.getMeasuredHeight();
             if (currentLineX + mHorizontalSpacing + childWidth < mMaximumWidth || currentLineChildren.size() == 0) {
