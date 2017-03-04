@@ -3,12 +3,16 @@ package com.onehook.util.bitmap;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.media.ExifInterface;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilterInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by EagleDiao on 2016-05-30.
@@ -39,7 +43,7 @@ public class BitmapUtility {
 
     public static void rotatePhotoFile(final File file, int rotation) {
         final long startTime = System.currentTimeMillis();
-        if(rotation == 0) {
+        if (rotation == 0) {
             /* do not do rotation if nothing to be rotated */
             return;
         }
@@ -55,7 +59,7 @@ public class BitmapUtility {
                 if (out != null) {
                     out.close();
                 }
-                if(DEBUG_TAG != null) {
+                if (DEBUG_TAG != null) {
                     Log.d(DEBUG_TAG, "rotate photo file takes " + (System.currentTimeMillis() - startTime) + " ms");
                 }
             } catch (IOException e) {
@@ -116,5 +120,37 @@ public class BitmapUtility {
     public static Bitmap getRotatedBitmap(final File file) {
         int rotation = getBitmapFileRotation(file);
         return getRotatedBitmap(file, rotation);
+    }
+
+    public static Bitmap loadBitmapWithBestSize(final File file, final int longestLength) {
+        try {
+            int inWidth = 0;
+            int inHeight = 0;
+
+            FileInputStream in = new FileInputStream(file);
+
+            // decode image size (decode metadata only, not the whole image)
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(in, null, options);
+            in.close();
+
+            // save width and height
+            inWidth = options.outWidth;
+            inHeight = options.outHeight;
+
+            // decode full image pre-resized
+            in = new FileInputStream(file);
+            options = new BitmapFactory.Options();
+            // calc rought re-size (this is no exact resize)
+            options.inSampleSize = Math.max(inWidth / longestLength, inHeight / longestLength);
+
+            // decode full image
+            Bitmap roughBitmap = BitmapFactory.decodeStream(in, null, options);
+            return roughBitmap;
+        } catch (IOException e) {
+            Log.e("Image", e.getMessage(), e);
+            return null;
+        }
     }
 }
