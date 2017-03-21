@@ -27,7 +27,7 @@ public class ConfettiView extends ViewGroup {
 
     private static final long MAXIMUM_DURATION = 3000;
 
-    private static final int DEFAULT_CONFETTI_COUNT = 30;
+    private static final int DEFAULT_CONFETTI_COUNT = 50;
 
     private static final int DEFAULT_CONFETTI_DELAY_RATIO = 8;
 
@@ -93,7 +93,7 @@ public class ConfettiView extends ViewGroup {
             final ConfettiViewCell cell = new ConfettiViewCell(getContext());
             cell.measure(MeasureSpec.makeMeasureSpec(mConfettiSize, MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(mConfettiSize, MeasureSpec.EXACTLY));
-            cell.layout(width / 2 - mConfettiSize / 2, -mConfettiSize, width / 2 + mConfettiSize / 2, 0);
+            cell.layout(generateRandomX(), -mConfettiSize, width / 2 + mConfettiSize / 2, 0);
             addView(cell);
             mConfettiViewCells.add(cell);
         }
@@ -107,7 +107,7 @@ public class ConfettiView extends ViewGroup {
             }
             final long duration = generateRandomDuration();
             final long delay = generateRandomDelay(i);
-            final int endingX = generateEndingX();
+            final int endingX = generateRandomX();
             final int controlX = (endingX > width / 2) ? width : 0;
             final int endingY = height + mConfettiSize;
             final int controlY = (int) (Math.random() * endingY);
@@ -164,7 +164,7 @@ public class ConfettiView extends ViewGroup {
         return (long) ((Math.random()* mConfettiDelayRatio) * 500);
     }
 
-    private int generateEndingX() {
+    private int generateRandomX() {
         return (int) (getMeasuredWidth() * Math.random());
     }
 }

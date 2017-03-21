@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.onehook.util.device.DeviceInfoUtil;
 import com.onehookinc.androidlib.R;
 
 import java.util.ArrayList;
@@ -104,7 +107,6 @@ public class OHFlowLayout extends ViewGroup {
         }
         mMaximumWidth = MeasureSpec.getSize(widthMeasureSpec);
         calculateLayout();
-
     }
 
     private void calculateLayout() {
@@ -156,7 +158,6 @@ public class OHFlowLayout extends ViewGroup {
 
     private void assignLayoutForLine(final List<View> children, final float yStart, final float maxHeight) {
         float xStart = 0;
-
         if (mHorizontalAlignType == HorizontalAlignType.CENTER) {
             float widthNeeded = 0;
             for (int i = 0; i < children.size(); i++) {
@@ -164,7 +165,7 @@ public class OHFlowLayout extends ViewGroup {
                 final float childWidth = child.getMeasuredWidth();
                 widthNeeded += childWidth + mHorizontalSpacing;
             }
-            xStart = (mMaximumWidth - widthNeeded) / 2;
+            xStart = (mMaximumWidth - (widthNeeded - mHorizontalSpacing)) / 2;
         }
 
 
