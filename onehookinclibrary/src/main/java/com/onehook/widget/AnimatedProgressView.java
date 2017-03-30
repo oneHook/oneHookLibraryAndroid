@@ -152,9 +152,6 @@ public class AnimatedProgressView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
-        System.out.println("OptimityDebug onsize changed " + w + " , " + h);
-
         final float length = Math.min(w, h);
         final float strokeWidth = length * mProgressRingStrokeRatio;
         mRadius = length / 2 - strokeWidth;
