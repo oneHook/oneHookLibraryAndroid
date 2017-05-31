@@ -52,7 +52,6 @@ public class AnimatedProgressBar extends View {
          */
         setWillNotDraw(false);
 
-
         this.primaryProgress = 0.5f;
         this.secondaryProgress = 0.75f;
         this.baseColor = Color.WHITE;
@@ -100,14 +99,17 @@ public class AnimatedProgressBar extends View {
         mPaint.setColor(this.secondaryProgressColor);
         canvas.drawLine(progressThickness / 2 + progressXOffset,
                 height / 2,
-                getMeasuredWidth() * this.secondaryProgress - progressThickness / 2 - 2 * progressXOffset,
+                Math.max(0, getMeasuredWidth() * this.secondaryProgress - progressThickness / 2 - 2 * progressXOffset),
                 height / 2, mPaint);
 
         mPaint.setColor(this.primaryProgressColor);
-        canvas.drawLine(progressThickness / 2 + progressXOffset,
-                height / 2,
-                getMeasuredWidth() * this.primaryProgress - progressThickness / 2 - 2 * progressXOffset,
-                height / 2, mPaint);
+        final float primaryLineWidth = Math.max(0, getMeasuredWidth() * this.primaryProgress - progressThickness / 2 - 2 * progressXOffset);
+        if(primaryLineWidth >= progressThickness) {
+            canvas.drawLine(progressThickness / 2 + progressXOffset,
+                    height / 2,
+                    Math.max(0, getMeasuredWidth() * this.primaryProgress - progressThickness / 2 - 2 * progressXOffset),
+                    height / 2, mPaint);
+        }
     }
 
     public void setPrimaryProgress(float primaryProgress) {
