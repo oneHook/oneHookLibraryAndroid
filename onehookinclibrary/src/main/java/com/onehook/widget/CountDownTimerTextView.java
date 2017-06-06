@@ -142,13 +142,13 @@ public class CountDownTimerTextView extends AppCompatTextView {
         final StringBuilder sb = new StringBuilder();
         boolean shouldIgnore = false;
         for (int i = 0; i < timeFormat.length(); ) {
-            if (shouldIgnore) {
-                sb.append(timeFormat.charAt(i));
-                i++;
-            }
             if (timeFormat.charAt(i) == '\'') {
                 shouldIgnore = !shouldIgnore;
                 i++;
+            } else if (shouldIgnore) {
+                sb.append(timeFormat.charAt(i));
+                i++;
+                continue;
             } else if (timeFormat.startsWith(DAY_PLACEHOLDER, i)) {
                 sb.append("%1$d");
                 i += 2;
