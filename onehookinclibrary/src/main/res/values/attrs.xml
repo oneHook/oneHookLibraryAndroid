@@ -62,6 +62,10 @@
 
     <declare-styleable name="OHIconProgressView">
         <attr name="oh_icon_progress_view_icons" format="reference"></attr>
+    </declare-styleable>
 
+    <declare-styleable name="CountDownTimerTextView">
+        <attr name="oh_count_down_timer_format" format="string|reference"></attr>
+        <attr name="oh_count_down_timer_interval" format="integer"></attr>
     </declare-styleable>
 </resources>
