@@ -75,7 +75,7 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
 
         String mTitle;
 
-        String mMesssage;
+        String mMessage;
 
         Serializable mObjectS;
 
@@ -94,7 +94,7 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
             mButton1Text = null;
             mButton2Text = null;
             mTitle = null;
-            mMesssage = null;
+            mMessage = null;
             mObjectS = null;
             mObjectP = null;
             mCancelable = false;
@@ -151,12 +151,12 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
         }
 
         public OHCompactAlertDialogFragmentBuilder message(final String text) {
-            mMesssage = text;
+            mMessage = text;
             return this;
         }
 
         public OHCompactAlertDialogFragmentBuilder message(final int res) {
-            mMesssage = mRes.getString(res);
+            mMessage = mRes.getString(res);
             return this;
         }
 
@@ -193,10 +193,10 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
         private OHCompactAlertDialogFragment show(FragmentManager manager, final String tag, final boolean allowStateLoss) {
             final OHCompactAlertDialogFragment fragment;
             if (mObjectP == null) {
-                fragment = OHCompactAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text,
+                fragment = OHCompactAlertDialogFragment.newInstance(tag, mTitle, mMessage, mButton1Text, mButton2Text,
                         mSelectableItems, mSelectableItemsRes, mSelectableItemIconsRes, mObjectS, mCancelable);
             } else {
-                fragment = OHCompactAlertDialogFragment.newInstance(tag, mTitle, mMesssage, mButton1Text, mButton2Text,
+                fragment = OHCompactAlertDialogFragment.newInstance(tag, mTitle, mMessage, mButton1Text, mButton2Text,
                         mSelectableItems, mSelectableItemsRes, mSelectableItemIconsRes, mObjectP, mCancelable);
             }
             final FragmentTransaction ft = manager.beginTransaction();
