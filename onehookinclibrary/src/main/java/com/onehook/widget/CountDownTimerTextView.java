@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.onehookinc.androidlib.R;
 
@@ -102,6 +103,7 @@ public class CountDownTimerTextView extends AppCompatTextView {
             mCountDownTimer.cancel();
             mCountDownTimer = null;
         }
+        renderTime(miliseconds);
         mCurrentTime = miliseconds;
         mCountDownTimer = new CountDownTimer(miliseconds, mInterval) {
             @Override
@@ -175,7 +177,7 @@ public class CountDownTimerTextView extends AppCompatTextView {
      *
      * @param milliseconds
      */
-    private void renderTime(final long milliseconds) {
+    public void renderTime(final long milliseconds) {
         final long seconds = (milliseconds / 1000) % 60;
         final long minute = (milliseconds / 60000) % 60;
         final long hour = (milliseconds / 3600000) % 24;
