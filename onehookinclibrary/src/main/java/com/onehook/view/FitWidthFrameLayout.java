@@ -3,6 +3,7 @@ package com.onehook.view;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 
 /**
@@ -32,5 +33,10 @@ public class FitWidthFrameLayout extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final int width = MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(width, width);
+        for (int i = 0; i < getChildCount(); i++) {
+            View v = getChildAt(i);
+            v.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
+                    MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST));
+        }
     }
 }
