@@ -52,13 +52,16 @@ public class AnimatedProgressBar extends View {
          */
         setWillNotDraw(false);
 
+        /*
+         * Default values.
+         */
         this.primaryProgress = 0.5f;
         this.secondaryProgress = 0.75f;
         this.baseColor = Color.WHITE;
         this.primaryProgressColor = Color.RED;
         this.secondaryProgressColor = Color.YELLOW;
 
-                /*
+        /*
          * Load from style if any.
          */
         if (attrs != null) {
@@ -79,9 +82,9 @@ public class AnimatedProgressBar extends View {
     protected void onDraw(final Canvas canvas) {
         final float width = getMeasuredWidth();
         final float height = getMeasuredHeight();
-        final float baseThickness = height * 0.85f;
-        final float progressThickness = height * 0.6f;
-        final float progressXOffset = height * 0.15f;
+        final float secondaryThickness = height * 0.85f;
+        final float primaryThickness = height * 0.6f;
+        final float primaryProgressXOffset = height * 0.15f;
 
         mPaint.setColor(Color.TRANSPARENT);
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
@@ -91,33 +94,43 @@ public class AnimatedProgressBar extends View {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.WHITE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(baseThickness);
+        mPaint.setStrokeWidth(secondaryThickness);
 
-        canvas.drawLine(baseThickness / 2, height / 2, width - baseThickness / 2, height / 2, mPaint);
+        canvas.drawLine(secondaryThickness / 2, height / 2, width - secondaryThickness / 2, height / 2, mPaint);
 
-        mPaint.setStrokeWidth(progressThickness);
+        mPaint.setStrokeWidth(primaryThickness);
         mPaint.setColor(this.secondaryProgressColor);
-        canvas.drawLine(progressThickness / 2 + progressXOffset,
+        canvas.drawLine(primaryThickness / 2 + primaryProgressXOffset,
                 height / 2,
-                Math.max(0, getMeasuredWidth() * this.secondaryProgress - progressThickness / 2 - 2 * progressXOffset),
+                Math.max(0, getMeasuredWidth() * this.secondaryProgress - primaryThickness / 2 - 2 * primaryProgressXOffset),
                 height / 2, mPaint);
 
         mPaint.setColor(this.primaryProgressColor);
-        final float primaryLineWidth = Math.max(0, getMeasuredWidth() * this.primaryProgress - progressThickness / 2 - 2 * progressXOffset);
-        if(primaryLineWidth >= progressThickness) {
-            canvas.drawLine(progressThickness / 2 + progressXOffset,
+        final float primaryLineWidth = Math.max(0, getMeasuredWidth() * this.primaryProgress - primaryThickness / 2 - primaryProgressXOffset);
+        if (primaryLineWidth >= primaryThickness) {
+            canvas.drawLine(primaryThickness / 2 + primaryProgressXOffset,
                     height / 2,
-                    Math.max(0, getMeasuredWidth() * this.primaryProgress - progressThickness / 2 - 2 * progressXOffset),
+                    Math.max(0, primaryLineWidth),
                     height / 2, mPaint);
         }
     }
 
     public void setPrimaryProgress(float primaryProgress) {
+        if (primaryProgress < 0) {
+            primaryProgress = 0;
+        } else if (primaryProgress > 1) {
+            primaryProgress = 1;
+        }
         this.primaryProgress = primaryProgress;
         invalidate();
     }
 
     public void setSecondaryProgress(float secondaryProgress) {
+        if (secondaryProgress < 0) {
+            secondaryProgress = 0;
+        } else if (secondaryProgress > 1) {
+            secondaryProgress = 1;
+        }
         this.secondaryProgress = secondaryProgress;
         invalidate();
     }
