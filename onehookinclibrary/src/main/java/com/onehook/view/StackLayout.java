@@ -33,36 +33,42 @@ public class StackLayout extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    private int mMaxChildWidth;
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final int width = MeasureSpec.getSize(widthMeasureSpec);
-        final int height = MeasureSpec.getSize(heightMeasureSpec);
-        if (width <= 0 || height <= 0) {
-            throw new RuntimeException("StackLayout require absolute size");
-        }
-
-        final int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View v = getChildAt(i);
-            v.measure(MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY),
-                    MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+        mMaxChildWidth = 0;
+        if (getChildCount() > 0) {
+            for (int i = 0; i < getChildCount(); i++) {
+                mMaxChildWidth = Math.max(getChildAt(i).getMeasuredWidth(), mMaxChildWidth);
+            }
+//            if (mMaxChildWidth > getMeasuredWidth() / getChildCount()) {
+//                mMaxChildWidth = getMeasuredWidth() / getChildCount();
+//            }
         }
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
         final int childCount = getChildCount();
 
-        final int width = right - left;
-        final int height = bottom - top;
-        final int offset = (width - height) / (childCount - 1);
+        if (childCount > 1) {
+            final int width = right - left;
+            final int height = bottom - top;
+            final int offset = (width - mMaxChildWidth) / (childCount - 1);
 
-        int xOffset = 0;
-        for (int i = 0; i < childCount; i++) {
-            final View v = getChildAt(i);
-            v.layout(left + xOffset, top, left + xOffset + height, bottom);
-            xOffset += offset;
+            int xOffset = 0;
+            for (int i = 0; i < childCount; i++) {
+                final View v = getChildAt(i);
+                final int childHeight = v.getMeasuredHeight();
+                final int yOffset = (height - childHeight) / 2;
+                v.layout(xOffset, yOffset, xOffset + mMaxChildWidth, childHeight);
+                xOffset += offset;
+            }
+        } else {
+
         }
     }
 }
