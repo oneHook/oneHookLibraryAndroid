@@ -6,3 +6,6 @@
 .DS_Store
 /build
 /captures
+/script/*.txt
+/script/*.h
+/script/*.m
