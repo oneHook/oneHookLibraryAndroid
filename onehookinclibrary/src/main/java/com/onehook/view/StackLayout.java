@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -41,11 +42,9 @@ public class StackLayout extends FrameLayout {
         mMaxChildWidth = 0;
         if (getChildCount() > 0) {
             for (int i = 0; i < getChildCount(); i++) {
+
                 mMaxChildWidth = Math.max(getChildAt(i).getMeasuredWidth(), mMaxChildWidth);
             }
-//            if (mMaxChildWidth > getMeasuredWidth() / getChildCount()) {
-//                mMaxChildWidth = getMeasuredWidth() / getChildCount();
-//            }
         }
     }
 
@@ -53,7 +52,6 @@ public class StackLayout extends FrameLayout {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         final int childCount = getChildCount();
-
         if (childCount > 1) {
             final int width = right - left;
             final int height = bottom - top;
@@ -65,6 +63,8 @@ public class StackLayout extends FrameLayout {
                 final int childHeight = v.getMeasuredHeight();
                 final int yOffset = (height - childHeight) / 2;
                 v.layout(xOffset, yOffset, xOffset + mMaxChildWidth, childHeight);
+
+                Log.d("OptimityDebug", "CHILD COUNNNNNTTTT " + xOffset + " , " + mMaxChildWidth);
                 xOffset += offset;
             }
         } else {
