@@ -63,8 +63,6 @@ public class StackLayout extends FrameLayout {
                 final int childHeight = v.getMeasuredHeight();
                 final int yOffset = (height - childHeight) / 2;
                 v.layout(xOffset, yOffset, xOffset + mMaxChildWidth, childHeight);
-
-                Log.d("OptimityDebug", "CHILD COUNNNNNTTTT " + xOffset + " , " + mMaxChildWidth);
                 xOffset += offset;
             }
         } else {

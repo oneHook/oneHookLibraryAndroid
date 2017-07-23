@@ -15,12 +15,14 @@
     <dimen name="common_margin_xxlarge">64dp</dimen>
     <dimen name="common_margin_xxxlarge">128dp</dimen>
 
-    <dimen name="title_xxhuge_font_size">30dp</dimen>
-    <dimen name="title_xhuge_font_size">26dp</dimen>
-    <dimen name="title_huge_font_size">22dp</dimen>
-    <dimen name="title_font_size">18dp</dimen>
-    <dimen name="title2_font_size">16dp</dimen>
-    <dimen name="title3_font_size">14dp</dimen>
-    <dimen name="title4_font_size">10dp</dimen>
+
+    <dimen name="title_xxxhuge_font_size">38dp</dimen>
+    <dimen name="title_xxhuge_font_size">28dp</dimen>
+    <dimen name="title_xhuge_font_size">24dp</dimen>
+    <dimen name="title_huge_font_size">20dp</dimen>
+    <dimen name="title_font_size">16dp</dimen>
+    <dimen name="title2_font_size">14dp</dimen>
+    <dimen name="title3_font_size">12dp</dimen>
+    <dimen name="title4_font_size">8dp</dimen>
 
 </resources>

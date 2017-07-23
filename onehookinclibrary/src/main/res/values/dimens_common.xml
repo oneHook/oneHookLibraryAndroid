@@ -15,6 +15,7 @@
     <dimen name="common_margin_xxlarge">32dp</dimen>
     <dimen name="common_margin_xxxlarge">64dp</dimen>
 
+    <dimen name="title_xxxhuge_font_size">32dp</dimen>
     <dimen name="title_xxhuge_font_size">26dp</dimen>
     <dimen name="title_xhuge_font_size">22dp</dimen>
     <dimen name="title_huge_font_size">18dp</dimen>
