@@ -51,6 +51,17 @@
         <attr name="oh_progress_bar_secondary_progress" format="float" />
     </declare-styleable>
 
+    <declare-styleable name="ScaleView">
+        <attr name="oh_scale_view_scale_color" format="color|reference"/>
+        <attr name="oh_scale_view_indicator_color" format="color|reference"/>
+        <attr name="oh_scale_view_segment_count" format="integer|reference"/>
+        <attr name="oh_scale_view_segment_length" format="integer|reference"/>
+        <attr name="oh_scale_view_minimum_offset" format="integer|reference"/>
+        <attr name="oh_scale_view_maximum_offset" format="integer|reference"/>
+        <attr name="oh_scale_view_thick_bar_thickness" format="dimension|reference"/>
+        <attr name="oh_scale_view_thin_bar_thickness" format="dimension|reference"/>
+    </declare-styleable>
+
     <declare-styleable name="RecyclerViewPager">
         <attr name="oh_triggerOffset" format="float" />
         <attr name="oh_flingFactor" format="float" />

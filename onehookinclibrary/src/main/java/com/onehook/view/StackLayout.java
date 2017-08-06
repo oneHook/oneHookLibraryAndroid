@@ -42,7 +42,6 @@ public class StackLayout extends FrameLayout {
         mMaxChildWidth = 0;
         if (getChildCount() > 0) {
             for (int i = 0; i < getChildCount(); i++) {
-
                 mMaxChildWidth = Math.max(getChildAt(i).getMeasuredWidth(), mMaxChildWidth);
             }
         }
