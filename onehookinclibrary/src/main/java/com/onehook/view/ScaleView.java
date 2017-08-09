@@ -6,8 +6,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,14 +18,19 @@ import com.onehookinc.androidlib.R;
 /**
  * Created by Eagle Diao on 2017-08-04.
  */
-
 public class ScaleView extends View {
 
     /**
      * Constants.
      */
-    private static final int DEFAULT_NUM_SEGMENTS = 3;
-    private static final int DEFAULT_LEN_SEGMENTS = 10;
+    private static final int DEFAULT_SCALE_INTERVAL_IN_DP = 18;
+    private static final int DEFAULT_SCALE_INTERVAL_COUNT = 10;
+    private static final int DEFAULT_MIN_SCALE = 0;
+    private static final int DEFAULT_MAX_SCALE = 500;
+    private static final int DEFAULT_CURRENT_SCALE = 100;
+
+    private static final int DEFAULT_THICK_LINE_THICKNESS_DP = 8;
+    private static final int DEFAULT_THIN_LINE_THICKNESS_DP = 4;
 
     /**
      * @param context context
@@ -44,7 +51,7 @@ public class ScaleView extends View {
 
     /**
      * @param context      context
-     * @param attrs        atributes
+     * @param attrs        attributes
      * @param defStyleAttr defined style attr
      */
     public ScaleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -67,33 +74,38 @@ public class ScaleView extends View {
     public interface ScaleViewListener {
 
         /**
-         * called when scale moved. 1 means 1 unit (10 units is one big one..)
+         * called when scale moved.
          *
-         * @param offset offset
+         * @param currentScale current scale
          */
-        void onScaleMoved(final ScaleView scaleView, int offset);
+        void onScaleMoved(final ScaleView scaleView, int currentScale);
     }
 
     /*
      * View Parameters.
      */
-    private int mMinimumOffset = Integer.MIN_VALUE / 500;
-    private int mMaximumOffset = Integer.MAX_VALUE / 500;
-    private int mNumSegments;
-    private int mSegmentLength;
+    private int mMinimumScale;
+    private int mMaximumScale;
+    private int mScaleIntervalInPixel;
+    private int mScaleIntervalCount;
+
+    @ColorInt
     private int mLineColor;
+
+    @ColorInt
     private int mIndicatorColor;
     private float mThickBarThickness;
     private float mThinBarThickness;
 
+    private boolean mIsNaturalPanning;
 
     /*
      * Touch event handling.
      */
     private float mStartX;
     private float mPreviousX;
-    private int mUnitSpacing;
-    private int mCurrentOffset;
+    private int mRawTranslationX;
+    private int mCurrentScale;
 
     /*
      * Paints.
@@ -113,25 +125,42 @@ public class ScaleView extends View {
      */
     private void commonInit(final Context context, @Nullable final AttributeSet attrs) {
         setWillNotDraw(false);
-        mCurrentOffset = 0;
-        mNumSegments = DEFAULT_NUM_SEGMENTS;
-        mSegmentLength = DEFAULT_LEN_SEGMENTS;
+        mMinimumScale = DEFAULT_MIN_SCALE;
+        mMaximumScale = DEFAULT_MAX_SCALE;
+        mScaleIntervalInPixel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                DEFAULT_SCALE_INTERVAL_IN_DP,
+                context.getResources().getDisplayMetrics());
+        mScaleIntervalCount = DEFAULT_SCALE_INTERVAL_COUNT;
+        mCurrentScale = DEFAULT_CURRENT_SCALE;
+        mIsNaturalPanning = false;
+
+        /* Setup default color and line thickness */
         mLineColor = Color.BLACK;
         mIndicatorColor = Color.RED;
-        mThickBarThickness = 8;
-        mThinBarThickness = 4;
+        mThickBarThickness = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                DEFAULT_THICK_LINE_THICKNESS_DP,
+                context.getResources().getDisplayMetrics());
+        mThinBarThickness = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                DEFAULT_THIN_LINE_THICKNESS_DP,
+                context.getResources().getDisplayMetrics());
 
         if (attrs != null) {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ScaleView);
-            mMinimumOffset = a.getInteger(R.styleable.ScaleView_oh_scale_view_minimum_offset, mMinimumOffset);
-            mMaximumOffset = a.getInteger(R.styleable.ScaleView_oh_scale_view_maximum_offset, mMaximumOffset);
-            mNumSegments = a.getInteger(R.styleable.ScaleView_oh_scale_view_segment_count, mNumSegments);
-            mSegmentLength = a.getInteger(R.styleable.ScaleView_oh_scale_view_segment_length, mSegmentLength);
+            mMinimumScale = a.getInteger(R.styleable.ScaleView_oh_scale_view_minimum_scale, mMinimumScale);
+            mMaximumScale = a.getInteger(R.styleable.ScaleView_oh_scale_view_maximum_scale, mMaximumScale);
+            mScaleIntervalCount = a.getInteger(R.styleable.ScaleView_oh_scale_view_scale_interval_count, mScaleIntervalCount);
+            mScaleIntervalInPixel = a.getInteger(R.styleable.ScaleView_oh_scale_view_scale_interval_length, mScaleIntervalInPixel);
+            mCurrentScale = a.getInteger(R.styleable.ScaleView_oh_scale_view_current_scale, mCurrentScale);
+
             mLineColor = a.getColor(R.styleable.ScaleView_oh_scale_view_scale_color, mLineColor);
             mIndicatorColor = a.getColor(R.styleable.ScaleView_oh_scale_view_indicator_color, mIndicatorColor);
             mThickBarThickness = a.getDimension(R.styleable.ScaleView_oh_scale_view_thick_bar_thickness, mThickBarThickness);
             mThinBarThickness = a.getDimension(R.styleable.ScaleView_oh_scale_view_thin_bar_thickness, mThinBarThickness);
+
+            mIsNaturalPanning = a.getBoolean(R.styleable.ScaleView_oh_scale_view_pan_direction_natural, mIsNaturalPanning);
         }
+
+        /* Setup all paints */
 
         mThickLinePaint = new Paint();
         mThickLinePaint.setStrokeWidth(mThickBarThickness);
@@ -145,6 +174,9 @@ public class ScaleView extends View {
         mDotPaint.setColor(mIndicatorColor);
         mDotPaint.setStrokeWidth(20);
         mDotPaint.setStrokeCap(Paint.Cap.ROUND);
+
+        /* setup Internal */
+        mRawTranslationX = mCurrentScale * mScaleIntervalInPixel;
     }
 
     @Override
@@ -159,13 +191,13 @@ public class ScaleView extends View {
             case (MotionEvent.ACTION_MOVE):
                 final float yOffset = event.getX() - mPreviousX;
                 mPreviousX = event.getX();
-                mCurrentOffset += yOffset;
-                if (mCurrentOffset < mMinimumOffset * mUnitSpacing) {
-                    mCurrentOffset = mMinimumOffset * mUnitSpacing;
-                } else if (mCurrentOffset > mMaximumOffset * mUnitSpacing) {
-                    mCurrentOffset = mMaximumOffset * mUnitSpacing;
-                }
-                dispatchListener();
+
+                /* modify raw translation based on panning direction, YES, natural panning
+                   introduced by apple. I dont get it, it doesn't feel natural to me.
+                 */
+                mRawTranslationX += mIsNaturalPanning ? yOffset : -yOffset;
+                enforceLimit();
+                invalidateCurrentScale();
                 invalidate();
                 return true;
             case (MotionEvent.ACTION_UP):
@@ -173,7 +205,7 @@ public class ScaleView extends View {
             case (MotionEvent.ACTION_OUTSIDE):
                 mStartX = -1;
                 snap();
-                dispatchListener();
+                invalidateCurrentScale();
                 return true;
             default:
                 return super.onTouchEvent(event);
@@ -181,29 +213,31 @@ public class ScaleView extends View {
     }
 
     /**
-     * Dispatch to listener.
+     * Enforce the limit.
      */
-    private void dispatchListener() {
-        final int newOffset = Math.round(mCurrentOffset * 1.0f / mUnitSpacing);
-        System.out.println("oneHook current offset " + mCurrentOffset + " min offset " + (mMinimumOffset * mUnitSpacing) + " max offset " + mMaximumOffset);
-        if (mListener != null) {
-            mListener.onScaleMoved(this, newOffset);
+    private void enforceLimit() {
+        if (mRawTranslationX < mMinimumScale * mScaleIntervalInPixel) {
+            mRawTranslationX = mMinimumScale * mScaleIntervalInPixel;
+        } else if (mRawTranslationX > mMaximumScale * mScaleIntervalInPixel) {
+            mRawTranslationX = mMaximumScale * mScaleIntervalInPixel;
         }
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final int width = getMeasuredWidth();
-        mUnitSpacing = (width / mNumSegments) / mSegmentLength;
+    /**
+     * Invalidate current scale based on raw translation X.
+     */
+    private void invalidateCurrentScale() {
+        mCurrentScale = Math.round(mRawTranslationX * 1.0f / mScaleIntervalInPixel);
+        if (mListener != null) {
+            mListener.onScaleMoved(this, mCurrentScale);
+        }
     }
 
     /**
      * Snap to the closet scale.
      */
     private void snap() {
-        final int newOffset = Math.round(mCurrentOffset * 1.0f / mUnitSpacing) * mUnitSpacing;
-        mCurrentOffset = newOffset;
+        mRawTranslationX = Math.round(mRawTranslationX * 1.0f / mScaleIntervalInPixel) * mScaleIntervalInPixel;
         invalidate();
     }
 
@@ -215,10 +249,10 @@ public class ScaleView extends View {
         final int width = canvas.getWidth();
         final int height = canvas.getHeight();
 
-        final int interval = width / mNumSegments;
-        final int yOffset = mCurrentOffset % interval;
+        final int centerX = width / 2 - mRawTranslationX % (mScaleIntervalInPixel * mScaleIntervalCount);
         final int paddingTop = getPaddingTop();
 
+        /* draw indicator */
         canvas.drawLine(width / 2,
                 height - 10,
                 width / 2,
@@ -226,40 +260,33 @@ public class ScaleView extends View {
                 mDotPaint
         );
 
-        canvas.drawLine(width / 2 - yOffset,
+        /* draw center line */
+        canvas.drawLine(centerX,
                 paddingTop,
-                width / 2 - yOffset,
+                centerX,
                 height,
                 mThickLinePaint);
 
-        for (int i = 1; i < mSegmentLength * mNumSegments; i++) {
-            if (i % mSegmentLength == 0) {
-                /* thick line */
-                canvas.drawLine(width / 2 - i * mUnitSpacing - yOffset,
-                        paddingTop,
-                        width / 2 - i * mUnitSpacing - yOffset,
-                        height,
-                        mThickLinePaint);
+        /* left lines */
+        for (int i = 1; centerX + i * mScaleIntervalInPixel <= width; i++) {
+            final Paint p = (i % mScaleIntervalCount == 0) ? mThickLinePaint : mThinLinePaint;
+            final int yOffset = (i % mScaleIntervalCount == 0) ? 0 : (height / 4);
+            canvas.drawLine(centerX + i * mScaleIntervalInPixel,
+                    paddingTop + yOffset,
+                    centerX + i * mScaleIntervalInPixel,
+                    height,
+                    p);
+        }
 
-                canvas.drawLine(width / 2 + i * mUnitSpacing - yOffset,
-                        paddingTop,
-                        width / 2 + i * mUnitSpacing - yOffset,
-                        height,
-                        mThickLinePaint);
-            } else {
-                /* thin line */
-                canvas.drawLine(width / 2 - i * mUnitSpacing - yOffset,
-                        paddingTop + (height - paddingTop) * 2 / 3,
-                        width / 2 - i * mUnitSpacing - yOffset,
-                        height,
-                        mThinLinePaint);
-
-                canvas.drawLine(width / 2 + i * mUnitSpacing - yOffset,
-                        paddingTop + (height - paddingTop) * 2 / 3,
-                        width / 2 + i * mUnitSpacing - yOffset,
-                        height,
-                        mThinLinePaint);
-            }
+        /* right lines */
+        for (int i = 1; centerX - i * mScaleIntervalInPixel >= 0; i++) {
+            final Paint p = (i % mScaleIntervalCount == 0) ? mThickLinePaint : mThinLinePaint;
+            final int yOffset = (i % mScaleIntervalCount == 0) ? 0 : height / 4;
+            canvas.drawLine(centerX - i * mScaleIntervalInPixel,
+                    paddingTop + yOffset,
+                    centerX - i * mScaleIntervalInPixel,
+                    height,
+                    p);
         }
     }
 
@@ -273,39 +300,61 @@ public class ScaleView extends View {
     }
 
     /**
-     * Snap to offset. Each 1 means one unit on scale.
+     * Set minimum scale. Make sure to call invalidate() after.
      *
-     * @param offset offset
+     * @param minimumScale
      */
-    public void snapToOffset(final int offset) {
-        final int newOffset = offset * mUnitSpacing;
-        mCurrentOffset = newOffset;
-        invalidate();
-    }
-
-    public void setMinimumOffset(final int minOffset) {
-        mMinimumOffset = minOffset;
-    }
-
-    public void setMaximumOffset(final int maxOffset) {
-        mMaximumOffset = maxOffset;
+    public void setMinimumScale(int minimumScale) {
+        mMinimumScale = minimumScale;
     }
 
     /**
-     * This call only works if called before measuring.
+     * Set maximum scale. Make sure to call invalidate() after.
      *
-     * @param numSeg
+     * @param maximumScale
      */
-    public void setNumSegments(final int numSeg) {
-        mNumSegments = numSeg;
+    public void setMaximumScale(int maximumScale) {
+        mMaximumScale = maximumScale;
     }
 
     /**
-     * This call only works if called before measuring.
+     * Set scale interval count. Make sure to call invalidate() after.
      *
-     * @param segmentLength
+     * @param scaleIntervalCount
      */
-    public void setSegmentLength(final int segmentLength) {
-        mSegmentLength = segmentLength;
+    public void setScaleIntervalCount(int scaleIntervalCount) {
+        mScaleIntervalCount = scaleIntervalCount;
+    }
+
+    /**
+     * Set line color. Make sure to call invalidate() after.
+     *
+     * @param lineColor
+     */
+    public void setLineColor(@ColorInt int lineColor) {
+        mLineColor = lineColor;
+        mThickLinePaint.setColor(mLineColor);
+        mThinLinePaint.setColor(mLineColor);
+    }
+
+    /**
+     * Set indicator scale. Make sure to call invalidate() after.
+     *
+     * @param indicatorColor
+     */
+    public void setIndicatorColor(@ColorInt int indicatorColor) {
+        mIndicatorColor = indicatorColor;
+        mDotPaint.setColor(mIndicatorColor);
+    }
+
+    /**
+     * Set current scale. Make sure to call invalidate() after.
+     *
+     * @param currentScale
+     */
+    public void setCurrentScale(int currentScale) {
+        mCurrentScale = currentScale;
+        mRawTranslationX = mCurrentScale * mScaleIntervalInPixel;
+        enforceLimit();
     }
 }
