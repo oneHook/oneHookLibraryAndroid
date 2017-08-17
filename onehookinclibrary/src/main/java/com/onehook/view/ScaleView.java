@@ -252,14 +252,6 @@ public class ScaleView extends View {
         final int centerX = width / 2 - mRawTranslationX % (mScaleIntervalInPixel * mScaleIntervalCount);
         final int paddingTop = getPaddingTop();
 
-        /* draw indicator */
-        canvas.drawLine(width / 2,
-                height - 10,
-                width / 2,
-                height,
-                mDotPaint
-        );
-
         /* draw center line */
         canvas.drawLine(centerX,
                 paddingTop,
@@ -288,6 +280,14 @@ public class ScaleView extends View {
                     height,
                     p);
         }
+
+        /* draw indicator */
+        canvas.drawLine(width / 2,
+                height - 10,
+                width / 2,
+                height,
+                mDotPaint
+        );
     }
 
     /**
