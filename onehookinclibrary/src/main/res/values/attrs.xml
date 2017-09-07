@@ -46,9 +46,11 @@
     <declare-styleable name="AnimatedProgressBar">
         <attr name="oh_progress_bar_primary_progress_color" format="color|reference" />
         <attr name="oh_progress_bar_secondary_progress_color" format="color|reference" />
+        <attr name="oh_progress_bar_border_color" format="color|reference" />
         <attr name="oh_progress_bar_progress_base_color" format="color|reference" />
         <attr name="oh_progress_bar_primary_progress" format="float" />
         <attr name="oh_progress_bar_secondary_progress" format="float" />
+        <attr name="oh_progress_bar_border_thickness" format="dimension|reference" />
     </declare-styleable>
 
     <declare-styleable name="ScaleView">

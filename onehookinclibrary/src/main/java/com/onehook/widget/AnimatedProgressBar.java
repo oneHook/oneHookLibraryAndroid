@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -25,10 +26,15 @@ public class AnimatedProgressBar extends View {
 
     private int secondaryProgressColor;
 
+    private int borderColor;
+
+    private float borderThickness;
+
     /**
      * Main paint. for drawing progress base, and progress bar.
      */
     private Paint mPaint;
+    private RectF mRectF;
 
     public AnimatedProgressBar(Context context) {
         super(context);
@@ -51,6 +57,7 @@ public class AnimatedProgressBar extends View {
          * CUSTOM DRAWING!!
          */
         setWillNotDraw(false);
+        mRectF = new RectF();
 
         /*
          * Default values.
@@ -60,6 +67,8 @@ public class AnimatedProgressBar extends View {
         this.baseColor = Color.WHITE;
         this.primaryProgressColor = Color.RED;
         this.secondaryProgressColor = Color.YELLOW;
+        this.borderColor = Color.TRANSPARENT;
+        this.borderThickness = 0;
 
         /*
          * Load from style if any.
@@ -71,6 +80,8 @@ public class AnimatedProgressBar extends View {
             this.baseColor = a.getColor(R.styleable.AnimatedProgressBar_oh_progress_bar_progress_base_color, this.baseColor);
             this.primaryProgressColor = a.getColor(R.styleable.AnimatedProgressBar_oh_progress_bar_primary_progress_color, this.primaryProgressColor);
             this.secondaryProgressColor = a.getColor(R.styleable.AnimatedProgressBar_oh_progress_bar_secondary_progress_color, this.secondaryProgressColor);
+            this.borderColor = a.getColor(R.styleable.AnimatedProgressBar_oh_progress_bar_border_color, this.borderColor);
+            this.borderThickness = a.getDimension(R.styleable.AnimatedProgressBar_oh_progress_bar_border_thickness, this.borderThickness);
             a.recycle();
         }
 
@@ -112,6 +123,21 @@ public class AnimatedProgressBar extends View {
                     height / 2,
                     Math.max(0, primaryLineWidth),
                     height / 2, mPaint);
+        }
+
+        /* draw border if apply */
+        if(this.borderThickness > 0) {
+            mPaint.setColor(this.borderColor);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(this.borderThickness);
+            mRectF.set(borderThickness / 2,
+                    borderThickness / 2,
+                    width - borderThickness,
+                    height - borderThickness);
+            canvas.drawRoundRect(mRectF,
+                    (height - this.borderThickness) / 2,
+                    (height - this.borderThickness) / 2,
+                    mPaint);
         }
     }
 
