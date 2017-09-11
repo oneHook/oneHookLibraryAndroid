@@ -64,6 +64,8 @@
         <attr name="oh_scale_view_maximum_scale" format="integer|reference" />
         <attr name="oh_scale_view_current_scale" format="integer|reference" />
         <attr name="oh_scale_view_pan_direction_natural" format="boolean" />
+        <attr name="oh_scale_view_maximum_line_height" format="dimension|reference"></attr>
+        <attr name="oh_scale_view_indicator_width" format="dimension|reference"></attr>
     </declare-styleable>
 
     <declare-styleable name="RecyclerViewPager">

@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -31,6 +32,7 @@ public class ScaleView extends View {
 
     private static final int DEFAULT_THICK_LINE_THICKNESS_DP = 8;
     private static final int DEFAULT_THIN_LINE_THICKNESS_DP = 4;
+    private static final int DEFAULT_INDICATOR_WIDTH_DP = 8;
 
     /**
      * @param context context
@@ -96,6 +98,8 @@ public class ScaleView extends View {
     private int mIndicatorColor;
     private float mThickBarThickness;
     private float mThinBarThickness;
+    private int mMaximumLineHeight;
+    private int mIndicatorWidth;
 
     private boolean mIsNaturalPanning;
 
@@ -110,7 +114,7 @@ public class ScaleView extends View {
     /*
      * Paints.
      */
-    private Paint mDotPaint;
+    private Paint mIndicatorPaint;
     private Paint mThinLinePaint;
     private Paint mThickLinePaint;
 
@@ -130,9 +134,13 @@ public class ScaleView extends View {
         mScaleIntervalInPixel = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 DEFAULT_SCALE_INTERVAL_IN_DP,
                 context.getResources().getDisplayMetrics());
+        mIndicatorWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                DEFAULT_INDICATOR_WIDTH_DP,
+                context.getResources().getDisplayMetrics());
         mScaleIntervalCount = DEFAULT_SCALE_INTERVAL_COUNT;
         mCurrentScale = DEFAULT_CURRENT_SCALE;
         mIsNaturalPanning = false;
+        mMaximumLineHeight = Integer.MAX_VALUE;
 
         /* Setup default color and line thickness */
         mLineColor = Color.BLACK;
@@ -149,13 +157,15 @@ public class ScaleView extends View {
             mMinimumScale = a.getInteger(R.styleable.ScaleView_oh_scale_view_minimum_scale, mMinimumScale);
             mMaximumScale = a.getInteger(R.styleable.ScaleView_oh_scale_view_maximum_scale, mMaximumScale);
             mScaleIntervalCount = a.getInteger(R.styleable.ScaleView_oh_scale_view_scale_interval_count, mScaleIntervalCount);
-            mScaleIntervalInPixel = a.getInteger(R.styleable.ScaleView_oh_scale_view_scale_interval_length, mScaleIntervalInPixel);
+            mScaleIntervalInPixel = (int) a.getDimension(R.styleable.ScaleView_oh_scale_view_scale_interval_length, mScaleIntervalInPixel);
             mCurrentScale = a.getInteger(R.styleable.ScaleView_oh_scale_view_current_scale, mCurrentScale);
 
             mLineColor = a.getColor(R.styleable.ScaleView_oh_scale_view_scale_color, mLineColor);
             mIndicatorColor = a.getColor(R.styleable.ScaleView_oh_scale_view_indicator_color, mIndicatorColor);
             mThickBarThickness = a.getDimension(R.styleable.ScaleView_oh_scale_view_thick_bar_thickness, mThickBarThickness);
             mThinBarThickness = a.getDimension(R.styleable.ScaleView_oh_scale_view_thin_bar_thickness, mThinBarThickness);
+            mMaximumLineHeight = (int) a.getDimension(R.styleable.ScaleView_oh_scale_view_maximum_line_height, mMaximumLineHeight);
+            mIndicatorWidth = (int) a.getDimension(R.styleable.ScaleView_oh_scale_view_indicator_width, mIndicatorWidth);
 
             mIsNaturalPanning = a.getBoolean(R.styleable.ScaleView_oh_scale_view_pan_direction_natural, mIsNaturalPanning);
         }
@@ -170,10 +180,10 @@ public class ScaleView extends View {
         mThinLinePaint.setStrokeWidth(mThinBarThickness);
         mThinLinePaint.setColor(mLineColor);
 
-        mDotPaint = new Paint();
-        mDotPaint.setColor(mIndicatorColor);
-        mDotPaint.setStrokeWidth(20);
-        mDotPaint.setStrokeCap(Paint.Cap.ROUND);
+        mIndicatorPaint = new Paint();
+        mIndicatorPaint.setColor(mIndicatorColor);
+        mIndicatorPaint.setStrokeWidth(20);
+        mIndicatorPaint.setStrokeCap(Paint.Cap.ROUND);
 
         /* setup Internal */
         mRawTranslationX = mCurrentScale * mScaleIntervalInPixel;
@@ -245,49 +255,53 @@ public class ScaleView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawColor(Color.TRANSPARENT);
-
+        final int paddingTop = getPaddingTop();
+        final int paddingBottom = getPaddingBottom();
         final int width = canvas.getWidth();
         final int height = canvas.getHeight();
 
         final int centerX = width / 2 - mRawTranslationX % (mScaleIntervalInPixel * mScaleIntervalCount);
-        final int paddingTop = getPaddingTop();
 
+        final float lineHeight = Math.min(mMaximumLineHeight, height - paddingTop - paddingBottom);
         /* draw center line */
         canvas.drawLine(centerX,
-                paddingTop,
+                (height - lineHeight),
                 centerX,
-                height,
+                height - paddingBottom,
                 mThickLinePaint);
 
         /* left lines */
         for (int i = 1; centerX + i * mScaleIntervalInPixel <= width; i++) {
             final Paint p = (i % mScaleIntervalCount == 0) ? mThickLinePaint : mThinLinePaint;
-            final int yOffset = (i % mScaleIntervalCount == 0) ? 0 : (height / 4);
+            final int yOffset = (i % mScaleIntervalCount == 0) ? 0 : (int) (lineHeight * 0.4);
             canvas.drawLine(centerX + i * mScaleIntervalInPixel,
-                    paddingTop + yOffset,
+                    (height - lineHeight) + yOffset,
                     centerX + i * mScaleIntervalInPixel,
-                    height,
+                    height - paddingBottom,
                     p);
         }
 
         /* right lines */
         for (int i = 1; centerX - i * mScaleIntervalInPixel >= 0; i++) {
             final Paint p = (i % mScaleIntervalCount == 0) ? mThickLinePaint : mThinLinePaint;
-            final int yOffset = (i % mScaleIntervalCount == 0) ? 0 : height / 4;
+            final int yOffset = (i % mScaleIntervalCount == 0) ? 0 : (int) (lineHeight * 0.4);
             canvas.drawLine(centerX - i * mScaleIntervalInPixel,
-                    paddingTop + yOffset,
+                    (height - lineHeight) + yOffset,
                     centerX - i * mScaleIntervalInPixel,
-                    height,
+                    height - paddingBottom,
                     p);
         }
 
-        /* draw indicator */
-        canvas.drawLine(width / 2,
-                height - 10,
-                width / 2,
-                height,
-                mDotPaint
-        );
+        mIndicatorPaint.setStyle(Paint.Style.FILL);
+        mIndicatorPaint.setAntiAlias(true);
+
+        final Path indicatorPath = new Path();
+        indicatorPath.moveTo(width / 2, height - mIndicatorWidth);
+        indicatorPath.lineTo(width / 2 - mIndicatorWidth / 2, height);
+        indicatorPath.lineTo(width / 2 + mIndicatorWidth / 2, height);
+        indicatorPath.close();
+
+        canvas.drawPath(indicatorPath, mIndicatorPaint);
     }
 
     /**
@@ -344,7 +358,7 @@ public class ScaleView extends View {
      */
     public void setIndicatorColor(@ColorInt int indicatorColor) {
         mIndicatorColor = indicatorColor;
-        mDotPaint.setColor(mIndicatorColor);
+        mIndicatorPaint.setColor(mIndicatorColor);
     }
 
     /**
