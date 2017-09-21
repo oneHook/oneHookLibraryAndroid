@@ -1,6 +1,8 @@
 
 package com.onehook.widget.adapter;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -33,6 +35,11 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
      *
      */
     private String mCustomLoadMoreTextMessage;
+
+    /**
+     * Main thread handler.
+     */
+    private Handler mMainThreadHandler;
 
     /**
      * Observer for wrapped adapter.
@@ -92,6 +99,7 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         super(wrappedAdapter);
         mAutoTriggerLoading = true;
         setDataObserver(mObserver);
+        mMainThreadHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -165,7 +173,7 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
         public LoadingViewHolder(View view) {
             super(view, FlexGridLayoutManager.FlexGridViewHolder.SIZE_WRAP_CONTENT);
             mProgressBar = view.findViewById(R.id.view_loading_progress);
-            mLoadMoreText = (TextView) view.findViewById(R.id.view_loading_load_more_text);
+            mLoadMoreText = view.findViewById(R.id.view_loading_load_more_text);
             view.setTag(R.id.loading_adapter_view_tag_key, this);
         }
 
@@ -188,8 +196,10 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
      * @param autoLoading should auto loading
      */
     public void setAutoLoading(boolean autoLoading) {
-        mAutoTriggerLoading = autoLoading;
-        notifyItemChanged(getItemCount() - 1);
+        if (mAutoTriggerLoading != autoLoading) {
+            mAutoTriggerLoading = autoLoading;
+            notifyItemChanged(getItemCount() - 1);
+        }
     }
 
     /**
@@ -221,9 +231,16 @@ public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> exten
      * @param position
      */
     private void notifyLoadingStarted(int position) {
-        if (mOnLoadingListener != null) {
-            mOnLoadingListener.onLoadNextPage(position);
-        }
+        final int positionToNotify = position;
+        final Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                if (mOnLoadingListener != null) {
+                    mOnLoadingListener.onLoadNextPage(positionToNotify);
+                }
+            }
+        };
+        mMainThreadHandler.post(r);
     }
 
     @Override
