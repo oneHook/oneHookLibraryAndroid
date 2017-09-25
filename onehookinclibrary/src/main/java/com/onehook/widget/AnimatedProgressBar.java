@@ -111,17 +111,18 @@ public class AnimatedProgressBar extends View {
 
         mPaint.setStrokeWidth(primaryThickness);
         mPaint.setColor(this.secondaryProgressColor);
-        canvas.drawLine(primaryThickness / 2 + primaryProgressXOffset,
+        final float secondaryWidth = Math.max(0, getMeasuredWidth() * this.secondaryProgress - primaryThickness / 2 - primaryProgressXOffset);
+        canvas.drawLine(primaryThickness / 2 + primaryProgressXOffset + this.borderThickness,
                 height / 2,
-                Math.max(0, getMeasuredWidth() * this.secondaryProgress - primaryThickness / 2 - 2 * primaryProgressXOffset),
+                Math.max(0, secondaryWidth - this.borderThickness),
                 height / 2, mPaint);
 
         mPaint.setColor(this.primaryProgressColor);
         final float primaryLineWidth = Math.max(0, getMeasuredWidth() * this.primaryProgress - primaryThickness / 2 - primaryProgressXOffset);
         if (primaryLineWidth >= primaryThickness) {
-            canvas.drawLine(primaryThickness / 2 + primaryProgressXOffset,
+            canvas.drawLine(primaryThickness / 2 + primaryProgressXOffset + this.borderThickness,
                     height / 2,
-                    Math.max(0, primaryLineWidth),
+                    Math.max(0, primaryLineWidth - this.borderThickness),
                     height / 2, mPaint);
         }
 
@@ -132,7 +133,7 @@ public class AnimatedProgressBar extends View {
             mPaint.setStrokeWidth(this.borderThickness);
             mRectF.set(borderThickness / 2,
                     borderThickness / 2,
-                    width - borderThickness,
+                    getMeasuredWidth() - this.borderThickness / 2,
                     height - borderThickness);
             canvas.drawRoundRect(mRectF,
                     (height - this.borderThickness) / 2,
