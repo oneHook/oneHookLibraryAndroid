@@ -12,6 +12,19 @@
         <attr name="customThumb" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="StackLayout">
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="alignment" format="enum">
+            <enum name="left_or_top" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right_or_bottom" value="2" />
+        </attr>
+        <attr name="equalToMax" format="boolean"></attr>
+    </declare-styleable>
+
 
     <declare-styleable name="OHFlowLayout">
         <attr name="oh_flow_layout_horizontal_margin" format="dimension|reference"></attr>

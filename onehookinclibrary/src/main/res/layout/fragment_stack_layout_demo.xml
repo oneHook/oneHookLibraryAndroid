@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.onehook.view.StackLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:alignment="left_or_top"
+    app:orientation="horizontal">
+
+    <View
+        android:layout_width="20dp"
+        android:layout_height="90dp"
+        android:background="#FF0000"></View>
+
+    <View
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:background="#FFFF00"></View>
+
+    <View
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:background="#FF00FF"></View>
+
+
+    <View
+        android:layout_width="20dp"
+        android:layout_height="60dp"
+        android:background="#00FF00"></View>
+
+    <View
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:background="#0000FF"></View>
+
+
+</com.onehook.view.StackLayout>
