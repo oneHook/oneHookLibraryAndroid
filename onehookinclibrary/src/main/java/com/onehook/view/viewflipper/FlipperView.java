@@ -113,23 +113,21 @@ public class FlipperView extends FrameLayout {
             public void onAnimationEndOrCanceled(Animator animation) {
                 if (mCallback != null) {
                     final boolean hasNextPage = mCallback.onWillPresentNextBottomPage(mFrontPage);
-                    if (hasNextPage) {
-                        doSwap();
-                    }
+                    doSwap(hasNextPage);
                 } else {
-                    doSwap();
+                    doSwap(true);
                 }
             }
         });
         animatorSet.start();
     }
 
-    private void doSwap() {
+    private void doSwap(final boolean hasNext) {
         mBottomPage.bringToFront();
         mFrontPage.setTranslationX(0);
-        ObjectAnimator bottomMoveDownAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationY", mBottomTranslationY);
-        ObjectAnimator bottomScaleXAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleX", mBottomScale);
-        ObjectAnimator bottomScaleYAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleY", mBottomScale);
+        ObjectAnimator bottomMoveDownAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationY", hasNext ? mBottomTranslationY : 1);
+        ObjectAnimator bottomScaleXAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleX", hasNext ? mBottomScale : 1);
+        ObjectAnimator bottomScaleYAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleY", hasNext ? mBottomScale : 1);
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(bottomMoveDownAnimator, bottomScaleXAnimator, bottomScaleYAnimator);
         animatorSet.setDuration(ANIMATION_DURATION);
