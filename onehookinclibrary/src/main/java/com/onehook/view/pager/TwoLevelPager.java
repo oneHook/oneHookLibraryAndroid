@@ -117,7 +117,6 @@ public class TwoLevelPager extends FrameLayout {
     public boolean gotoPage(final int page, final boolean animated) {
 //        if (mAdapter != null && mCurrentPage < mAdapter.getCount() - 1) {
         mCurrentPage++;
-        System.out.println("OptimityDebug should go to " + page);
         mTopView.animate().translationX(-mTopView.getMeasuredWidth()).setDuration(2000).setListener(new AnimationEndListener() {
             @Override
             public void onAnimationEndOrCanceled(Animator animation) {
