@@ -23,6 +23,7 @@
             <enum name="right_or_bottom" value="2" />
         </attr>
         <attr name="equalToMax" format="boolean"></attr>
+        <attr name="distributeToEdge" format="boolean"></attr>
     </declare-styleable>
 
 

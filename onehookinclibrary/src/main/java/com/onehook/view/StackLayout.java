@@ -63,9 +63,21 @@ public class StackLayout extends FrameLayout {
     /**
      * If all the children view should have the same size as the maximum sized child.
      */
-    private boolean mEqualToMax = true;
+    private boolean mMatchToMaxChild = true;
 
+    /**
+     * If we distribute to center or to bound.
+     */
+    private boolean mDistributeToEdge = false;
+
+    /* for horizontal */
+
+    private int mTotalChildrenWidth;
     private int mMaxChildWidth;
+
+    /* for vertical */
+    private int mTotalChildrenHeight;
+    private int mMaxChildHeight;
 
     /**
      * Common init with nullable attributes.
@@ -97,7 +109,8 @@ public class StackLayout extends FrameLayout {
                     mAlignment = Alignment.CENTER;
                     break;
             }
-            mEqualToMax = a.getBoolean(R.styleable.StackLayout_equalToMax, true);
+            mMatchToMaxChild = a.getBoolean(R.styleable.StackLayout_equalToMax, true);
+            mDistributeToEdge = a.getBoolean(R.styleable.StackLayout_distributeToEdge, true);
             a.recycle();
         }
     }
@@ -129,21 +142,35 @@ public class StackLayout extends FrameLayout {
         }
     }
 
+    /* Horizontal handling */
+
     private void measureHorizontally() {
         mMaxChildWidth = 0;
+        mTotalChildrenWidth = 0;
         for (int i = 0; i < getChildCount(); i++) {
-            mMaxChildWidth = Math.max(getChildAt(i).getMeasuredWidth(), mMaxChildWidth);
+            final int measuredWidth = getChildAt(i).getMeasuredWidth();
+            mMaxChildWidth = Math.max(measuredWidth, mMaxChildWidth);
+            mTotalChildrenWidth += measuredWidth;
+        }
+        if (mMatchToMaxChild) {
+            mTotalChildrenWidth = mMaxChildWidth * getChildCount();
         }
     }
 
     private void layoutHorizontally(final int width, final int height) {
         final int childCount = getChildCount();
-
-        final int offset = (width - mMaxChildWidth) / (childCount - 1);
-        int xOffset = 0;
+        final int spacingCount;
+        if (mDistributeToEdge) {
+            spacingCount = childCount - 1;
+        } else {
+            spacingCount = childCount + 1;
+        }
+        final int spacing = (width - mTotalChildrenWidth) / spacingCount;
+        int xOffset = mDistributeToEdge ? 0 : spacing;
         for (int i = 0; i < childCount; i++) {
             final View v = getChildAt(i);
 
+            final int childWidth = mMatchToMaxChild ? mMaxChildWidth : v.getMeasuredWidth();
             final int childHeight = v.getMeasuredHeight();
 
             /* find top starting point */
@@ -161,17 +188,59 @@ public class StackLayout extends FrameLayout {
                     break;
             }
 
-
-            v.layout(xOffset, yOffset, xOffset + mMaxChildWidth, yOffset + childHeight);
-            xOffset += offset;
+            v.layout(xOffset, yOffset, xOffset + childWidth, yOffset + childHeight);
+            xOffset += childWidth + spacing;
         }
     }
 
-    private void measureVertically() {
+    /* Vertical handling */
 
+    private void measureVertically() {
+        mMaxChildHeight = 0;
+        mTotalChildrenHeight = 0;
+        for (int i = 0; i < getChildCount(); i++) {
+            final int measuredHeight = getChildAt(i).getMeasuredHeight();
+            mMaxChildHeight = Math.max(measuredHeight, mMaxChildHeight);
+            mTotalChildrenHeight += measuredHeight;
+        }
+        if (mMatchToMaxChild) {
+            mTotalChildrenHeight = mMaxChildHeight * getChildCount();
+        }
     }
 
     private void layoutVertically(final int width, final int height) {
+        final int childCount = getChildCount();
+        final int spacingCount;
+        if (mDistributeToEdge) {
+            spacingCount = childCount - 1;
+        } else {
+            spacingCount = childCount + 1;
+        }
+        final int spacing = (height - mTotalChildrenHeight) / spacingCount;
+        int yOffset = mDistributeToEdge ? 0 : spacing;
+        for (int i = 0; i < childCount; i++) {
+            final View v = getChildAt(i);
 
+            final int childWidth = v.getMeasuredWidth();
+            final int childHeight = mMatchToMaxChild ? mMaxChildHeight : v.getMeasuredHeight();
+
+            /* find top starting point */
+            final int xOffset;
+            switch (mAlignment) {
+                case LEFT_OR_TOP:
+                    xOffset = 0;
+                    break;
+                case RIGHT_OR_BOTTOM:
+                    xOffset = width - childWidth;
+                    break;
+                case CENTER:
+                default:
+                    xOffset = (width - childWidth) / 2;
+                    break;
+            }
+
+            v.layout(xOffset, yOffset, xOffset + childWidth, yOffset + childHeight);
+            yOffset += childHeight + spacing;
+        }
     }
 }
