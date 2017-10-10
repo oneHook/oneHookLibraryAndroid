@@ -78,23 +78,33 @@ public class ActivityOverlayView extends FrameLayout {
         mContentView.animate().alpha(1.0f).setDuration(300).start();
     }
 
-    public void destroy() {
-        mContentView.animate().alpha(0).setDuration(150).setListener(new AnimationEndListener() {
-            @Override
-            public void onAnimationEndOrCanceled(Animator animation) {
-                animate().alpha(0)
-                        .setDuration(300)
-                        .setListener(new AnimationEndListener() {
-                            @Override
-                            public void onAnimationEndOrCanceled(Animator animation) {
-                                removeView(mContentView);
-                                mContentView = null;
-                            }
-                        })
-                        .start();
+    public void destroy(final Activity activity, final boolean animated) {
+        if (animated) {
+            mContentView.animate().alpha(0).setDuration(150).setListener(new AnimationEndListener() {
+                @Override
+                public void onAnimationEndOrCanceled(Animator animation) {
+                    animate().alpha(0)
+                            .setDuration(300)
+                            .setListener(new AnimationEndListener() {
+                                @Override
+                                public void onAnimationEndOrCanceled(Animator animation) {
+                                    removeView(mContentView);
+                                    mContentView = null;
+                                    if (activity != null) {
+                                        ((ViewGroup) activity.getWindow().getDecorView()).removeView(ActivityOverlayView.this);
+                                    }
+                                }
+                            })
+                            .start();
+                }
+            }).start();
+        } else {
+            removeView(mContentView);
+            mContentView = null;
+            if (activity != null) {
+                ((ViewGroup) activity.getWindow().getDecorView()).removeView(ActivityOverlayView.this);
             }
-        }).start();
-
+        }
     }
 
     public static class Builder {
