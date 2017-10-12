@@ -5,12 +5,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.onehook.util.device.DeviceInfoUtil;
 import com.onehookinc.androidlib.R;
 
 import java.util.ArrayList;
@@ -153,7 +150,7 @@ public class OHFlowLayout extends ViewGroup {
         } else {
             currentLineY -= mVerticalSpacing;
         }
-        setMeasuredDimension(mMaximumWidth, (int) currentLineY);
+        setMeasuredDimension(mMaximumWidth, (int) currentLineY + getPaddingBottom());
     }
 
     private void assignLayoutForLine(final List<View> children, final float yStart, final float maxHeight) {
