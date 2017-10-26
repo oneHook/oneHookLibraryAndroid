@@ -137,6 +137,7 @@ public abstract class TaggedFragmentStatePagerAdapter extends PagerAdapter {
             Log.v(TAG,
                     "Removing item #" + position + ": f=" + object + " v="
                             + ((Fragment)object).getView());
+
         while (mSavedState.size() <= position) {
             mSavedState.add(null);
         }
