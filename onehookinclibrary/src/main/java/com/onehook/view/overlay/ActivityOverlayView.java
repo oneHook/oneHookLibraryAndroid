@@ -75,7 +75,9 @@ public class ActivityOverlayView extends FrameLayout {
     }
 
     private void showContent() {
-        mContentView.animate().alpha(1.0f).setDuration(300).start();
+        if(mContentView != null) {
+            mContentView.animate().alpha(1.0f).setDuration(300).start();
+        }
     }
 
     public void destroy(final Activity activity, final boolean animated) {
