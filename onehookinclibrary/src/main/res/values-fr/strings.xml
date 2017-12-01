@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">oneHookLibraryAndroid</string>
+    <string name="common_retry">Essayer de nouveau</string>
+    <string name="common_loading_adapter_load_more_text">Télécharger plus</string>
+</resources>
