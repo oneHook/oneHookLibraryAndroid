@@ -1,5 +1,7 @@
 package com.onehook.widget;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -198,6 +200,10 @@ public class AnimatedProgressView extends View {
     public void setProgress(final float progress) {
         this.progress = progress;
         invalidate();
+    }
+
+    public ValueAnimator createAnimation(final float toProgress, final long duration) {
+        return ObjectAnimator.ofFloat(this, "progress", this.progress, toProgress).setDuration(duration);
     }
 
     public void setBottomRingProgress(final float progress) {
