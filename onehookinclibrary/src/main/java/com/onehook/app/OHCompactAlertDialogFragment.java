@@ -19,6 +19,8 @@ import java.io.Serializable;
 
 /**
  * Created by EagleDiao on 2016-04-29.
+ * <p>
+ * Note that message can not be displayed same time as selectable items.
  */
 public class OHCompactAlertDialogFragment extends DialogFragment {
 
@@ -177,14 +179,14 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
         }
 
         public OHCompactAlertDialogFragment show(FragmentManager manager, final String tag) {
-            if(manager.findFragmentByTag(tag) == null) {
+            if (manager.findFragmentByTag(tag) == null) {
                 return show(manager, tag, false);
             }
             return (OHCompactAlertDialogFragment) manager.findFragmentByTag(tag);
         }
 
         public OHCompactAlertDialogFragment showAllowingStateLoss(FragmentManager manager, final String tag) {
-            if(manager.findFragmentByTag(tag) == null) {
+            if (manager.findFragmentByTag(tag) == null) {
                 return show(manager, tag, true);
             }
             return (OHCompactAlertDialogFragment) manager.findFragmentByTag(tag);
@@ -327,18 +329,18 @@ public class OHCompactAlertDialogFragment extends DialogFragment {
                         }
                     });
         } else if (selectableItemIconsRes != null && selectableItemsRes != null) {
-        /* selectable items res and icons are optional */
+             /* selectable items res and icons are optional */
             builder.setAdapter(new IconTitleListAdapter(selectableItemIconsRes, selectableItemsRes),
                     new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    if (mCallback == null) {
-                        return;
-                    }
-                    mCallback.onAlertDialogFragmentButtonClicked(i, getTag(), attachedObject);
-                    mCallback = null;
-                }
-            });
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (mCallback == null) {
+                                return;
+                            }
+                            mCallback.onAlertDialogFragmentButtonClicked(i, getTag(), attachedObject);
+                            mCallback = null;
+                        }
+                    });
         } else if (selectableItems != null) {
             /* only strings */
             builder.setItems(selectableItems, new DialogInterface.OnClickListener() {
