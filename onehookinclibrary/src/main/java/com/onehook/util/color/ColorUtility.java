@@ -31,6 +31,13 @@ public class ColorUtility {
         return Color.rgb((int) (r * degree), (int) (g * degree), (int) (b * degree));
     }
 
+    public static int getAlphaColor(int color, float alpha) {
+        final int r = Color.red(color);
+        final int b = Color.blue(color);
+        final int g = Color.green(color);
+        return Color.argb(255 * alpha, r, g, b);
+    }
+
     public static int getWhiteColor(final float degree) {
         int comp = (int) (255 * degree);
         return Color.rgb(comp, comp, comp);
@@ -40,5 +47,6 @@ public class ColorUtility {
         double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
         return darkness < 0.5;
     }
+
 
 }
