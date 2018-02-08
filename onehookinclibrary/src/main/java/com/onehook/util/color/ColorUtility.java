@@ -35,7 +35,7 @@ public class ColorUtility {
         final int r = Color.red(color);
         final int b = Color.blue(color);
         final int g = Color.green(color);
-        return Color.argb(255 * alpha, r, g, b);
+        return Color.argb((int) (255 * alpha), r, g, b);
     }
 
     public static int getWhiteColor(final float degree) {
