@@ -31,7 +31,7 @@ public class TimeAgo {
         if (secondsDelta < 0) {
             return timeAgoShort(context, -secondsDelta);
         } else {
-            return "N/A";
+            return context.getResources().getString(R.string.time_ago_short_now);
         }
     }
 
