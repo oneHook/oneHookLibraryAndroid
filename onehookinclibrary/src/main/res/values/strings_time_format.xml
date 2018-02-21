@@ -10,5 +10,13 @@
     <string name="time_ago_short_months_ago">%1$dmo</string>
     <string name="time_ago_short_years_ago">%1$dy</string>
 
+    <string name="time_ago_medium_now">Just Now</string>
+    <string name="time_ago_medium_seconds_ago">%1$d seconds ago</string>
+    <string name="time_ago_medium_minutes_ago">%1$d minutes ago</string>
+    <string name="time_ago_medium_hours_ago">%1$d hours ago</string>
+    <string name="time_ago_medium_days_ago">%1$d days ago</string>
+    <string name="time_ago_medium_weeks_ago">%1$d weeks ago</string>
+    <string name="time_ago_medium_months_ago">%1$d months ago</string>
+    <string name="time_ago_medium_years_ago">%1$d years ago</string>
 
 </resources>

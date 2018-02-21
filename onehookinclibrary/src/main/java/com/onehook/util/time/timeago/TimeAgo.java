@@ -35,6 +35,19 @@ public class TimeAgo {
         }
     }
 
+    public String relativeTimeMedium(final Context context, final long time) {
+        return relativeTimeMedium(context, System.currentTimeMillis(), time);
+    }
+
+    public String relativeTimeMedium(final Context context, final long currentTime, final long time) {
+        final long secondsDelta = time - currentTime;
+        if (secondsDelta < 0) {
+            return timeAgoMedium(context, -secondsDelta);
+        } else {
+            return context.getResources().getString(R.string.time_ago_medium_now);
+        }
+    }
+
     private String timeAgoShort(final Context context, final long delta) {
         if (delta < NOW) {
             return context.getResources().getString(R.string.time_ago_short_now);
@@ -52,6 +65,26 @@ public class TimeAgo {
             return context.getResources().getString(R.string.time_ago_short_months_ago, delta / MONTH);
         } else {
             return context.getResources().getString(R.string.time_ago_short_years_ago, delta / YEAR);
+        }
+    }
+
+    private String timeAgoMedium(final Context context, final long delta) {
+        if (delta < NOW) {
+            return context.getResources().getString(R.string.time_ago_medium_now);
+        } else if (delta < MINUTE) {
+            return context.getResources().getString(R.string.time_ago_medium_seconds_ago, delta / SECOND);
+        } else if (delta < HOUR) {
+            return context.getResources().getString(R.string.time_ago_medium_minutes_ago, delta / MINUTE);
+        } else if (delta < DAY) {
+            return context.getResources().getString(R.string.time_ago_medium_hours_ago, delta / HOUR);
+        } else if (delta < WEEK) {
+            return context.getResources().getString(R.string.time_ago_medium_days_ago, delta / DAY);
+        } else if (delta < MONTH) {
+            return context.getResources().getString(R.string.time_ago_medium_weeks_ago, delta / WEEK);
+        } else if (delta < YEAR) {
+            return context.getResources().getString(R.string.time_ago_medium_months_ago, delta / MONTH);
+        } else {
+            return context.getResources().getString(R.string.time_ago_medium_years_ago, delta / YEAR);
         }
     }
 
