@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,7 @@ public class FlipperView extends FrameLayout {
         mBottomPage.setTranslationY(mBottomTranslationY);
         mBottomPage.setScaleX(mBottomScale);
         mBottomPage.setScaleY(mBottomScale);
+        mBottomPage.setVisibility(View.GONE);
     }
 
     public void setCallback(final FlipperViewCallback callback) {
@@ -120,6 +122,9 @@ public class FlipperView extends FrameLayout {
             }
         });
         animatorSet.start();
+
+        mFrontPage.setVisibility(View.VISIBLE);
+        mBottomPage.setVisibility(View.VISIBLE);
     }
 
     private void doSwap(final boolean hasNext) {
@@ -136,6 +141,9 @@ public class FlipperView extends FrameLayout {
         final View temp = mFrontPage;
         mFrontPage = mBottomPage;
         mBottomPage = temp;
+
+        mFrontPage.setVisibility(View.VISIBLE);
+        mBottomPage.setVisibility(View.GONE);
     }
 
 }
