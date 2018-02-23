@@ -58,18 +58,6 @@ public class ActivityOverlayView extends FrameLayout {
         return false;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (mContentView == null) {
-            return super.onTouchEvent(event);
-        }
-        if (mContentView.onTouchEvent(event)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     private void hideContent() {
         mContentView.setAlpha(0);
     }
