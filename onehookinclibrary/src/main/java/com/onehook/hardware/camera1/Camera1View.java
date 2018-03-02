@@ -16,8 +16,9 @@ import java.util.List;
 
 /**
  * Created by EagleDiaoOptimity on 2018-03-01.
+ * Camera view for < 21.
  */
-public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
+public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final String DEBUG_TAG = "oneHook";
 
@@ -36,9 +37,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
      */
     private Point mPreviewViewSize;
 
-    public CameraView(Context context, Camera camera) {
+    public Camera1View(Context context, Camera1Controller cameraController) {
         super(context);
-        mCamera = camera;
+        mCamera = cameraController.getCamera();
 
         mPreviewViewSize = new Point();
         mHolder = getHolder();
