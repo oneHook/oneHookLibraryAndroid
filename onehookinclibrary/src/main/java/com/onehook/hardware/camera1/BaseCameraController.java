@@ -8,6 +8,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.ExifInterface;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 
@@ -32,10 +34,21 @@ public abstract class BaseCameraController implements SensorEventListener {
      */
     protected int mCurrentOrientation;
 
-    public BaseCameraController(final Context context) {
+    /**
+     * Camera config.
+     */
+    private CameraConfig mCameraConfig;
+
+    public BaseCameraController(@NonNull final Context context, @Nullable CameraConfig cameraConfig) {
 
         /* Getting the sensor service. */
         mSensorManager = (SensorManager) context.getSystemService(Activity.SENSOR_SERVICE);
+
+        if (cameraConfig != null) {
+            mCameraConfig = cameraConfig;
+        } else {
+            mCameraConfig = new CameraConfig();
+        }
     }
 
     /**
@@ -60,6 +73,14 @@ public abstract class BaseCameraController implements SensorEventListener {
     public void onPause() {
         /* make sure we dont listen to sensor events */
         mSensorManager.unregisterListener(this);
+    }
+
+    /**
+     * Get camera config object.
+     */
+    @NonNull
+    public CameraConfig getCameraConfig() {
+        return mCameraConfig;
     }
 
     /**
@@ -155,5 +176,11 @@ public abstract class BaseCameraController implements SensorEventListener {
         return animation;
     }
 
+
+    /* child should implement the following */
+
+    public abstract void takePicture();
+
+    public abstract void restartPreview();
 
 }

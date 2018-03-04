@@ -33,6 +33,11 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
     private Camera mCamera;
 
     /**
+     * Camera config object.
+     */
+    private CameraConfig mCameraConfig;
+
+    /**
      * Hosted preview view size. calculated in onMeasure.
      */
     private Point mPreviewViewSize;
@@ -40,7 +45,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
     public Camera1View(Context context, Camera1Controller cameraController) {
         super(context);
         mCamera = cameraController.getCamera();
-
+        mCameraConfig = cameraController.getCameraConfig();
         mPreviewViewSize = new Point();
         mHolder = getHolder();
         mHolder.addCallback(this);
@@ -108,7 +113,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         }
         params.setPictureSize(pictureSize.width, pictureSize.height);
         params.setPictureFormat(PixelFormat.JPEG);
-        params.setJpegQuality(85);
+        params.setJpegQuality(mCameraConfig.JPEG_QUALITY);
 
         final Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 

@@ -5,6 +5,7 @@ import android.hardware.Camera;
 import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -26,6 +27,8 @@ public class Camera1Controller extends BaseCameraController {
     private String fileName;
     private ExifInterface exif;
 
+
+
     /**
      * Camera object.
      */
@@ -35,26 +38,30 @@ public class Camera1Controller extends BaseCameraController {
      * @param context
      * @param savedInstanceState
      */
-    public Camera1Controller(final Context context, final Bundle savedInstanceState) {
-        super(context);
+    public Camera1Controller(@NonNull final Context context,
+                             @Nullable final Bundle savedInstanceState,
+                             @Nullable CameraConfig cameraConfig) {
+        super(context, cameraConfig);
         // Setting all the path for the image
         sdRoot = Environment.getExternalStorageDirectory();
         dir = "/DCIM/Camera/";
-
     }
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
     public void onResume() {
+        super.onResume();
         /* make sure the camera instance is ready */
         mCamera = getCameraInstance();
     }
 
     @Override
     public void onPause() {
+        super.onPause();
         if (mCamera != null) {
             /* Make sure we release the camera for other applications */
             mCamera.release();
@@ -67,25 +74,15 @@ public class Camera1Controller extends BaseCameraController {
         return mCamera;
     }
 
+    @Override
     public void takePicture() {
-
-//                mCamera.takePicture(null, null, mPicture);
+        mCamera.takePicture(null, null, mPicture);
     }
 
-    public void retakePicture() {
-        //                // Deleting the image from the SD card/
-//                File discardedPhoto = new File(sdRoot, dir + fileName);
-//                discardedPhoto.delete();
-//
-//                // Restart the camera preview.
-//                mCamera.startPreview();
-//
-//                // Reorganize the buttons on the screen
-//                flBtnContainer.setVisibility(LinearLayout.VISIBLE);
-//                ibRetake.setVisibility(LinearLayout.GONE);
-//                ibUse.setVisibility(LinearLayout.GONE);
+    @Override
+    public void restartPreview() {
+        mCamera.startPreview();
     }
-
 
     private boolean checkSDCard() {
         boolean state = false;
@@ -155,7 +152,6 @@ public class Camera1Controller extends BaseCameraController {
 
         }
     };
-
 
 
 }
