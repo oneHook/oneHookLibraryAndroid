@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.ExifInterface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.animation.Animation;
@@ -39,7 +40,20 @@ public abstract class BaseCameraController implements SensorEventListener {
      */
     private CameraConfig mCameraConfig;
 
-    public BaseCameraController(@NonNull final Context context, @Nullable CameraConfig cameraConfig) {
+    /**
+     * Callback.
+     */
+    protected CameraControllerCallback mCallback;
+
+    /**
+     *
+     * @param context
+     * @param savedInstnaceState
+     * @param cameraConfig
+     */
+    public BaseCameraController(@NonNull final Context context,
+                                @Nullable final Bundle savedInstnaceState,
+                                @Nullable CameraConfig cameraConfig) {
 
         /* Getting the sensor service. */
         mSensorManager = (SensorManager) context.getSystemService(Activity.SENSOR_SERVICE);
@@ -174,6 +188,10 @@ public abstract class BaseCameraController implements SensorEventListener {
         animation.setFillAfter(true);
 
         return animation;
+    }
+
+    public void setCallback(final CameraControllerCallback callback) {
+        mCallback = callback;
     }
 
 

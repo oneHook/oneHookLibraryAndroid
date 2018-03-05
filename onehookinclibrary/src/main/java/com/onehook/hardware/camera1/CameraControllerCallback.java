@@ -7,5 +7,5 @@ import android.media.ExifInterface;
  */
 public interface CameraControllerCallback {
 
-    void onPictureTaken(byte[] data, final ExifInterface exif);
+    void onPictureTaken(byte[] data, final PictureInfo pictureInfo);
 }

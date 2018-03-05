@@ -22,13 +22,6 @@ import java.util.Date;
  */
 public class Camera1Controller extends BaseCameraController {
 
-    private File sdRoot;
-    private String dir;
-    private String fileName;
-    private ExifInterface exif;
-
-
-
     /**
      * Camera object.
      */
@@ -41,10 +34,7 @@ public class Camera1Controller extends BaseCameraController {
     public Camera1Controller(@NonNull final Context context,
                              @Nullable final Bundle savedInstanceState,
                              @Nullable CameraConfig cameraConfig) {
-        super(context, cameraConfig);
-        // Setting all the path for the image
-        sdRoot = Environment.getExternalStorageDirectory();
-        dir = "/DCIM/Camera/";
+        super(context, savedInstanceState, cameraConfig);
     }
 
     @Override
@@ -84,17 +74,6 @@ public class Camera1Controller extends BaseCameraController {
         mCamera.startPreview();
     }
 
-    private boolean checkSDCard() {
-        boolean state = false;
-
-        String sd = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(sd)) {
-            state = true;
-        }
-
-        return state;
-    }
-
     /**
      * A safe way to get an instance of the Camera object.
      */
@@ -102,56 +81,22 @@ public class Camera1Controller extends BaseCameraController {
     public static Camera getCameraInstance() {
         Camera c = null;
         try {
-            // attempt to get a Camera instance
             c = Camera.open();
         } catch (Exception e) {
-            // Camera is not available (in use or does not exist)
+            /* Camera is not available (in use or does not exist) */
             e.printStackTrace();
         }
-
-        // returns null if camera is unavailable
         return c;
     }
 
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
         public void onPictureTaken(byte[] data, Camera camera) {
-
-            // Replacing the button after a photho was taken.
-
-            // File name of the image that we just took.
-            fileName = "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()).toString() + ".jpg";
-
-            // Creating the directory where to save the image. Sadly in older
-            // version of Android we can not get the Media catalog name
-            File mkDir = new File(sdRoot, dir);
-            mkDir.mkdirs();
-
-            // Main file where to save the data that we recive from the camera
-            File pictureFile = new File(sdRoot, dir + fileName);
-
-            try {
-                FileOutputStream purge = new FileOutputStream(pictureFile);
-                purge.write(data);
-                purge.close();
-            } catch (FileNotFoundException e) {
-                Log.d("DG_DEBUG", "File not found: " + e.getMessage());
-            } catch (IOException e) {
-                Log.d("DG_DEBUG", "Error accessing file: " + e.getMessage());
+            final PictureInfo info = new PictureInfo();
+            info.orientation = mCurrentOrientation;
+            if (mCallback != null) {
+                mCallback.onPictureTaken(data, info);
             }
-
-            // Adding Exif data for the orientation. For some strange reason the
-            // ExifInterface class takes a string instead of a file.
-            try {
-                exif = new ExifInterface("/sdcard/" + dir + fileName);
-                exif.setAttribute(ExifInterface.TAG_ORIENTATION, "" + mCurrentOrientation);
-                exif.saveAttributes();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
         }
     };
-
-
 }
