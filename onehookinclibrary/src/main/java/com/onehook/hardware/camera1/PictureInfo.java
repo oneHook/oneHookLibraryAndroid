@@ -6,5 +6,7 @@ package com.onehook.hardware.camera1;
 
 public class PictureInfo {
 
-    int orientation;
+    public int orientation;
+    public int width;
+    public int height;
 }

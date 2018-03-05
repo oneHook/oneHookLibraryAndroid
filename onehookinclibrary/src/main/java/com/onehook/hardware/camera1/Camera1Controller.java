@@ -94,6 +94,9 @@ public class Camera1Controller extends BaseCameraController {
         public void onPictureTaken(byte[] data, Camera camera) {
             final PictureInfo info = new PictureInfo();
             info.orientation = mCurrentOrientation;
+            info.width = camera.getParameters().getPictureSize().width;
+            info.height = camera.getParameters().getPictureSize().height;
+
             if (mCallback != null) {
                 mCallback.onPictureTaken(data, info);
             }

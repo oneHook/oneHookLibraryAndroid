@@ -65,6 +65,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        System.out.println("oneHook surface changed");
         /* If your preview can change or rotate, take care of those events here.
            Make sure to stop the preview before resizing or reformatting it. */
         if (mHolder.getSurface() == null) {
@@ -75,7 +76,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         try {
             mCamera.stopPreview();
         } catch (Exception e) {
-            Log.d(DEBUG_TAG, "Failed to stop preview: " + e.getMessage());
+            Log.d(DEBUG_TAG, "SURFACE CHANGED Failed to stop preview: " + e.getMessage());
         }
 
         try {
@@ -87,10 +88,11 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        System.out.println("oneHook surface destroyed");
         try {
             mCamera.stopPreview();
         } catch (Exception e) {
-            Log.d(DEBUG_TAG, "Failed to stop preview: " + e.getMessage());
+            Log.d(DEBUG_TAG, "SURFACE DESTROYED Failed to stop preview: " + e.getMessage());
         }
     }
 
