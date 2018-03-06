@@ -6,5 +6,9 @@ package com.onehook.hardware.camera1;
 
 public class CameraConfig {
 
-    public int JPEG_QUALITY = 85;
+    public static final int HIGHIST_POSSIBLE = -1;
+
+    public int jpegQuality = 85;
+
+    public int shortEdgeLength = HIGHIST_POSSIBLE;
 }

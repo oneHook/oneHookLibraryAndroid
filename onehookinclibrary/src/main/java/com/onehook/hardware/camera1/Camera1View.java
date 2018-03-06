@@ -65,7 +65,6 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        System.out.println("oneHook surface changed");
         /* If your preview can change or rotate, take care of those events here.
            Make sure to stop the preview before resizing or reformatting it. */
         if (mHolder.getSurface() == null) {
@@ -103,19 +102,24 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
      */
     private void restartCamera() throws IOException {
         final Camera.Parameters params = mCamera.getParameters();
-        final Camera.Size previewSize = getOptimalPreviewSize(mCamera.getParameters().getSupportedPreviewSizes(), mPreviewViewSize.x, mPreviewViewSize.y);
+        final Camera.Size previewSize = getOptimalPreviewSize(mCamera.getParameters().getSupportedPreviewSizes(),
+                mPreviewViewSize.x,
+                mPreviewViewSize.y);
         params.setPreviewSize(previewSize.width, previewSize.height);
 
         Camera.Size pictureSize = params.getSupportedPictureSizes().get(0);
-        for (Camera.Size size : params.getSupportedPictureSizes()) {
-            if (size.width == previewSize.width && size.height == previewSize.height) {
+
+        if(mCameraConfig.shortEdgeLength != CameraConfig.HIGHIST_POSSIBLE) {
+            for (Camera.Size size : params.getSupportedPictureSizes()) {
+                if (Math.min(size.width, size.height) < mCameraConfig.shortEdgeLength) {
+                    break;
+                }
                 pictureSize = size;
-                break;
             }
         }
         params.setPictureSize(pictureSize.width, pictureSize.height);
         params.setPictureFormat(PixelFormat.JPEG);
-        params.setJpegQuality(mCameraConfig.JPEG_QUALITY);
+        params.setJpegQuality(mCameraConfig.jpegQuality);
 
         final Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
