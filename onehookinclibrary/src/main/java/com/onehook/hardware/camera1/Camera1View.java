@@ -109,7 +109,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
         Camera.Size pictureSize = params.getSupportedPictureSizes().get(0);
 
-        if(mCameraConfig.shortEdgeLength != CameraConfig.HIGHIST_POSSIBLE) {
+        if (mCameraConfig.shortEdgeLength != CameraConfig.HIGHIST_POSSIBLE) {
             for (Camera.Size size : params.getSupportedPictureSizes()) {
                 if (Math.min(size.width, size.height) < mCameraConfig.shortEdgeLength) {
                     break;
@@ -123,16 +123,34 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
         final Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
-        if (display.getRotation() == Surface.ROTATION_0) {
-            mCamera.setDisplayOrientation(90);
-        } else if (display.getRotation() == Surface.ROTATION_90) {
-        } else if (display.getRotation() == Surface.ROTATION_180) {
-        } else if (display.getRotation() == Surface.ROTATION_270) {
-            mCamera.setDisplayOrientation(180);
+        if (mCameraConfig.cameraInfo == CameraConfig.BACK_FACING) {
+            /* TODO orientation calculation*/
+            if (display.getRotation() == Surface.ROTATION_0) {
+                mCamera.setDisplayOrientation(90);
+            } else if (display.getRotation() == Surface.ROTATION_90) {
+            } else if (display.getRotation() == Surface.ROTATION_180) {
+            } else if (display.getRotation() == Surface.ROTATION_270) {
+                mCamera.setDisplayOrientation(180);
+            }
+        } else {
+            /* TODO orientation calculation */
+            if (display.getRotation() == Surface.ROTATION_0) {
+                mCamera.setDisplayOrientation(270);
+            } else if (display.getRotation() == Surface.ROTATION_90) {
+                mCamera.setDisplayOrientation(90);
+            } else if (display.getRotation() == Surface.ROTATION_180) {
+                mCamera.setDisplayOrientation(90);
+            } else if (display.getRotation() == Surface.ROTATION_270) {
+                mCamera.setDisplayOrientation(90);
+            }
         }
 
         /* make sure to auto focus */
-        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        if(params.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+            params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        } else if(params.getSupportedFocusModes().size() > 0) {
+            params.setFocusMode(params.getSupportedFocusModes().get((0)));
+        }
 
         mCamera.setParameters(params);
         mCamera.setPreviewDisplay(mHolder);

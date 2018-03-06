@@ -28,6 +28,11 @@ public class Camera1Controller extends BaseCameraController {
     private Camera mCamera;
 
     /**
+     * Camera Surface.
+     */
+    private Camera1View mCamera1View;
+
+    /**
      * @param context
      * @param savedInstanceState
      */
@@ -46,7 +51,7 @@ public class Camera1Controller extends BaseCameraController {
     public void onResume() {
         super.onResume();
         /* make sure the camera instance is ready */
-        mCamera = getCameraInstance();
+        mCamera = getCameraInstance(mCameraConfig);
     }
 
     @Override
@@ -57,6 +62,16 @@ public class Camera1Controller extends BaseCameraController {
             mCamera.release();
             mCamera = null;
         }
+        mCamera1View = null;
+    }
+
+    /**
+     * Set the surface of the camera.
+     *
+     * @param view camera surface view
+     */
+    public void setView(final Camera1View view) {
+        mCamera1View = view;
     }
 
     @Nullable
@@ -78,10 +93,15 @@ public class Camera1Controller extends BaseCameraController {
      * A safe way to get an instance of the Camera object.
      */
     @Nullable
-    public static Camera getCameraInstance() {
+    public static Camera getCameraInstance(final CameraConfig config) {
+        int cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
+        if (config.cameraInfo == CameraConfig.FRONT_FACING) {
+            cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
+        }
+
         Camera c = null;
         try {
-            c = Camera.open();
+            c = Camera.open(cameraID);
         } catch (Exception e) {
             /* Camera is not available (in use or does not exist) */
             e.printStackTrace();

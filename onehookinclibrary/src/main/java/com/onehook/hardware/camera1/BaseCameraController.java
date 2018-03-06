@@ -38,7 +38,7 @@ public abstract class BaseCameraController implements SensorEventListener {
     /**
      * Camera config.
      */
-    private CameraConfig mCameraConfig;
+    protected CameraConfig mCameraConfig;
 
     /**
      * Callback.
