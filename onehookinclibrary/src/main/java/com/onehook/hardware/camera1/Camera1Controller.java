@@ -37,9 +37,8 @@ public class Camera1Controller extends BaseCameraController {
      * @param savedInstanceState
      */
     public Camera1Controller(@NonNull final Context context,
-                             @Nullable final Bundle savedInstanceState,
                              @Nullable CameraConfig cameraConfig) {
-        super(context, savedInstanceState, cameraConfig);
+        super(context, cameraConfig);
     }
 
     @Override

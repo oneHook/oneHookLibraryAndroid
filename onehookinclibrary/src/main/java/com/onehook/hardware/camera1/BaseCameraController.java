@@ -52,7 +52,6 @@ public abstract class BaseCameraController implements SensorEventListener {
      * @param cameraConfig
      */
     public BaseCameraController(@NonNull final Context context,
-                                @Nullable final Bundle savedInstnaceState,
                                 @Nullable CameraConfig cameraConfig) {
 
         /* Getting the sensor service. */
