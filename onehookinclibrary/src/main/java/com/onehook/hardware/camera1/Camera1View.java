@@ -87,7 +87,6 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        System.out.println("oneHook surface destroyed");
         try {
             mCamera.stopPreview();
         } catch (Exception e) {
