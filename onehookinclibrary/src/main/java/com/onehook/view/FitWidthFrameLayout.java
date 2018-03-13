@@ -35,7 +35,7 @@ public class FitWidthFrameLayout extends FrameLayout {
         setMeasuredDimension(width, width);
         for (int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
-            v.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
+            v.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST));
         }
     }

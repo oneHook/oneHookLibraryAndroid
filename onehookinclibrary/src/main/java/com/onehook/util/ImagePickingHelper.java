@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.File;
@@ -58,6 +59,29 @@ public class ImagePickingHelper {
             final File image = File.createTempFile(
                     imageFileName,  /* prefix */
                     ".jpg",         /* suffix */
+                    storageDir      /* directory */
+            );
+            Log.d("OH ImagePickingHelper", "Create new temp file " + image.getAbsolutePath());
+            return image;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    @Nullable
+    public static File createNewImageFileInInternal(final Context context, final String filename) {
+        final String imageFileName;
+        if (filename != null) {
+            imageFileName = filename;
+        } else {
+            final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            imageFileName = "JPEG_" + timeStamp + "_";
+        }
+        final File storageDir = context.getFilesDir();
+        try {
+            final File image = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".jpg",   /* suffix */
                     storageDir      /* directory */
             );
             Log.d("OH ImagePickingHelper", "Create new temp file " + image.getAbsolutePath());
