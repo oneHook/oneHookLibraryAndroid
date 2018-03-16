@@ -8,6 +8,7 @@ import com.onehookinc.androidlib.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by eaglediaotomore on 2016-07-10.
@@ -102,5 +103,37 @@ public class OHDateUtils extends DateUtils {
             sWeekdayStrings = context.getResources().getStringArray(R.array.date_weekdays);
         }
         return sWeekdayStrings[normalizedWeekday];
+    }
+
+    /**
+     * Create a date object with given year, month and day and 00:00:00 in UTC time.
+     *
+     * @param year  year
+     * @param month month of the year (1-12)
+     * @param day   day of the month
+     * @return date of the given day in UTC
+     */
+    public static Date getDate(final int year, final int month, final int day) {
+        return getDate(year, month, day, 0, 0);
+    }
+
+    /**
+     * @param year
+     * @param month
+     * @param day
+     * @param hour
+     * @param minutes
+     * @return
+     */
+    public static Date getDate(final int year, final int month, final int day, int hour, int minutes) {
+        final Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        return calendar.getTime();
     }
 }
