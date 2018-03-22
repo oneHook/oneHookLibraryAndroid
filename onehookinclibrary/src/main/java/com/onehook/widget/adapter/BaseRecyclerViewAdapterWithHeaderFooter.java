@@ -12,7 +12,7 @@ import android.view.ViewGroup;
  * @param <T> wrapped base recycler view adapter
  */
 public abstract class BaseRecyclerViewAdapterWithHeaderFooter<T extends BaseRecyclerViewAdapter>
-        extends BaseWrappedRecyclerViewAdapter<T> {
+        extends BaseWrapperRecyclerViewAdapter<T> {
 
     final RecyclerView.AdapterDataObserver mObserver = new RecyclerView.AdapterDataObserver() {
         @Override

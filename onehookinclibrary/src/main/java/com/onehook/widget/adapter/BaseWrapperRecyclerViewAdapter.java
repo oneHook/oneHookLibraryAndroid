@@ -6,12 +6,12 @@ import android.support.v7.widget.RecyclerView;
 /**
  * @author EagleDiao
  */
-public abstract class BaseWrappedRecyclerViewAdapter<T extends BaseRecyclerViewAdapter> extends BaseRecyclerViewAdapter {
+public abstract class BaseWrapperRecyclerViewAdapter<T extends BaseRecyclerViewAdapter> extends BaseRecyclerViewAdapter {
 
     final T mWrappedAdapter;
     private RecyclerView.AdapterDataObserver mObserver;
 
-    public BaseWrappedRecyclerViewAdapter(T adapter) {
+    public BaseWrapperRecyclerViewAdapter(T adapter) {
         mWrappedAdapter = adapter;
     }
 
@@ -20,8 +20,9 @@ public abstract class BaseWrappedRecyclerViewAdapter<T extends BaseRecyclerViewA
             mWrappedAdapter.registerAdapterDataObserver(mObserver);
         }
 
-        if (mWrappedAdapter != null && mWrappedAdapter instanceof BaseWrappedRecyclerViewAdapter) {
-            ((BaseWrappedRecyclerViewAdapter) mWrappedAdapter).onResume();
+        /* in case my wrapped adapter is also a wrapper */
+        if (mWrappedAdapter != null && mWrappedAdapter instanceof BaseWrapperRecyclerViewAdapter) {
+            ((BaseWrapperRecyclerViewAdapter) mWrappedAdapter).onResume();
         }
     }
 
@@ -30,8 +31,9 @@ public abstract class BaseWrappedRecyclerViewAdapter<T extends BaseRecyclerViewA
             mWrappedAdapter.unregisterAdapterDataObserver(mObserver);
         }
 
-        if (mWrappedAdapter != null && mWrappedAdapter instanceof BaseWrappedRecyclerViewAdapter) {
-            ((BaseWrappedRecyclerViewAdapter) mWrappedAdapter).onPause();
+        /* in case my wrapped adapter is also a wrapper */
+        if (mWrappedAdapter != null && mWrappedAdapter instanceof BaseWrapperRecyclerViewAdapter) {
+            ((BaseWrapperRecyclerViewAdapter) mWrappedAdapter).onPause();
         }
     }
 

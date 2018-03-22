@@ -19,7 +19,7 @@ import com.onehookinc.androidlib.R;
  * @author EagleDiao
  */
 public class RecyclerViewLoadingAdapter<T extends BaseRecyclerViewAdapter> extends
-        BaseWrappedRecyclerViewAdapter<T> implements OnClickListener {
+        BaseWrapperRecyclerViewAdapter<T> implements OnClickListener {
 
     /**
      * If the loading is triggered by clicking or auto.
