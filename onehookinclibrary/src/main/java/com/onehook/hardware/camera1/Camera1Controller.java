@@ -43,6 +43,7 @@ public class Camera1Controller extends BaseCameraController {
 
     @Override
     public void onDestroy() {
+        mCamera1View = null;
         super.onDestroy();
     }
 
@@ -80,12 +81,14 @@ public class Camera1Controller extends BaseCameraController {
 
     @Override
     public void takePicture() {
-        mCamera.takePicture(null, null, mPicture);
+        if (mCamera1View != null && mCamera1View.isSafeToTake()) {
+            mCamera1View.takePicture(null, null, mPicture);
+        }
     }
 
     @Override
     public void restartPreview() {
-        mCamera.startPreview();
+        mCamera1View.startPreview();
     }
 
     /**

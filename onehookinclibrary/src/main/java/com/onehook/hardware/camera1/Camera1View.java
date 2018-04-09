@@ -42,6 +42,8 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
      */
     private Point mPreviewViewSize;
 
+    private boolean mIsSafeToTakePicture = false;
+
     public Camera1View(Context context, Camera1Controller cameraController) {
         super(context);
         mCamera = cameraController.getCamera();
@@ -49,6 +51,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         mPreviewViewSize = new Point();
         mHolder = getHolder();
         mHolder.addCallback(this);
+        cameraController.setView(this);
 
         /* deprecated setting, but required on Android versions prior to 3.0 */
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -58,6 +61,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         try {
             restartCamera();
+            mIsSafeToTakePicture = true;
         } catch (Exception e) {
             Log.d(DEBUG_TAG, "Error setting camera preview: " + e.getMessage());
         }
@@ -80,6 +84,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
         try {
             restartCamera();
+            mIsSafeToTakePicture = true;
         } catch (Exception e) {
             Log.d(DEBUG_TAG, "Error starting camera preview: " + e.getMessage());
         }
@@ -92,6 +97,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         } catch (Exception e) {
             Log.d(DEBUG_TAG, "SURFACE DESTROYED Failed to stop preview: " + e.getMessage());
         }
+        mIsSafeToTakePicture = false;
     }
 
     /**
@@ -145,15 +151,20 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         /* make sure to auto focus */
-        if(params.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+        if (params.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
             params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-        } else if(params.getSupportedFocusModes().size() > 0) {
+        } else if (params.getSupportedFocusModes().size() > 0) {
             params.setFocusMode(params.getSupportedFocusModes().get((0)));
         }
 
         mCamera.setParameters(params);
         mCamera.setPreviewDisplay(mHolder);
         mCamera.startPreview();
+    }
+
+    public void startPreview() {
+        mCamera.startPreview();
+        mIsSafeToTakePicture = true;
     }
 
     @Override
@@ -202,5 +213,14 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         return optimalSize;
+    }
+
+    public boolean isSafeToTake() {
+        return mIsSafeToTakePicture;
+    }
+
+    public void takePicture(Camera.ShutterCallback callback, Camera.PictureCallback rawPictureCallback, Camera.PictureCallback jpgPictureCallback ) {
+        mCamera.takePicture(callback, rawPictureCallback, jpgPictureCallback);
+        mIsSafeToTakePicture = false;
     }
 }

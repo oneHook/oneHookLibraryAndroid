@@ -38,6 +38,8 @@ public class ImagePickingHelper {
         pickIntent.setType("image/*");
         final Intent chooserIntent = Intent.createChooser(pickIntent, context.getString(res));
         if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
+            takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             final File photoFile = newImageFile;
             if (photoFile != null) {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
