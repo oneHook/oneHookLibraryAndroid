@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.os.Build;
 import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
@@ -110,7 +111,6 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         final Camera.Size previewSize = getOptimalPreviewSize(mCamera.getParameters().getSupportedPreviewSizes(),
                 mPreviewViewSize.x,
                 mPreviewViewSize.y);
-        params.setPreviewSize(previewSize.width, previewSize.height);
 
         Camera.Size pictureSize = params.getSupportedPictureSizes().get(0);
 
@@ -128,7 +128,12 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
         final Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        Camera.getCameraInfo(mCameraConfig.cameraInfo, cameraInfo);
+
+
         if (mCameraConfig.cameraInfo == CameraConfig.BACK_FACING) {
+            /* back camera */
             /* TODO orientation calculation*/
             if (display.getRotation() == Surface.ROTATION_0) {
                 mCamera.setDisplayOrientation(90);
@@ -138,9 +143,18 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
                 mCamera.setDisplayOrientation(180);
             }
         } else {
+            /* front camera */
             /* TODO orientation calculation */
             if (display.getRotation() == Surface.ROTATION_0) {
-                mCamera.setDisplayOrientation(270);
+                /* Super hacky */
+                if("Nexus 5".equals(Build.MODEL)) {
+                    mCamera.setDisplayOrientation(90);
+                } else {
+                    final int degrees = 0;
+                    int result = (cameraInfo.orientation + degrees) % 360;
+                    result = (360 - result) % 360;
+                    mCamera.setDisplayOrientation(result);
+                }
             } else if (display.getRotation() == Surface.ROTATION_90) {
                 mCamera.setDisplayOrientation(90);
             } else if (display.getRotation() == Surface.ROTATION_180) {
