@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.hardware.Camera;
-import android.os.Build;
 import android.util.Log;
+import android.util.Size;
 import android.view.Display;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -41,7 +41,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * Hosted preview view size. calculated in onMeasure.
      */
-    private Point mPreviewViewSize;
+    private Point mDesiredPreviewViewSize;
 
     private boolean mIsSafeToTakePicture = false;
 
@@ -49,7 +49,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         mCamera = cameraController.getCamera();
         mCameraConfig = cameraController.getCameraConfig();
-        mPreviewViewSize = new Point();
+        mDesiredPreviewViewSize = new Point();
         mHolder = getHolder();
         mHolder.addCallback(this);
         cameraController.setView(this);
@@ -108,29 +108,17 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
      */
     private void restartCamera() throws IOException {
         final Camera.Parameters params = mCamera.getParameters();
-        final Camera.Size previewSize = getOptimalPreviewSize(mCamera.getParameters().getSupportedPreviewSizes(),
-                mPreviewViewSize.x,
-                mPreviewViewSize.y);
+        final SizePair sp = generateValidPreviewSize(mCamera, mDesiredPreviewViewSize.x, mDesiredPreviewViewSize.y);
 
-        Camera.Size pictureSize = params.getSupportedPictureSizes().get(0);
-
-        if (mCameraConfig.shortEdgeLength != CameraConfig.HIGHIST_POSSIBLE) {
-            for (Camera.Size size : params.getSupportedPictureSizes()) {
-                if (Math.min(size.width, size.height) < mCameraConfig.shortEdgeLength) {
-                    break;
-                }
-                pictureSize = size;
-            }
-        }
-        params.setPictureSize(pictureSize.width, pictureSize.height);
+        params.setPictureSize(sp.mPicture.getWidth(), sp.mPicture.getHeight());
+        params.setPreviewSize(sp.mPicture.getWidth(), sp.mPicture.getHeight());
         params.setPictureFormat(PixelFormat.JPEG);
         params.setJpegQuality(mCameraConfig.jpegQuality);
 
         final Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
-        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        final Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
         Camera.getCameraInfo(mCameraConfig.cameraInfo, cameraInfo);
-
 
         if (mCameraConfig.cameraInfo == CameraConfig.BACK_FACING) {
             /* back camera */
@@ -144,24 +132,21 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
             }
         } else {
             /* front camera */
-            /* TODO orientation calculation */
+            final int degrees;
             if (display.getRotation() == Surface.ROTATION_0) {
-                /* Super hacky */
-                if("Nexus 5".equals(Build.MODEL)) {
-                    mCamera.setDisplayOrientation(90);
-                } else {
-                    final int degrees = 0;
-                    int result = (cameraInfo.orientation + degrees) % 360;
-                    result = (360 - result) % 360;
-                    mCamera.setDisplayOrientation(result);
-                }
+                degrees = 0;
             } else if (display.getRotation() == Surface.ROTATION_90) {
-                mCamera.setDisplayOrientation(90);
+                degrees = 90;
             } else if (display.getRotation() == Surface.ROTATION_180) {
-                mCamera.setDisplayOrientation(90);
-            } else if (display.getRotation() == Surface.ROTATION_270) {
-                mCamera.setDisplayOrientation(90);
+                degrees = 180;
+            } else {
+                degrees = 270;
             }
+
+            int result = (cameraInfo.orientation + degrees) % 360;
+            result = (360 - result) % 360;
+            mCamera.setDisplayOrientation(result);
+            params.setRotation(result);
         }
 
         /* make sure to auto focus */
@@ -186,55 +171,76 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         final int width = resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec);
         final int height = resolveSize(getSuggestedMinimumHeight(), heightMeasureSpec);
-        mPreviewViewSize.set(width, height);
-    }
-
-    /**
-     * Get optimal preview size based on current view width and height.
-     *
-     * @param sizes device supported sizes
-     * @param w     width
-     * @param h     height
-     * @return optimal size
-     */
-    private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
-        final double ASPECT_TOLERANCE = 0.1;
-        double targetRatio = (double) h / w;
-
-        if (sizes == null) return null;
-
-        Camera.Size optimalSize = null;
-        double minDiff = Double.MAX_VALUE;
-
-        int targetHeight = h;
-
-        for (Camera.Size size : sizes) {
-            double ratio = (double) size.width / size.height;
-            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
-            if (Math.abs(size.height - targetHeight) < minDiff) {
-                optimalSize = size;
-                minDiff = Math.abs(size.height - targetHeight);
-            }
-        }
-
-        if (optimalSize == null) {
-            minDiff = Double.MAX_VALUE;
-            for (Camera.Size size : sizes) {
-                if (Math.abs(size.height - targetHeight) < minDiff) {
-                    optimalSize = size;
-                    minDiff = Math.abs(size.height - targetHeight);
-                }
-            }
-        }
-        return optimalSize;
+        mDesiredPreviewViewSize.set(width, height);
     }
 
     public boolean isSafeToTake() {
         return mIsSafeToTakePicture;
     }
 
-    public void takePicture(Camera.ShutterCallback callback, Camera.PictureCallback rawPictureCallback, Camera.PictureCallback jpgPictureCallback ) {
+    public void takePicture(Camera.ShutterCallback callback, Camera.PictureCallback rawPictureCallback, Camera.PictureCallback jpgPictureCallback) {
         mCamera.takePicture(callback, rawPictureCallback, jpgPictureCallback);
         mIsSafeToTakePicture = false;
+    }
+
+    /* Optimal Preview/Picture size */
+
+    private static final double MAX_ASPECT_DISTORTION = 0.15;
+    private static final float ASPECT_RATIO_TOLERANCE = 0.01f;
+
+    // desiredWidth and desiredHeight can be the screen size of mobile device
+    private static SizePair generateValidPreviewSize(Camera camera,
+                                                     int desiredWidth,
+                                                     int desiredHeight) {
+        Camera.Parameters parameters = camera.getParameters();
+        double screenAspectRatio = desiredWidth / (double) desiredHeight;
+        List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
+        List<Camera.Size> supportedPictureSizes = parameters.getSupportedPictureSizes();
+        SizePair bestPair = null;
+        double currentMinDistortion = MAX_ASPECT_DISTORTION;
+        for (Camera.Size previewSize : supportedPreviewSizes) {
+            float previewAspectRatio = (float) previewSize.width / (float) previewSize.height;
+            for (Camera.Size pictureSize : supportedPictureSizes) {
+                float pictureAspectRatio = (float) pictureSize.width / (float) pictureSize.height;
+                if (Math.abs(previewAspectRatio - pictureAspectRatio) < ASPECT_RATIO_TOLERANCE) {
+                    SizePair sizePair = new SizePair(previewSize, pictureSize);
+
+                    boolean isCandidatePortrait = previewSize.width < previewSize.height;
+                    int maybeFlippedWidth = isCandidatePortrait ? previewSize.width : previewSize.height;
+                    int maybeFlippedHeight = isCandidatePortrait ? previewSize.height : previewSize.width;
+                    double aspectRatio = maybeFlippedWidth / (double) maybeFlippedHeight;
+                    double distortion = Math.abs(aspectRatio - screenAspectRatio);
+                    if (distortion < currentMinDistortion) {
+                        currentMinDistortion = distortion;
+                        bestPair = sizePair;
+                    }
+                    break;
+                }
+            }
+        }
+
+        return bestPair;
+    }
+
+
+    private static class SizePair {
+        private Size mPreview;
+        private Size mPicture;
+
+        public SizePair(Camera.Size previewSize, Camera.Size pictureSize) {
+            mPreview = new Size(previewSize.width, previewSize.height);
+            if (pictureSize != null) {
+                mPicture = new Size(pictureSize.width, pictureSize.height);
+            }
+        }
+
+        public Size previewSize() {
+            return mPreview;
+        }
+
+        @SuppressWarnings("unused")
+        public Size pictureSize() {
+            return mPicture;
+        }
     }
 }
