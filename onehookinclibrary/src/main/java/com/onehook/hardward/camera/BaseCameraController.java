@@ -45,6 +45,8 @@ public abstract class BaseCameraController implements SensorEventListener {
      */
     protected CameraControllerCallback mCallback;
 
+    protected Context mContext;
+
     /**
      * @param context
      * @param savedInstnaceState
@@ -52,9 +54,9 @@ public abstract class BaseCameraController implements SensorEventListener {
      */
     public BaseCameraController(@NonNull final Context context,
                                 @Nullable CameraConfig cameraConfig) {
-
+        mContext = context;
         /* Getting the sensor service. */
-        mSensorManager = (SensorManager) context.getSystemService(Activity.SENSOR_SERVICE);
+        mSensorManager = (SensorManager) mContext.getSystemService(Activity.SENSOR_SERVICE);
 
         if (cameraConfig != null) {
             mCameraConfig = cameraConfig;
@@ -75,8 +77,10 @@ public abstract class BaseCameraController implements SensorEventListener {
      */
     public void onResume() {
         /* Register this class as a listener for the accelerometer sensor */
-        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
+        if (mSensorManager != null) {
+            mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                    SensorManager.SENSOR_DELAY_NORMAL);
+        }
     }
 
     /**
@@ -84,7 +88,9 @@ public abstract class BaseCameraController implements SensorEventListener {
      */
     public void onPause() {
         /* make sure we dont listen to sensor events */
-        mSensorManager.unregisterListener(this);
+        if (mSensorManager != null) {
+            mSensorManager.unregisterListener(this);
+        }
     }
 
     /**
