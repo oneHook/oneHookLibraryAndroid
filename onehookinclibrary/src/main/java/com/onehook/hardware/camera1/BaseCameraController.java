@@ -11,6 +11,7 @@ import android.media.ExifInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 
@@ -46,7 +47,6 @@ public abstract class BaseCameraController implements SensorEventListener {
     protected CameraControllerCallback mCallback;
 
     /**
-     *
      * @param context
      * @param savedInstnaceState
      * @param cameraConfig
@@ -193,11 +193,19 @@ public abstract class BaseCameraController implements SensorEventListener {
         mCallback = callback;
     }
 
+    public void resetCameraConfigAndStart(final CameraConfig config) {
+        mCameraConfig = config;
+        onCameraConfigChanged(mCameraConfig);
+    }
 
     /* child should implement the following */
 
     public abstract void takePicture();
 
     public abstract void restartPreview();
+
+    public abstract View obtainCameraView(final Context context);
+
+    public abstract void onCameraConfigChanged(final CameraConfig config);
 
 }

@@ -2,19 +2,9 @@ package com.onehook.hardware.camera1;
 
 import android.content.Context;
 import android.hardware.Camera;
-import android.media.ExifInterface;
-import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import android.view.View;
 
 /**
  * Created by EagleDiaoOptimity on 2018-03-01.
@@ -43,7 +33,6 @@ public class Camera1Controller extends BaseCameraController {
 
     @Override
     public void onDestroy() {
-        mCamera1View = null;
         super.onDestroy();
     }
 
@@ -52,31 +41,16 @@ public class Camera1Controller extends BaseCameraController {
         super.onResume();
         /* make sure the camera instance is ready */
         mCamera = getCameraInstance(mCameraConfig);
+        mCamera1View.setCamera(mCamera);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mCamera != null) {
-            /* Make sure we release the camera for other applications */
-            mCamera.release();
-            mCamera = null;
-        }
-        mCamera1View = null;
-    }
-
-    /**
-     * Set the surface of the camera.
-     *
-     * @param view camera surface view
-     */
-    public void setView(final Camera1View view) {
-        mCamera1View = view;
-    }
-
-    @Nullable
-    protected Camera getCamera() {
-        return mCamera;
+        mCamera1View.stopCamera();
+        mCamera.release();
+        mCamera = null;
+        mCamera1View.setCamera(null);
     }
 
     @Override
@@ -124,4 +98,27 @@ public class Camera1Controller extends BaseCameraController {
             }
         }
     };
+
+    @Override
+    public View obtainCameraView(final Context context) {
+        mCamera1View = new Camera1View(context, this);
+        return mCamera1View;
+    }
+
+    @Override
+    public void onCameraConfigChanged(CameraConfig config) {
+        if (mCamera1View != null) {
+            mCamera1View.stopCamera();
+        }
+        if (mCamera != null) {
+            mCamera.release();
+        }
+        mCamera = getCameraInstance(config);
+        mCamera1View.setCamera(mCamera);
+        try {
+            mCamera1View.restartCamera();
+        } catch (Exception e) {
+
+        }
+    }
 }

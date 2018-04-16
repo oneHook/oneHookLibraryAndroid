@@ -47,15 +47,17 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
 
     public Camera1View(Context context, Camera1Controller cameraController) {
         super(context);
-        mCamera = cameraController.getCamera();
         mCameraConfig = cameraController.getCameraConfig();
         mDesiredPreviewViewSize = new Point();
         mHolder = getHolder();
         mHolder.addCallback(this);
-        cameraController.setView(this);
 
         /* deprecated setting, but required on Android versions prior to 3.0 */
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+    }
+
+    public void setCamera(final Camera camera) {
+        mCamera = camera;
     }
 
     @Override
@@ -78,7 +80,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         try {
-            mCamera.stopPreview();
+            stopCamera();
         } catch (Exception e) {
             Log.d(DEBUG_TAG, "SURFACE CHANGED Failed to stop preview: " + e.getMessage());
         }
@@ -94,7 +96,7 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         try {
-            mCamera.stopPreview();
+            stopCamera();
         } catch (Exception e) {
             Log.d(DEBUG_TAG, "SURFACE DESTROYED Failed to stop preview: " + e.getMessage());
         }
@@ -106,7 +108,10 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
      *
      * @throws IOException exception
      */
-    private void restartCamera() throws IOException {
+    protected void restartCamera() throws IOException {
+        if (mCamera == null) {
+            return;
+        }
         final Camera.Parameters params = mCamera.getParameters();
         final SizePair sp = generateValidPreviewSize(mCamera, mDesiredPreviewViewSize.x, mDesiredPreviewViewSize.y);
 
@@ -161,9 +166,17 @@ public class Camera1View extends SurfaceView implements SurfaceHolder.Callback {
         mCamera.startPreview();
     }
 
+    public void stopCamera() {
+        if (mCamera != null) {
+            mCamera.stopPreview();
+        }
+    }
+
     public void startPreview() {
-        mCamera.startPreview();
-        mIsSafeToTakePicture = true;
+        if (mCamera != null) {
+            mCamera.startPreview();
+            mIsSafeToTakePicture = true;
+        }
     }
 
     @Override
