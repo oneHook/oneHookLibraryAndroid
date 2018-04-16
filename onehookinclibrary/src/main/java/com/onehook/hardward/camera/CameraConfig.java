@@ -1,4 +1,4 @@
-package com.onehook.hardware.camera1;
+package com.onehook.hardward.camera;
 
 /**
  * Created by EagleDiaoOptimity on 2018-03-04.

@@ -1,6 +1,8 @@
-package com.onehook.hardware.camera1;
+package com.onehook.hardward.camera;
 
 import android.content.Context;
+
+import com.onehook.hardward.camera.camera1.Camera1Controller;
 
 public class CameraControllerFactory {
 

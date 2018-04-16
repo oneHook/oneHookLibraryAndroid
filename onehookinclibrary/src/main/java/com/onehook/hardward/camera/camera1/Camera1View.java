@@ -1,4 +1,4 @@
-package com.onehook.hardware.camera1;
+package com.onehook.hardward.camera.camera1;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
@@ -11,6 +11,8 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+
+import com.onehook.hardward.camera.CameraConfig;
 
 import java.io.IOException;
 import java.util.List;

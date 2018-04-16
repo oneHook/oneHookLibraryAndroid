@@ -1,6 +1,4 @@
-package com.onehook.hardware.camera1;
-
-import android.media.ExifInterface;
+package com.onehook.hardward.camera;
 
 /**
  * Created by eaglediaooptimity on 2018-03-02.
