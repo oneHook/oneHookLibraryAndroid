@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.onehookinc.androidlib.R;
 
 /**
- * Created by eaglediaotomore on 2016-09-03.
+ * Created by Eagle Diao.
  */
 
 public class IconTitleListAdapter extends BaseAdapter {
