@@ -24,14 +24,14 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final SampleItem parent = new SampleItem("oneHookLibrarySample",
+        final SampleItem parent = new SampleItem("oneHook Samples",
                 new SampleItem("Utilities",
                         new SampleItem("Device", SampleItem.SampleItemType.DEVICE)),
                 new SampleItem("View",
                         new SampleItem("StackLayout", SampleItem.SampleItemType.STACK_LAYOUT)));
 
         if (getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT) == null) {
-            final SampleListFragment fragment = SampleListFragment.newInstance(parent);
+            final SampleListFragment fragment = SampleListFragment.newInstance(parent, false);
             getSupportFragmentManager().beginTransaction().
                     replace(R.id.id_common_fragment, fragment, TAG_LIST_FRAGMENT)
                     .commit();
@@ -57,13 +57,18 @@ public class MainActivity extends BaseActivity {
             return true;
         }
 
+        if (id == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     protected void onItemClicked(final SampleItem item) {
         if (item.getType() == SampleItem.SampleItemType.CATEGORY) {
             /* has sub pages */
-            final SampleListFragment fragment = SampleListFragment.newInstance(item);
+            final SampleListFragment fragment = SampleListFragment.newInstance(item, true);
             getSupportFragmentManager().beginTransaction().
                     replace(R.id.id_common_fragment, fragment, TAG_LIST_FRAGMENT)
                     .addToBackStack(null)

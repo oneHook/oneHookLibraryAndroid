@@ -14,7 +14,7 @@
         <item name="android:lineSpacingMultiplier">1.5</item>
     </style>
 
-    <style name="OH.AppBarOverlay" parent="@style/ThemeOverlay.AppCompat.Light">
+    <style name="OH.AppBarOverlay" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorControlNormal">#ffffff</item>
         <item name="android:textColorPrimary">#ffffff</item>
     </style>

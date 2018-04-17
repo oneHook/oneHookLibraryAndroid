@@ -3,6 +3,7 @@ package com.onehookinc.onehooklibraryandroid.sample;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,13 @@ import java.util.ArrayList;
 public class SampleListFragment extends BaseListFragment implements View.OnClickListener {
 
     private static final String ARG_PARENT = "argParent";
+    private static final String ARG_HAS_PARENT = "argHasParent";
 
-    public static SampleListFragment newInstance(final SampleItem itemParent) {
+    public static SampleListFragment newInstance(final SampleItem itemParent, final boolean hasParent) {
         final SampleListFragment fragment = new SampleListFragment();
         final Bundle args = new Bundle();
         args.putParcelable(ARG_PARENT, itemParent);
+        args.putBoolean(ARG_HAS_PARENT, hasParent);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,10 +37,19 @@ public class SampleListFragment extends BaseListFragment implements View.OnClick
     }
 
     @Override
+    public void onToolbarReady(Toolbar toolbar) {
+        super.onToolbarReady(toolbar);
+        mParent = getArguments().getParcelable(ARG_PARENT);
+        getBaseAcivity().getSupportActionBar().setTitle(mParent.getTitle());
+        final boolean hasParent = getArguments().getBoolean(ARG_HAS_PARENT, false);
+        getBaseAcivity().getSupportActionBar().setDisplayHomeAsUpEnabled(hasParent);
+    }
+
+    @Override
     public void onClick(View view) {
         final SampleItem item = (SampleItem) view.getTag(R.id.cell_view_tag_key);
         if (item != null) {
-            final MainActivity activity  = (MainActivity) getActivity();
+            final MainActivity activity = (MainActivity) getActivity();
             activity.onItemClicked(item);
         }
     }
