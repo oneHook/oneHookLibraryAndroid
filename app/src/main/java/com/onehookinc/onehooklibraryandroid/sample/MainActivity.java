@@ -1,16 +1,33 @@
-package com.onehookinc.onehooklibraryandroid;
+package com.onehookinc.onehooklibraryandroid.sample;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.onehookinc.onehooklibraryandroid.R;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG_LIST_FRAGMENT = "tagListFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final SampleItem parent = new SampleItem("oneHookLibrarySample",
+                new SampleItem("View",
+                        new SampleItem("StackLayout", SampleItem.SampleItemType.STACK_LAYOUT)));
+
+        if(getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT) == null) {
+            final SampleListFragment fragment = SampleListFragment.newInstance(parent);
+            getSupportFragmentManager().beginTransaction().
+                    replace(R.id.id_common_fragment, fragment, TAG_LIST_FRAGMENT)
+                    .commit();
+        }
     }
 
     @Override
@@ -34,4 +51,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

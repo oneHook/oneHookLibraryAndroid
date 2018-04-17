@@ -1,14 +1,16 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/id_common_coordinate_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/id_common_coordinate_layout"
     tools:context=".sample.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/id_common_fragment"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_common_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 
 </android.support.design.widget.CoordinatorLayout>
