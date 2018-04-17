@@ -14,7 +14,10 @@ public class SampleItem implements Parcelable {
         CATEGORY,
 
         /* View */
-        STACK_LAYOUT
+        STACK_LAYOUT,
+
+        /* Utility */
+        DEVICE
     }
 
     @NonNull

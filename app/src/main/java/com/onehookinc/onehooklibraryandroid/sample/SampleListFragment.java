@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -12,7 +13,7 @@ import com.onehookinc.onehooklibraryandroid.sample.common.BaseListFragment;
 
 import java.util.ArrayList;
 
-public class SampleListFragment extends BaseListFragment {
+public class SampleListFragment extends BaseListFragment implements View.OnClickListener {
 
     private static final String ARG_PARENT = "argParent";
 
@@ -32,8 +33,16 @@ public class SampleListFragment extends BaseListFragment {
         return new SampleListAdapter(mParent.getSubItems());
     }
 
+    @Override
+    public void onClick(View view) {
+        final SampleItem item = (SampleItem) view.getTag(R.id.cell_view_tag_key);
+        if (item != null) {
+            final MainActivity activity  = (MainActivity) getActivity();
+            activity.onItemClicked(item);
+        }
+    }
 
-    private static class ItemViewHolder extends RecyclerView.ViewHolder {
+    private class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTitleTextView;
 
@@ -41,14 +50,17 @@ public class SampleListFragment extends BaseListFragment {
             super(LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_sample_item,
                     parent, false));
             mTitleTextView = itemView.findViewById(R.id.cell_sample_item_title_textview);
+            itemView.setOnClickListener(SampleListFragment.this);
         }
 
-        private void bind(final SampleItem item) {
+        private void bind(final int position, final SampleItem item) {
+            itemView.setTag(R.id.cell_view_position_key, Integer.valueOf(position));
+            itemView.setTag(R.id.cell_view_tag_key, item);
             mTitleTextView.setText(item.getTitle());
         }
     }
 
-    private static class SampleListAdapter extends RecyclerView.Adapter<ItemViewHolder> {
+    private class SampleListAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
         @NonNull
         private ArrayList<SampleItem> mItems;
@@ -66,7 +78,7 @@ public class SampleListFragment extends BaseListFragment {
         @Override
         public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
             final SampleItem item = mItems.get(position);
-            holder.bind(item);
+            holder.bind(position, item);
         }
 
         @Override

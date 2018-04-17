@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="@dimen/common_margin_medium">
@@ -13,6 +13,17 @@
         android:layout_height="match_parent"
         android:textColor="#000000"
         android:textSize="16sp"
+        android:layout_marginLeft="@dimen/common_margin_medium"
+        android:layout_marginRight="@dimen/common_margin_medium"
+        android:layout_marginBottom="@dimen/common_margin_medium"
         tools:text="@string/app_name" />
 
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginLeft="@dimen/common_margin_medium"
+        android:layout_marginRight="@dimen/common_margin_medium"
+        android:background="#4F000000"></View>
+
+</FrameLayout>

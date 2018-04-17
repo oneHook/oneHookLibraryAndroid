@@ -5,7 +5,10 @@
     <item name="id_common_recycler_view" type="id"></item>
     <item name="id_common_fragment" type="id"></item>
 
+
     <item name="cell_view_tag_key" type="id"></item>
+    <item name="cell_view_position_key" type="id"></item>
+
     <item name="view_sizing_tag_key" type="id"></item>
     <item name="view_layout_info_tag_key" type="id"></item>
     <item name="loading_adapter_view_tag_key" type="id"></item>

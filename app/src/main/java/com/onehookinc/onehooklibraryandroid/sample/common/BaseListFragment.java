@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.onehookinc.onehooklibraryandroid.R;
 
-public abstract class BaseListFragment extends Fragment {
+public abstract class BaseListFragment extends BaseFragment {
 
 
     private RecyclerView mRecyclerView;
