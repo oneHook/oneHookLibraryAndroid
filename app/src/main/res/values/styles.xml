@@ -2,7 +2,35 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="android:background">#00000000</item>
+        <item name="colorPrimary">#280202</item>
+        <item name="colorPrimaryDark">#160101</item>
+        <item name="colorAccent">#00ff00</item>
+        <item name="android:textColorPrimary">#000000</item>
+        <item name="android:textColorHint">#000000</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionBarOverlay">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    <style name="OH.AppBarOverlay" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+    </style>
+
+    <style name="OH"></style>
+
+    <style name="OH.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="OH.Title.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="OH.Title2">
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
