@@ -53,6 +53,15 @@ public class SampleItem implements Parcelable {
         return mSubItems;
     }
 
+    @NonNull
+    public String getTitle() {
+        return mName;
+    }
+
+    public SampleItemType getType() {
+        return mType;
+    }
+
     protected SampleItem(Parcel in) {
         mName = in.readString();
         mType = (SampleItemType) in.readSerializable();

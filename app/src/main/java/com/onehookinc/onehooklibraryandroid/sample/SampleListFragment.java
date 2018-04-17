@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseListFragment;
@@ -34,13 +35,16 @@ public class SampleListFragment extends BaseListFragment {
 
     private static class ItemViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView mTitleTextView;
+
         public ItemViewHolder(ViewGroup parent) {
             super(LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_sample_item,
                     parent, false));
+            mTitleTextView = itemView.findViewById(R.id.cell_sample_item_title_textview);
         }
 
         private void bind(final SampleItem item) {
-
+            mTitleTextView.setText(item.getTitle());
         }
     }
 
