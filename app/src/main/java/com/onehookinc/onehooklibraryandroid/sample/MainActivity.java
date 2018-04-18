@@ -14,6 +14,7 @@ import com.onehookinc.onehooklibraryandroid.sample.common.BaseFragment;
 import com.onehookinc.onehooklibraryandroid.sample.common.StackActivity;
 import com.onehookinc.onehooklibraryandroid.sample.samples.DeviceUtilFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.NotFoundFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.StackLayoutSampleFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -83,6 +84,8 @@ public class MainActivity extends BaseActivity {
         switch (type) {
             case DEVICE:
                 return StackActivity.intent(this, DeviceUtilFragment.class);
+            case STACK_LAYOUT:
+                return StackActivity.intent(this, StackLayoutSampleFragment.class);
             default:
                 return StackActivity.intent(this, NotFoundFragment.class);
         }

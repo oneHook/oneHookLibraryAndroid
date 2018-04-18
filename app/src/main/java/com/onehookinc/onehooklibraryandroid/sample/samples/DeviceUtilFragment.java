@@ -20,7 +20,7 @@ public class DeviceUtilFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_device_util, container, false);
+        return inflater.inflate(R.layout.fragment_sample_device_util, container, false);
     }
 
     @Override
