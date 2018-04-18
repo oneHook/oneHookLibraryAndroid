@@ -137,7 +137,7 @@ public class ConfettiView extends ViewGroup {
         for (int i = 0; i < mConfettiViewCells.size(); i++) {
             final View cell = mConfettiViewCells.get(i);
             final int cellSize = cell.getMeasuredHeight();
-            
+
             final long duration = generateRandomDuration();
             final long delay = generateRandomDelay(i);
             final int endingX = generateRandomX();

@@ -2,7 +2,6 @@ package com.onehook.view.confetti;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -35,11 +34,9 @@ public class ConfettiCellBuilder {
     }
 
     @Nullable
-    public View emojiCell(@StringRes final int stringRes,
-                          @ColorInt final int color) {
+    public View emojiCell(@StringRes final int stringRes) {
         final AppCompatTextView tv = new AppCompatTextView(mContext);
         tv.setText(stringRes);
-        tv.setTextColor(color);
         return tv;
     }
 }

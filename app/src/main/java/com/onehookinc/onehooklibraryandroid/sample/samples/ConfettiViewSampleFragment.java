@@ -3,6 +3,7 @@ package com.onehookinc.onehooklibraryandroid.sample.samples;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.Toolbar;
@@ -44,15 +45,56 @@ public class ConfettiViewSampleFragment extends BaseFragment {
 
         mConfettiView = view.findViewById(R.id.fragment_sample_confetti_view);
 
-       mConfettiView.postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               startConfetti();
-           }
-       }, 100);
+        view.findViewById(R.id.fragment_sample_confetti_view_button1).setOnClickListener(v -> button1Clicked());
+        view.findViewById(R.id.fragment_sample_confetti_view_button2).setOnClickListener(v -> button2Clicked());
+        view.findViewById(R.id.fragment_sample_confetti_view_button3).setOnClickListener(v -> button3Clicked());
+        view.findViewById(R.id.fragment_sample_confetti_view_button4).setOnClickListener(v -> button4Clicked());
     }
 
-    private void startConfetti() {
+    private void button1Clicked() {
+        if(mConfettiView.isAnimating()) {
+            Snackbar.make(getView(), "Animation in progress, just wait", Snackbar.LENGTH_SHORT);
+            return;
+        }
+
+        mConfettiView.setConfettiCellCount(100);
+        mConfettiView.setSizeDiffRatio(1.5f);
+        mConfettiView.setConfettiRotation(360);
+        mConfettiView.start(new ConfettiView.IConfettiViewCustomizationListener() {
+            @Override
+            public View createConfettiCell(ConfettiCellBuilder builder, int index) {
+                return builder.emojiCell(R.string.emoji_poop);
+            }
+        });
+    }
+
+    private void button2Clicked() {
+        if(mConfettiView.isAnimating()) {
+            Snackbar.make(getView(), "Animation in progress, just wait", Snackbar.LENGTH_SHORT);
+            return;
+        }
+
+        mConfettiView.setConfettiCellCount(66);
+        mConfettiView.setSizeDiffRatio(1);
+        mConfettiView.setConfettiRotation(0);
+        mConfettiView.start(new ConfettiView.IConfettiViewCustomizationListener() {
+            @Override
+            public View createConfettiCell(ConfettiCellBuilder builder, int index) {
+                return builder.emojiCell(R.string.emoji_dog);
+            }
+        });
+    }
+
+    private void button3Clicked() {
+        if(mConfettiView.isAnimating()) {
+            Snackbar.make(getView(), "Animation in progress, just wait", Snackbar.LENGTH_SHORT);
+            return;
+        }
+
+        mConfettiView.setConfettiCellCount(66);
+        mConfettiView.setConfettiDelayRatio(2);
+        mConfettiView.setSizeDiffRatio(1);
+        mConfettiView.setConfettiRotation(720);
         mConfettiView.start(new ConfettiView.IConfettiViewCustomizationListener() {
             @Override
             public View createConfettiCell(ConfettiCellBuilder builder, int index) {
@@ -61,13 +103,36 @@ public class ConfettiViewSampleFragment extends BaseFragment {
                 if (colorIndex >= mConfettiColors.length) {
                     colorIndex -= mConfettiColors.length;
                 }
-//                return builder.imageCell(R.drawable.ic_close_black_24dp,
-//                        colorRes);
 
-                return builder.emojiCell(R.string.emoji_dog, colorRes);
+                return builder.imageCell(R.drawable.ic_close_black_36dp, colorRes);
             }
         });
     }
+
+    private void button4Clicked() {
+        if(mConfettiView.isAnimating()) {
+            Snackbar.make(getView(), "Animation in progress, just wait", Snackbar.LENGTH_SHORT);
+            return;
+        }
+
+        mConfettiView.setConfettiCellCount(66);
+        mConfettiView.setConfettiDelayRatio(8);
+        mConfettiView.setSizeDiffRatio(1);
+        mConfettiView.setConfettiRotation(360);
+        mConfettiView.start(new ConfettiView.IConfettiViewCustomizationListener() {
+            @Override
+            public View createConfettiCell(ConfettiCellBuilder builder, int index) {
+                final int colorRes = mConfettiColors[colorIndex];
+                colorIndex++;
+                if (colorIndex >= mConfettiColors.length) {
+                    colorIndex -= mConfettiColors.length;
+                }
+
+                return builder.imageCell(R.drawable.ic_oda_avatar, colorRes);
+            }
+        });
+    }
+
 
     @Override
     public void onToolbarReady(Toolbar toolbar) {
