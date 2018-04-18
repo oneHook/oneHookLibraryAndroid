@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.onehook.view.ScaleView;
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseActivity;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseFragment;
@@ -18,6 +19,7 @@ import com.onehookinc.onehooklibraryandroid.sample.samples.FlipperViewSampleFrag
 import com.onehookinc.onehooklibraryandroid.sample.samples.FlowLayoutSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.NotFoundFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.ProgressViewSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.ScaleViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.StackLayoutSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.TagsViewSampleFragment;
 
@@ -38,7 +40,8 @@ public class MainActivity extends BaseActivity {
                         new SampleItem("FlowLayout", SampleItem.SampleItemType.FLOW_LAYOUT),
                         new SampleItem("TagsView", SampleItem.SampleItemType.TAGS_VIEW),
                         new SampleItem("FlipperView", SampleItem.SampleItemType.FLIPPER_VIEW),
-                        new SampleItem("ProgressViews", SampleItem.SampleItemType.PROGRESS_VIEW)
+                        new SampleItem("ProgressViews", SampleItem.SampleItemType.PROGRESS_VIEW),
+                        new SampleItem("ScaleView", SampleItem.SampleItemType.SCALE_VIEW)
                 ),
                 new SampleItem("Camera", SampleItem.SampleItemType.CAMERA),
                 new SampleItem("Dialogs", SampleItem.SampleItemType.DIALOG));
@@ -56,7 +59,7 @@ public class MainActivity extends BaseActivity {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.FLOW_LAYOUT));
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.SCALE_VIEW));
             }
         }, 100);
     }
@@ -116,6 +119,8 @@ public class MainActivity extends BaseActivity {
                 return StackActivity.intent(this, FlipperViewSampleFragment.class);
             case PROGRESS_VIEW:
                 return StackActivity.intent(this, ProgressViewSampleFragment.class);
+            case SCALE_VIEW:
+                return StackActivity.intent(this, ScaleViewSampleFragment.class);
             default:
                 return StackActivity.intent(this, NotFoundFragment.class);
         }

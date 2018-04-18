@@ -19,6 +19,7 @@ public class SampleItem implements Parcelable {
         TAGS_VIEW,
         FLIPPER_VIEW,
         PROGRESS_VIEW,
+        SCALE_VIEW,
 
         /* Utility */
         DEVICE,
