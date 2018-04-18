@@ -83,7 +83,7 @@ public class ShimmerFrameLayout extends FrameLayout {
         }
 
         /**
-         * Get the array of relative positions [0..1] of each corresponding color in the colors array
+         * Get the array of relative positions [0..1] of each corresponding colorRes in the colors array
          *
          * @return A array of float values in the [0..1] range
          */

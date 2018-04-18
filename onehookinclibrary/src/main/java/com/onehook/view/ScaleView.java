@@ -142,7 +142,7 @@ public class ScaleView extends View {
         mIsNaturalPanning = false;
         mMaximumLineHeight = Integer.MAX_VALUE;
 
-        /* Setup default color and line thickness */
+        /* Setup default colorRes and line thickness */
         mLineColor = Color.BLACK;
         mIndicatorColor = Color.RED;
         mThickBarThickness = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
@@ -341,7 +341,7 @@ public class ScaleView extends View {
     }
 
     /**
-     * Set line color. Make sure to call invalidate() after.
+     * Set line colorRes. Make sure to call invalidate() after.
      *
      * @param lineColor
      */

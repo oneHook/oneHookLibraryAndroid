@@ -32,22 +32,22 @@ public class AnimatedProgressRing extends View {
     private float progress;
 
     /**
-     * Progress bar base color (drawn underneath actual progress).
+     * Progress bar base colorRes (drawn underneath actual progress).
      */
     private int mProgressBaseColor = Color.RED;
 
     /**
-     * Progress color.
+     * Progress colorRes.
      */
     private int mProgressColor = Color.GREEN;
 
     /**
-     * Progress Text color.
+     * Progress Text colorRes.
      */
     private int mProgressTextColor = Color.BLACK;
 
     /**
-     * Circle background color.
+     * Circle background colorRes.
      */
     private int mCircleBackgroundColor = Color.WHITE;
 

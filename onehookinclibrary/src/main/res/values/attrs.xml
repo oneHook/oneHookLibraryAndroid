@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Flipper view attributes -->
+
     <declare-styleable name="FlipperView">
-        <attr name="viewRes" format="reference"></attr>
-        <attr name="bottomPageTranslationY" format="dimension|reference"></attr>
-        <attr name="bottomPageScale" format="float|reference"></attr>
+        <attr name="viewRes" format="reference"/>
+        <attr name="bottomPageTranslationY" format="dimension|reference"/>
+        <attr name="bottomPageScale" format="float|reference"/>
     </declare-styleable>
+
+    <!-- Stack Layout Attributes -->
 
     <declare-styleable name="StackLayout">
         <attr name="orientation" format="enum">
@@ -17,14 +21,15 @@
             <enum name="center" value="1" />
             <enum name="right_or_bottom" value="2" />
         </attr>
-        <attr name="equalToMax" format="boolean"></attr>
-        <attr name="distributeToEdge" format="boolean"></attr>
+        <attr name="equalToMax" format="boolean"/>
+        <attr name="distributeToEdge" format="boolean"/>
     </declare-styleable>
 
+    <!-- FlowLayout Attributes -->
 
     <declare-styleable name="FlowLayout">
-        <attr name="oh_flow_layout_horizontal_margin" format="dimension|reference"></attr>
-        <attr name="oh_flow_layout_vertical_margin" format="dimension|reference"></attr>
+        <attr name="oh_flow_layout_horizontal_margin" format="dimension|reference"/>
+        <attr name="oh_flow_layout_vertical_margin" format="dimension|reference"/>
         <attr name="oh_flow_layout_vertical_align_type" format="enum">
             <enum name="center" value="0" />
             <enum name="bottom" value="1" />
@@ -36,7 +41,35 @@
         </attr>
     </declare-styleable>
 
+    <!-- ScaleView Attributes -->
 
+    <declare-styleable name="ScaleView">
+        <attr name="oh_scale_view_scale_color" format="color|reference" />
+        <attr name="oh_scale_view_indicator_color" format="color|reference" />
+        <attr name="oh_scale_view_thick_bar_thickness" format="dimension|reference" />
+        <attr name="oh_scale_view_thin_bar_thickness" format="dimension|reference" />
+        <attr name="oh_scale_view_scale_interval_count" format="integer|reference" />
+        <attr name="oh_scale_view_scale_interval_length" format="dimension|reference" />
+        <attr name="oh_scale_view_minimum_scale" format="integer|reference" />
+        <attr name="oh_scale_view_maximum_scale" format="integer|reference" />
+        <attr name="oh_scale_view_current_scale" format="integer|reference" />
+        <attr name="oh_scale_view_pan_direction_natural" format="boolean" />
+        <attr name="oh_scale_view_maximum_line_height" format="dimension|reference"/>
+        <attr name="oh_scale_view_indicator_width" format="dimension|reference"/>
+    </declare-styleable>
+
+    <!-- Confetti View Attributes -->
+
+    <declare-styleable name="ConfettiView">
+        <attr name="oh_confetti_view_min_duration" format="integer|reference" />
+        <attr name="oh_confetti_view_max_duration" format="integer|reference" />
+        <attr name="oh_confetti_view_count" format="integer|reference" />
+        <attr name="oh_confetti_view_delay" format="integer|reference" />
+        <attr name="oh_confetti_view_size" format="dimension|reference" />
+
+
+
+    </declare-styleable>
 
 
     <!-- to be cleaned -->
@@ -46,9 +79,6 @@
         <attr name="onlyThumb" format="boolean" />
         <attr name="customThumb" format="reference" />
     </declare-styleable>
-
-
-
 
     <declare-styleable name="OHPagerIndicator">
         <attr name="oh_pager_indicator_selected_color" format="color|reference"></attr>
@@ -76,20 +106,6 @@
         <attr name="oh_progress_bar_border_thickness" format="dimension|reference" />
     </declare-styleable>
 
-    <declare-styleable name="ScaleView">
-        <attr name="oh_scale_view_scale_color" format="color|reference" />
-        <attr name="oh_scale_view_indicator_color" format="color|reference" />
-        <attr name="oh_scale_view_thick_bar_thickness" format="dimension|reference" />
-        <attr name="oh_scale_view_thin_bar_thickness" format="dimension|reference" />
-        <attr name="oh_scale_view_scale_interval_count" format="integer|reference" />
-        <attr name="oh_scale_view_scale_interval_length" format="dimension|reference" />
-        <attr name="oh_scale_view_minimum_scale" format="integer|reference" />
-        <attr name="oh_scale_view_maximum_scale" format="integer|reference" />
-        <attr name="oh_scale_view_current_scale" format="integer|reference" />
-        <attr name="oh_scale_view_pan_direction_natural" format="boolean" />
-        <attr name="oh_scale_view_maximum_line_height" format="dimension|reference"></attr>
-        <attr name="oh_scale_view_indicator_width" format="dimension|reference"></attr>
-    </declare-styleable>
 
     <declare-styleable name="RecyclerViewPager">
         <attr name="oh_triggerOffset" format="float" />

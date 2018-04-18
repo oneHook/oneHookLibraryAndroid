@@ -1,18 +1,13 @@
 package com.onehookinc.onehooklibraryandroid.sample;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.onehook.view.ScaleView;
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseActivity;
-import com.onehookinc.onehooklibraryandroid.sample.common.BaseFragment;
 import com.onehookinc.onehooklibraryandroid.sample.common.StackActivity;
 import com.onehookinc.onehooklibraryandroid.sample.samples.DeviceUtilFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.FlipperViewSampleFragment;
@@ -21,7 +16,7 @@ import com.onehookinc.onehooklibraryandroid.sample.samples.NotFoundFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.ProgressViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.ScaleViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.StackLayoutSampleFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.TagsViewSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.ConfettiViewSampleFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -38,7 +33,7 @@ public class MainActivity extends BaseActivity {
                 new SampleItem("View",
                         new SampleItem("StackLayout", SampleItem.SampleItemType.STACK_LAYOUT),
                         new SampleItem("FlowLayout", SampleItem.SampleItemType.FLOW_LAYOUT),
-                        new SampleItem("TagsView", SampleItem.SampleItemType.TAGS_VIEW),
+                        new SampleItem("Confetti", SampleItem.SampleItemType.CONFETTI_VIEW),
                         new SampleItem("FlipperView", SampleItem.SampleItemType.FLIPPER_VIEW),
                         new SampleItem("ProgressViews", SampleItem.SampleItemType.PROGRESS_VIEW),
                         new SampleItem("ScaleView", SampleItem.SampleItemType.SCALE_VIEW)
@@ -55,13 +50,13 @@ public class MainActivity extends BaseActivity {
 
         /* for debugging */
 
-//        final View view = findViewById(R.id.id_common_fragment);
-//        view.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.FLOW_LAYOUT));
-//            }
-//        }, 100);
+        final View view = findViewById(R.id.id_common_fragment);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.CONFETTI_VIEW));
+            }
+        }, 100);
     }
 
     @Override
@@ -113,8 +108,8 @@ public class MainActivity extends BaseActivity {
                 return StackActivity.intent(this, StackLayoutSampleFragment.class);
             case FLOW_LAYOUT:
                 return StackActivity.intent(this, FlowLayoutSampleFragment.class);
-            case TAGS_VIEW:
-                return StackActivity.intent(this, TagsViewSampleFragment.class);
+            case CONFETTI_VIEW:
+                return StackActivity.intent(this, ConfettiViewSampleFragment.class);
             case FLIPPER_VIEW:
                 return StackActivity.intent(this, FlipperViewSampleFragment.class);
             case PROGRESS_VIEW:
