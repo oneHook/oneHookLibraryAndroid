@@ -1,4 +1,4 @@
-package com.onehook.widget;
+package com.onehook.view.progress;
 
 import android.content.Context;
 import android.content.res.TypedArray;

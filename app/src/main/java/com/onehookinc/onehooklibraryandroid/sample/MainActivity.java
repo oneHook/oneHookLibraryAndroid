@@ -13,8 +13,12 @@ import com.onehookinc.onehooklibraryandroid.sample.common.BaseActivity;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseFragment;
 import com.onehookinc.onehooklibraryandroid.sample.common.StackActivity;
 import com.onehookinc.onehooklibraryandroid.sample.samples.DeviceUtilFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.FlipperViewSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.FlowLayoutSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.NotFoundFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.ProgressViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.StackLayoutSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.TagsViewSampleFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -29,7 +33,12 @@ public class MainActivity extends BaseActivity {
                 new SampleItem("Utilities",
                         new SampleItem("Device", SampleItem.SampleItemType.DEVICE)),
                 new SampleItem("View",
-                        new SampleItem("StackLayout", SampleItem.SampleItemType.STACK_LAYOUT)));
+                        new SampleItem("StackLayout", SampleItem.SampleItemType.STACK_LAYOUT),
+                        new SampleItem("FlowLayout", SampleItem.SampleItemType.FLOW_LAYOUT),
+                        new SampleItem("TagsView", SampleItem.SampleItemType.TAGS_VIEW),
+                        new SampleItem("FlipperView", SampleItem.SampleItemType.FLIPPER_VIEW),
+                        new SampleItem("ProgressViews", SampleItem.SampleItemType.PROGRESS_VIEW)
+                ));
 
         if (getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT) == null) {
             final SampleListFragment fragment = SampleListFragment.newInstance(parent, false);
@@ -86,6 +95,14 @@ public class MainActivity extends BaseActivity {
                 return StackActivity.intent(this, DeviceUtilFragment.class);
             case STACK_LAYOUT:
                 return StackActivity.intent(this, StackLayoutSampleFragment.class);
+            case FLOW_LAYOUT:
+                return StackActivity.intent(this, FlowLayoutSampleFragment.class);
+            case TAGS_VIEW:
+                return StackActivity.intent(this, TagsViewSampleFragment.class);
+            case FLIPPER_VIEW:
+                return StackActivity.intent(this, FlipperViewSampleFragment.class);
+            case PROGRESS_VIEW:
+                return StackActivity.intent(this, ProgressViewSampleFragment.class);
             default:
                 return StackActivity.intent(this, NotFoundFragment.class);
         }

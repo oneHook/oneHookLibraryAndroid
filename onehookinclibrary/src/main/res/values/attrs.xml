@@ -7,11 +7,6 @@
         <attr name="bottomPageScale" format="float|reference"></attr>
     </declare-styleable>
 
-    <declare-styleable name="VerticalSeekBar">
-        <attr name="onlyThumb" format="boolean" />
-        <attr name="customThumb" format="reference" />
-    </declare-styleable>
-
     <declare-styleable name="StackLayout">
         <attr name="orientation" format="enum">
             <enum name="horizontal" value="0" />
@@ -27,7 +22,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="OHFlowLayout">
+    <declare-styleable name="FlowLayout">
         <attr name="oh_flow_layout_horizontal_margin" format="dimension|reference"></attr>
         <attr name="oh_flow_layout_vertical_margin" format="dimension|reference"></attr>
         <attr name="oh_flow_layout_vertical_align_type" format="enum">
@@ -41,12 +36,26 @@
         </attr>
     </declare-styleable>
 
+
+
+
+    <!-- to be cleaned -->
+
+
+    <declare-styleable name="VerticalSeekBar">
+        <attr name="onlyThumb" format="boolean" />
+        <attr name="customThumb" format="reference" />
+    </declare-styleable>
+
+
+
+
     <declare-styleable name="OHPagerIndicator">
         <attr name="oh_pager_indicator_selected_color" format="color|reference"></attr>
         <attr name="oh_pager_indicator_default_color" format="color|reference"></attr>
     </declare-styleable>
 
-    <declare-styleable name="AnimatedProgressView">
+    <declare-styleable name="AnimatedProgressRing">
         <attr name="oh_progress_view_primary_color" format="color|reference" />
         <attr name="oh_progress_view_base_color" format="color|reference" />
         <attr name="oh_progress_view_text_color" format="color|reference" />
@@ -91,7 +100,7 @@
         <attr name="oh_last_item_fully_fill" format="boolean"></attr>
     </declare-styleable>
 
-    <declare-styleable name="OHIconProgressView">
+    <declare-styleable name="IconProgressView">
         <attr name="oh_icon_progress_view_icons" format="reference"></attr>
     </declare-styleable>
 

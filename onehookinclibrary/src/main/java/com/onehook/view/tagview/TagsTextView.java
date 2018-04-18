@@ -15,25 +15,25 @@ import java.util.List;
  * Created by eaglediaotomore on 2016-07-20.
  */
 
-public class OHTagsView extends TextView {
+public class TagsTextView extends TextView {
 
-    public OHTagsView(Context context) {
+    public TagsTextView(Context context) {
         super(context);
         commonInit(null);
     }
 
-    public OHTagsView(Context context, AttributeSet attrs) {
+    public TagsTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         commonInit(attrs);
     }
 
-    public OHTagsView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TagsTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         commonInit(attrs);
     }
 
     @TargetApi(21)
-    public OHTagsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TagsTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         commonInit(attrs);
     }

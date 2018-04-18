@@ -13,20 +13,20 @@ import com.onehookinc.androidlib.R;
 /**
  * Created by EagleDiao on 2016-05-01.
  */
-public class OHIconProgressView extends TextView {
+public class IconProgressView extends TextView {
 
-    public OHIconProgressView(Context context, AttributeSet attrs) {
+    public IconProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
         commonInit(context, attrs);
     }
 
-    public OHIconProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public IconProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         commonInit(context, attrs);
     }
 
     @TargetApi(21)
-    public OHIconProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public IconProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         commonInit(context, attrs);
     }
@@ -38,8 +38,8 @@ public class OHIconProgressView extends TextView {
     private void commonInit(final Context context, final AttributeSet attrs) {
         setGravity(Gravity.CENTER);
 
-        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.OHIconProgressView);
-        final int resID = a.getResourceId(R.styleable.OHIconProgressView_oh_icon_progress_view_icons, 0);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.IconProgressView);
+        final int resID = a.getResourceId(R.styleable.IconProgressView_oh_icon_progress_view_icons, 0);
         if (resID == 0) {
             throw new IllegalArgumentException(
                     "IntegerListPreference: error - entryList is not specified");

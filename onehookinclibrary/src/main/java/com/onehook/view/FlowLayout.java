@@ -1,4 +1,4 @@
-package com.onehook.widget;
+package com.onehook.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by eaglediaotomore on 2016-07-22.
  */
 
-public class OHFlowLayout extends ViewGroup {
+public class FlowLayout extends ViewGroup {
 
     public enum VerticalAlignType {
         TOP,
@@ -40,23 +40,23 @@ public class OHFlowLayout extends ViewGroup {
 
     private int mMaximumWidth;
 
-    public OHFlowLayout(Context context) {
+    public FlowLayout(Context context) {
         super(context);
         commonInit(context, null);
     }
 
-    public OHFlowLayout(Context context, AttributeSet attrs) {
+    public FlowLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         commonInit(context, attrs);
     }
 
-    public OHFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         commonInit(context, attrs);
     }
 
     @TargetApi(21)
-    public OHFlowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         commonInit(context, attrs);
     }
@@ -67,10 +67,10 @@ public class OHFlowLayout extends ViewGroup {
         mHorizontalSpacing = 24;
         mVerticalSpacing = 24;
         if (attrs != null) {
-            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.OHFlowLayout);
-            mHorizontalSpacing = (int) a.getDimension(R.styleable.OHFlowLayout_oh_flow_layout_horizontal_margin, mHorizontalSpacing);
-            mVerticalSpacing = (int) a.getDimension(R.styleable.OHFlowLayout_oh_flow_layout_vertical_margin, mVerticalSpacing);
-            final int type = a.getInt(R.styleable.OHFlowLayout_oh_flow_layout_vertical_align_type, 0);
+            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FlowLayout);
+            mHorizontalSpacing = (int) a.getDimension(R.styleable.FlowLayout_oh_flow_layout_horizontal_margin, mHorizontalSpacing);
+            mVerticalSpacing = (int) a.getDimension(R.styleable.FlowLayout_oh_flow_layout_vertical_margin, mVerticalSpacing);
+            final int type = a.getInt(R.styleable.FlowLayout_oh_flow_layout_vertical_align_type, 0);
             switch (type) {
                 case 0:
                     mVerticalAlignType = VerticalAlignType.CENTER;
@@ -82,7 +82,7 @@ public class OHFlowLayout extends ViewGroup {
                     mVerticalAlignType = VerticalAlignType.TOP;
                     break;
             }
-            final int hType = a.getInt(R.styleable.OHFlowLayout_oh_flow_layout_horizontal_align_type, 0);
+            final int hType = a.getInt(R.styleable.FlowLayout_oh_flow_layout_horizontal_align_type, 0);
             switch (hType) {
                 case 1:
                     mHorizontalAlignType = HorizontalAlignType.CENTER;
