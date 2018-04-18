@@ -34,9 +34,21 @@
             android:orientation="vertical">
 
             <com.onehook.view.FlowLayout
-                android:layout_margin="@dimen/common_margin_medium"
+                android:id="@+id/fragment_sample_flow_layout_flow1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_300"
+                android:padding="@dimen/common_margin_small"
+                app:oh_flow_layout_horizontal_margin="@dimen/common_margin_small"
+                app:oh_flow_layout_vertical_margin="@dimen/common_margin_small"
+                android:layout_margin="@dimen/common_margin_medium">
+
+            </com.onehook.view.FlowLayout>
+
+            <com.onehook.view.FlowLayout
                 android:layout_width="60dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/common_margin_medium">
 
                 <ImageView
                     android:layout_width="64dp"
@@ -65,9 +77,9 @@
             </com.onehook.view.FlowLayout>
 
             <com.onehook.view.FlowLayout
-                android:layout_margin="@dimen/common_margin_medium"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/common_margin_medium">
 
                 <ImageView
                     android:layout_width="64dp"

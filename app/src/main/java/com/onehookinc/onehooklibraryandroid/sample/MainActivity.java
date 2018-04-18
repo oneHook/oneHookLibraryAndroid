@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.STACK_LAYOUT));
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.FLOW_LAYOUT));
             }
         }, 100);
     }
