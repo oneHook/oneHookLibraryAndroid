@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.onehook.view.touchimageview.TouchImageView;
+import com.onehook.thirdparty.TouchImageView;
 import com.onehookinc.androidlib.R;
 
 /**

@@ -1,4 +1,4 @@
-package com.onehook.view.touchimageview;
+package com.onehook.thirdparty;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -22,10 +22,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.OverScroller;
 import android.widget.Scroller;
-
-/**
- * Created by EagleDiao on 2016-06-09.
- */
 
 public class TouchImageView extends ImageView {
 
