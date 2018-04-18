@@ -33,6 +33,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <com.onehook.view.progress.IconProgressView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center_horizontal"
+                app:oh_icon_progress_view_icons="@array/icon_loading_view_icons"/>
+
+
+            <com.onehook.view.progress.AnimatedProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="@dimen/common_margin_medium"
+                android:layout_marginRight="@dimen/common_margin_medium"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/common_margin_medium" />
+
+            <com.onehook.view.progress.AnimatedProgressRing
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/common_margin_medium" />
 
 
         </LinearLayout>

@@ -1,4 +1,4 @@
-package com.onehook.view;
+package com.onehook.view.progress;
 
 import android.annotation.TargetApi;
 import android.content.Context;

@@ -4,4 +4,9 @@
 
     <string name="emoji_dog">🐶</string>
     <string name="emoji_poop">💩</string>
+
+    <string-array name="icon_loading_view_icons">
+        <item>🐶</item>
+        <item>💩</item>
+    </string-array>
 </resources>
