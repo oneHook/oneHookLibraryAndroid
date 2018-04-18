@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseActivity;
@@ -48,6 +49,16 @@ public class MainActivity extends BaseActivity {
                     replace(R.id.id_common_fragment, fragment, TAG_LIST_FRAGMENT)
                     .commit();
         }
+
+        /* for debugging */
+
+        final View view = findViewById(R.id.id_common_fragment);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.STACK_LAYOUT));
+            }
+        }, 100);
     }
 
     @Override

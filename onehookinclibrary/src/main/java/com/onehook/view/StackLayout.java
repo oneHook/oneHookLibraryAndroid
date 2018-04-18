@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import com.onehookinc.androidlib.R;
 
 /**
- * Created by EagleDiaoOptimity on 2017-06-27.
+ * Created by Eagle Diao on 2017-06-27.
  */
 public class StackLayout extends FrameLayout {
 
@@ -63,12 +63,12 @@ public class StackLayout extends FrameLayout {
     /**
      * If all the children view should have the same size as the maximum sized child.
      */
-    private boolean mMatchToMaxChild = true;
+    private boolean mMatchToMaxChild = false;
 
     /**
      * If we distribute to center or to bound.
      */
-    private boolean mDistributeToEdge = false;
+    private boolean mDistributeToEdge = true;
 
     /* for horizontal */
 
@@ -76,6 +76,7 @@ public class StackLayout extends FrameLayout {
     private int mMaxChildWidth;
 
     /* for vertical */
+
     private int mTotalChildrenHeight;
     private int mMaxChildHeight;
 
@@ -109,8 +110,8 @@ public class StackLayout extends FrameLayout {
                     mAlignment = Alignment.CENTER;
                     break;
             }
-            mMatchToMaxChild = a.getBoolean(R.styleable.StackLayout_equalToMax, true);
-            mDistributeToEdge = a.getBoolean(R.styleable.StackLayout_distributeToEdge, true);
+            mMatchToMaxChild = a.getBoolean(R.styleable.StackLayout_equalToMax, mMatchToMaxChild);
+            mDistributeToEdge = a.getBoolean(R.styleable.StackLayout_distributeToEdge, mDistributeToEdge);
             a.recycle();
         }
     }
@@ -157,6 +158,12 @@ public class StackLayout extends FrameLayout {
         }
     }
 
+    /**
+     * Layout Horizontally.
+     *
+     * @param width  view actual width (with padding included)
+     * @param height view actual height (with padding included)
+     */
     private void layoutHorizontally(final int width, final int height) {
         final int childCount = getChildCount();
         final int spacingCount;
@@ -165,8 +172,8 @@ public class StackLayout extends FrameLayout {
         } else {
             spacingCount = childCount + 1;
         }
-        final int spacing = (width - mTotalChildrenWidth) / spacingCount;
-        int xOffset = mDistributeToEdge ? 0 : spacing;
+        final int spacing = (width - mTotalChildrenWidth - getPaddingLeft() - getPaddingRight()) / spacingCount;
+        int xOffset = mDistributeToEdge ? getPaddingLeft() : getPaddingLeft() + spacing;
         for (int i = 0; i < childCount; i++) {
             final View v = getChildAt(i);
 
@@ -177,10 +184,10 @@ public class StackLayout extends FrameLayout {
             final int yOffset;
             switch (mAlignment) {
                 case LEFT_OR_TOP:
-                    yOffset = 0;
+                    yOffset = getPaddingTop();
                     break;
                 case RIGHT_OR_BOTTOM:
-                    yOffset = height - childHeight;
+                    yOffset = height - childHeight - getPaddingBottom();
                     break;
                 case CENTER:
                 default:
@@ -208,6 +215,12 @@ public class StackLayout extends FrameLayout {
         }
     }
 
+    /**
+     * Layout Vertically.
+     *
+     * @param width  view actual width (with padding included)
+     * @param height view actual height (with padding included)
+     */
     private void layoutVertically(final int width, final int height) {
         final int childCount = getChildCount();
         final int spacingCount;
@@ -216,8 +229,8 @@ public class StackLayout extends FrameLayout {
         } else {
             spacingCount = childCount + 1;
         }
-        final int spacing = (height - mTotalChildrenHeight) / spacingCount;
-        int yOffset = mDistributeToEdge ? 0 : spacing;
+        final int spacing = (height - mTotalChildrenHeight - getPaddingTop() - getPaddingBottom()) / spacingCount;
+        int yOffset = mDistributeToEdge ? getPaddingTop() : getPaddingTop() + spacing;
         for (int i = 0; i < childCount; i++) {
             final View v = getChildAt(i);
 
@@ -228,10 +241,10 @@ public class StackLayout extends FrameLayout {
             final int xOffset;
             switch (mAlignment) {
                 case LEFT_OR_TOP:
-                    xOffset = 0;
+                    xOffset = getPaddingLeft();
                     break;
                 case RIGHT_OR_BOTTOM:
-                    xOffset = width - childWidth;
+                    xOffset = width - childWidth - getPaddingRight();
                     break;
                 case CENTER:
                 default:
