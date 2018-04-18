@@ -23,15 +23,24 @@ public class FlipperView extends FrameLayout {
 
     private static final long ANIMATION_DURATION = 150;
 
+    public enum Direction {
+        LEFT,
+        RIGHT
+    }
+
     public interface FlipperViewCallback {
 
         /**
          * Called when next bottom page will be presented.
          *
          * @param nextPage next page
+         */
+        void onWillPresentNextPage(final View nextPage);
+
+        /**
          * @return true if next page should be presented, false otherwise
          */
-        boolean onWillPresentNextBottomPage(final View nextPage);
+        boolean onDidPresentNextPage();
     }
 
     public FlipperView(Context context, final int resID) {
@@ -77,6 +86,16 @@ public class FlipperView extends FrameLayout {
 
     private FlipperViewCallback mCallback;
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        mFrontPage.setPivotX(mFrontPage.getMeasuredWidth() / 2);
+        mBottomPage.setPivotX(mBottomPage.getMeasuredWidth() / 2);
+        mFrontPage.setPivotY(mFrontPage.getMeasuredHeight());
+        mBottomPage.setPivotY(mBottomPage.getMeasuredHeight());
+        setMeasuredDimension(getMeasuredWidth(), getMeasuredHeight() + (int) mBottomTranslationY);
+    }
+
     private void commonInit(final int res) {
         final LayoutInflater inflater = LayoutInflater.from(getContext());
         mFrontPage = inflater.inflate(res, this, false);
@@ -87,23 +106,47 @@ public class FlipperView extends FrameLayout {
         mBottomPage.setTranslationY(mBottomTranslationY);
         mBottomPage.setScaleX(mBottomScale);
         mBottomPage.setScaleY(mBottomScale);
-        mBottomPage.setVisibility(View.GONE);
+        mBottomPage.setVisibility(View.VISIBLE);
+
+        mBottomPage.bringToFront();
+        mFrontPage.bringToFront();
     }
 
     public void setCallback(final FlipperViewCallback callback) {
         mCallback = callback;
     }
 
+    /**
+     * Get the page view on the top of this view.
+     *
+     * @return front page view
+     */
     public View getFrontPage() {
         return mFrontPage;
     }
 
+    /**
+     * Get the page view on the bottom of this page view.
+     *
+     * @return bottom page view
+     */
     public View getBottomPage() {
         return mBottomPage;
     }
 
-    public void flipPage(final boolean swipeLeft) {
-        ObjectAnimator frontMoveLeftAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationX", swipeLeft ? -mFrontPage.getMeasuredWidth() : mFrontPage.getMeasuredWidth());
+    public void setHasNextPage(final boolean hasNextPage) {
+        mBottomPage.setVisibility(hasNextPage ? View.VISIBLE : View.GONE);
+    }
+
+    public void flipPage(final Direction direction) {
+        if (mCallback != null) {
+            mCallback.onWillPresentNextPage(mBottomPage);
+        }
+
+        ObjectAnimator frontMoveLeftAnimator = ObjectAnimator.ofFloat(mFrontPage,
+                "translationX",
+                direction == Direction.LEFT ?
+                        -mFrontPage.getMeasuredWidth() : mFrontPage.getMeasuredWidth());
         ObjectAnimator bottomMoveUpAnimator = ObjectAnimator.ofFloat(mBottomPage, "translationY", 0);
         ObjectAnimator bottomScaleXAnimator = ObjectAnimator.ofFloat(mBottomPage, "scaleX", 1);
         ObjectAnimator bottomScaleYAnimator = ObjectAnimator.ofFloat(mBottomPage, "scaleY", 1);
@@ -114,25 +157,29 @@ public class FlipperView extends FrameLayout {
             @Override
             public void onAnimationEndOrCanceled(Animator animation) {
                 if (mCallback != null) {
-                    final boolean hasNextPage = mCallback.onWillPresentNextBottomPage(mFrontPage);
-                    doSwap(hasNextPage);
+                    final boolean hasNextPage = mCallback.onDidPresentNextPage();
+                    if (hasNextPage) {
+                        doSwap();
+                    } else {
+                        mFrontPage.setAlpha(0);
+                    }
                 } else {
-                    doSwap(true);
+                    doSwap();
                 }
             }
         });
         animatorSet.start();
 
-        mFrontPage.setVisibility(View.VISIBLE);
-        mBottomPage.setVisibility(View.VISIBLE);
+        mFrontPage.setAlpha(1);
+        mBottomPage.setAlpha(1);
     }
 
-    private void doSwap(final boolean hasNext) {
+    private void doSwap() {
         mBottomPage.bringToFront();
         mFrontPage.setTranslationX(0);
-        ObjectAnimator bottomMoveDownAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationY", hasNext ? mBottomTranslationY : 1);
-        ObjectAnimator bottomScaleXAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleX", hasNext ? mBottomScale : 1);
-        ObjectAnimator bottomScaleYAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleY", hasNext ? mBottomScale : 1);
+        ObjectAnimator bottomMoveDownAnimator = ObjectAnimator.ofFloat(mFrontPage, "translationY", mBottomTranslationY);
+        ObjectAnimator bottomScaleXAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleX", mBottomScale);
+        ObjectAnimator bottomScaleYAnimator = ObjectAnimator.ofFloat(mFrontPage, "scaleY", mBottomScale);
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(bottomMoveDownAnimator, bottomScaleXAnimator, bottomScaleYAnimator);
         animatorSet.setDuration(ANIMATION_DURATION);
@@ -142,8 +189,8 @@ public class FlipperView extends FrameLayout {
         mFrontPage = mBottomPage;
         mBottomPage = temp;
 
-        mFrontPage.setVisibility(View.VISIBLE);
-        mBottomPage.setVisibility(View.GONE);
+        mFrontPage.setAlpha(1);
+        mBottomPage.setAlpha(1);
     }
 
 }

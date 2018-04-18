@@ -23,25 +23,30 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:text="No More Pages"
+            android:gravity="center"
+            android:textColor="@color/red_800" />
 
-            <com.onehook.view.viewflipper.FlipperView
-                android:id="@+id/fragment_sample_flipper_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:textColor="#ffffff" />
 
-        </LinearLayout>
+        <com.onehook.view.viewflipper.FlipperView
+            android:id="@+id/fragment_sample_flipper_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="#20000000"
+            app:bottomPageScale="0.80"
+            app:bottomPageTranslationY="12dp"
+            app:viewRes="@layout/cell_rounded_corner">
+        </com.onehook.view.viewflipper.FlipperView>
 
-    </ScrollView>
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

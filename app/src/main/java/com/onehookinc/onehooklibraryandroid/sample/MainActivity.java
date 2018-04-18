@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.CONFETTI_VIEW));
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.FLIPPER_VIEW));
             }
         }, 100);
     }
