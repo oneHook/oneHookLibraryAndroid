@@ -62,8 +62,10 @@ public class ConfettiView extends ViewGroup {
     private int mMinDuration = 1500;
     private int mMaxDuration = 3000;
     private int mConfettiCellCount = 50;
-    private int mConfettiSize = 64;
+    private int mConfettiSize = 128;
     private int mConfettiDelayRatio = 8;
+    private int mConfettiRotation = 180;
+    private float mSizeDiffRatio = 1.0f;
 
     private ArrayList<View> mConfettiViewCells;
 
@@ -88,6 +90,10 @@ public class ConfettiView extends ViewGroup {
                     mConfettiSize);
             mConfettiDelayRatio = a.getInteger(R.styleable.ConfettiView_oh_confetti_view_delay,
                     mConfettiDelayRatio);
+            mConfettiRotation = a.getInteger(R.styleable.ConfettiView_oh_confetti_view_rotation,
+                    mConfettiRotation);
+            mSizeDiffRatio = a.getFloat(R.styleable.ConfettiView_oh_confetti_view_size_diff_ratio,
+                    mSizeDiffRatio);
         }
     }
 
@@ -103,19 +109,24 @@ public class ConfettiView extends ViewGroup {
 
         final int width = getMeasuredWidth();
         final int height = getMeasuredHeight();
-        mConfettiSize = Math.min(width, height) / 10;
 
+        /* Create and customize each cell */
         final ConfettiCellBuilder builder = new ConfettiCellBuilder(getContext());
         for (int i = 0; i < mConfettiCellCount; i++) {
             final View cell = customizationListener.createConfettiCell(builder, i);
 
+            final int size = getCalculatedConfettiSize();
             if (cell instanceof TextView) {
-                ((TextView) cell).setTextSize(mConfettiSize / 4);
+                ((TextView) cell).setTextSize(size / 4);
             }
 
-            cell.measure(MeasureSpec.makeMeasureSpec(mConfettiSize, MeasureSpec.EXACTLY),
-                    MeasureSpec.makeMeasureSpec(mConfettiSize, MeasureSpec.EXACTLY));
-            cell.layout(generateRandomX(), -mConfettiSize, width / 2 + mConfettiSize / 2, 0);
+            cell.measure(MeasureSpec.makeMeasureSpec(size, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(size, MeasureSpec.EXACTLY));
+            final int x = generateRandomX();
+            cell.layout(x,
+                    -size,
+                    x + size,
+                    0);
             addView(cell);
             mConfettiViewCells.add(cell);
         }
@@ -124,15 +135,16 @@ public class ConfettiView extends ViewGroup {
 
         for (int i = 0; i < mConfettiViewCells.size(); i++) {
             final View cell = mConfettiViewCells.get(i);
+            final int cellSize = cell.getMeasuredHeight();
             final long duration = generateRandomDuration();
             final long delay = generateRandomDelay(i);
             final int endingX = generateRandomX();
             final int controlX = (endingX > width / 2) ? width : 0;
-            final int endingY = height + mConfettiSize;
+            final int endingY = height + cellSize;
             final int controlY = (int) (Math.random() * endingY);
 
             final Path path = new Path();
-            path.moveTo(width / 2, -mConfettiSize);
+            path.moveTo(width / 2, -cellSize);
             path.quadTo(controlX, controlY, endingX, endingY);
 
             final ValueAnimator pathAnimator = ValueAnimator.ofFloat(1.0f, 1.0f);
@@ -154,7 +166,7 @@ public class ConfettiView extends ViewGroup {
             final ObjectAnimator rotationAnimator = ObjectAnimator.ofFloat(cell,
                     "rotation",
                     0f,
-                    360f);
+                    mConfettiRotation);
             rotationAnimator.setDuration(duration);
 
             final AnimatorSet animatorSet = new AnimatorSet();
@@ -208,6 +220,10 @@ public class ConfettiView extends ViewGroup {
      */
     private int generateRandomX() {
         return (int) (getMeasuredWidth() * Math.random());
+    }
+
+    private int getCalculatedConfettiSize() {
+        return (int) (mConfettiSize - (mConfettiSize - (mConfettiSize * mSizeDiffRatio)) * Math.random());
     }
 
     /* Public accessors */

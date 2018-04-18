@@ -43,7 +43,9 @@
         android:id="@+id/fragment_sample_confetti_view"
         android:background="@color/gray_400"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:oh_confetti_view_rotation="0"
+        app:oh_confetti_view_size_diff_ratio="0.5">
 
     </com.onehook.view.confetti.ConfettiView>
 

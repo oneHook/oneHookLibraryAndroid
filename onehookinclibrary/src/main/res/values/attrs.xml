@@ -4,9 +4,9 @@
     <!-- Flipper view attributes -->
 
     <declare-styleable name="FlipperView">
-        <attr name="viewRes" format="reference"/>
-        <attr name="bottomPageTranslationY" format="dimension|reference"/>
-        <attr name="bottomPageScale" format="float|reference"/>
+        <attr name="viewRes" format="reference" />
+        <attr name="bottomPageTranslationY" format="dimension|reference" />
+        <attr name="bottomPageScale" format="float|reference" />
     </declare-styleable>
 
     <!-- Stack Layout Attributes -->
@@ -21,15 +21,15 @@
             <enum name="center" value="1" />
             <enum name="right_or_bottom" value="2" />
         </attr>
-        <attr name="equalToMax" format="boolean"/>
-        <attr name="distributeToEdge" format="boolean"/>
+        <attr name="equalToMax" format="boolean" />
+        <attr name="distributeToEdge" format="boolean" />
     </declare-styleable>
 
     <!-- FlowLayout Attributes -->
 
     <declare-styleable name="FlowLayout">
-        <attr name="oh_flow_layout_horizontal_margin" format="dimension|reference"/>
-        <attr name="oh_flow_layout_vertical_margin" format="dimension|reference"/>
+        <attr name="oh_flow_layout_horizontal_margin" format="dimension|reference" />
+        <attr name="oh_flow_layout_vertical_margin" format="dimension|reference" />
         <attr name="oh_flow_layout_vertical_align_type" format="enum">
             <enum name="center" value="0" />
             <enum name="bottom" value="1" />
@@ -54,8 +54,8 @@
         <attr name="oh_scale_view_maximum_scale" format="integer|reference" />
         <attr name="oh_scale_view_current_scale" format="integer|reference" />
         <attr name="oh_scale_view_pan_direction_natural" format="boolean" />
-        <attr name="oh_scale_view_maximum_line_height" format="dimension|reference"/>
-        <attr name="oh_scale_view_indicator_width" format="dimension|reference"/>
+        <attr name="oh_scale_view_maximum_line_height" format="dimension|reference" />
+        <attr name="oh_scale_view_indicator_width" format="dimension|reference" />
     </declare-styleable>
 
     <!-- Confetti View Attributes -->
@@ -66,8 +66,8 @@
         <attr name="oh_confetti_view_count" format="integer|reference" />
         <attr name="oh_confetti_view_delay" format="integer|reference" />
         <attr name="oh_confetti_view_size" format="dimension|reference" />
-
-
+        <attr name="oh_confetti_view_rotation" format="integer|reference" />
+        <attr name="oh_confetti_view_size_diff_ratio" format="float|reference" />
 
     </declare-styleable>
 
