@@ -97,10 +97,10 @@ public class FlowLayout extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         for (int i = 0; i < getChildCount(); i++) {
-            View v = getChildAt(i);
-            v.measure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.AT_MOST),
-                    MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(heightMeasureSpec), MeasureSpec.UNSPECIFIED));
+            final View v = getChildAt(i);
+            measureChild(v, widthMeasureSpec, heightMeasureSpec);
         }
         mMaximumWidth = MeasureSpec.getSize(widthMeasureSpec);
         calculateLayout();
@@ -108,8 +108,8 @@ public class FlowLayout extends ViewGroup {
 
     private void calculateLayout() {
         final int childCount = getChildCount();
-        float currentLineX = 0;
-        float currentLineY = 0;
+        float currentLineX = getPaddingLeft();
+        float currentLineY = getPaddingTop();
         float currentLineMaxHeight = 0;
         ArrayList<View> currentLineChildren = new ArrayList<>();
 
@@ -124,7 +124,7 @@ public class FlowLayout extends ViewGroup {
             }
             final float childWidth = child.getMeasuredWidth();
             final float childHeight = child.getMeasuredHeight();
-            if (currentLineX + mHorizontalSpacing + childWidth < mMaximumWidth || currentLineChildren.size() == 0) {
+            if (currentLineX + mHorizontalSpacing + childWidth < mMaximumWidth - getPaddingRight() || currentLineChildren.size() == 0) {
                 /* still in the same line */
                 currentLineMaxHeight = Math.max(currentLineMaxHeight, childHeight);
                 currentLineChildren.add(child);
@@ -137,7 +137,7 @@ public class FlowLayout extends ViewGroup {
                 currentLineChildren.clear();
                 currentLineY += currentLineMaxHeight + mVerticalSpacing;
                 currentLineMaxHeight = 0;
-                currentLineX = 0;
+                currentLineX = getPaddingLeft();
             }
         }
 
@@ -146,7 +146,6 @@ public class FlowLayout extends ViewGroup {
             assignLayoutForLine(currentLineChildren, currentLineY, currentLineMaxHeight);
             currentLineChildren.clear();
             currentLineY += currentLineMaxHeight;
-
         } else {
             currentLineY -= mVerticalSpacing;
         }
@@ -154,7 +153,7 @@ public class FlowLayout extends ViewGroup {
     }
 
     private void assignLayoutForLine(final List<View> children, final float yStart, final float maxHeight) {
-        float xStart = 0;
+        float xStart = getPaddingLeft();
         if (mHorizontalAlignType == HorizontalAlignType.CENTER) {
             float widthNeeded = 0;
             for (int i = 0; i < children.size(); i++) {
@@ -170,26 +169,28 @@ public class FlowLayout extends ViewGroup {
             final View child = children.get(i);
             final float childWidth = child.getMeasuredWidth();
             final float childHeight = child.getMeasuredHeight();
-
             switch (mVerticalAlignType) {
                 case CENTER:
-                    child.setTag(R.id.view_layout_info_tag_key, new RectF(xStart,
-                            yStart + (maxHeight - childHeight) / 2,
-                            xStart + childWidth,
-                            yStart + (maxHeight - childHeight) / 2 + childHeight
-                    ));
+                    child.setTag(R.id.view_layout_info_tag_key,
+                            new RectF(xStart,
+                                    yStart + (maxHeight - childHeight) / 2,
+                                    xStart + childWidth,
+                                    yStart + (maxHeight - childHeight) / 2 + childHeight
+                            ));
                     break;
                 case BOTTOM:
-                    child.setTag(R.id.view_layout_info_tag_key, new RectF(xStart,
-                            yStart + maxHeight - childHeight,
-                            xStart + childWidth,
-                            yStart + maxHeight));
+                    child.setTag(R.id.view_layout_info_tag_key,
+                            new RectF(xStart,
+                                    yStart + maxHeight - childHeight,
+                                    xStart + childWidth,
+                                    yStart + maxHeight));
                     break;
                 case TOP:
-                    child.setTag(R.id.view_layout_info_tag_key, new RectF(xStart,
-                            yStart,
-                            xStart + childWidth,
-                            yStart + childHeight));
+                    child.setTag(R.id.view_layout_info_tag_key,
+                            new RectF(xStart,
+                                    yStart,
+                                    xStart + childWidth,
+                                    yStart + childHeight));
                     break;
 
             }

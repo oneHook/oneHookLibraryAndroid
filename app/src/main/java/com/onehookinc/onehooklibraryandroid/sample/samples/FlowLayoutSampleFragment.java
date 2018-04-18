@@ -36,7 +36,7 @@ public class FlowLayoutSampleFragment extends BaseFragment {
 
         final LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        final String[] messages = new String[]{"This", "is", "a", "something", "very", "import",
+        final String[] messages = new String[]{"This", "is", "a", "something", "very", "import", "a",
                 "message", "please read", "it", "carefully"};
 
         final FlowLayout flowLayout1 = view.findViewById(R.id.fragment_sample_flow_layout_flow1);

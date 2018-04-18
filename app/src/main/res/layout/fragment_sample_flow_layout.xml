@@ -33,76 +33,232 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="Typical Usage" />
+
             <com.onehook.view.FlowLayout
                 android:id="@+id/fragment_sample_flow_layout_flow1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/common_margin_medium"
                 android:background="@color/gray_300"
                 android:padding="@dimen/common_margin_small"
                 app:oh_flow_layout_horizontal_margin="@dimen/common_margin_small"
-                app:oh_flow_layout_vertical_margin="@dimen/common_margin_small"
-                android:layout_margin="@dimen/common_margin_medium">
+                app:oh_flow_layout_vertical_margin="@dimen/common_margin_small">
 
             </com.onehook.view.FlowLayout>
 
-            <com.onehook.view.FlowLayout
-                android:layout_width="60dp"
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin_medium">
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_oda_avatar" />
-
-            </com.onehook.view.FlowLayout>
+                android:padding="@dimen/common_margin_medium"
+                android:text="Different Size, Center Vertical, Left Horizontal" />
 
             <com.onehook.view.FlowLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin_medium">
+                android:layout_margin="@dimen/common_margin_medium"
+                android:background="@color/gray_300"
+                android:padding="@dimen/common_margin_small">
 
                 <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="center"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/ic_oda_avatar" />
 
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:scaleType="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+            </com.onehook.view.FlowLayout>
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="Different Size, Center Vertical, Center Horizontal" />
+
+            <com.onehook.view.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/common_margin_medium"
+                android:background="@color/gray_300"
+                app:oh_flow_layout_horizontal_align_type="center"
+                android:padding="@dimen/common_margin_small">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/ic_oda_avatar" />
 
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:scaleType="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/ic_oda_avatar" />
 
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:scaleType="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+            </com.onehook.view.FlowLayout>
+
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="Different Size, Bottom Vertical, Center Horizontal" />
+
+
+            <com.onehook.view.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/common_margin_medium"
+                android:background="@color/gray_300"
+                app:oh_flow_layout_horizontal_align_type="center"
+                app:oh_flow_layout_vertical_align_type="bottom"
+                android:padding="@dimen/common_margin_small">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+            </com.onehook.view.FlowLayout>
+
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="Same Size, Center Vertical, Left Horizontal" />
+
+
+            <com.onehook.view.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/common_margin_medium"
+                android:background="@color/gray_300"
+                android:padding="@dimen/common_margin_small"
+                app:oh_flow_layout_horizontal_margin="@dimen/common_margin_small"
+                app:oh_flow_layout_vertical_margin="@dimen/common_margin_small">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_oda_avatar" />
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/ic_oda_avatar" />
 
             </com.onehook.view.FlowLayout>
