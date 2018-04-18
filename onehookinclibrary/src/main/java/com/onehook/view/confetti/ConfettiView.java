@@ -131,11 +131,13 @@ public class ConfettiView extends ViewGroup {
             mConfettiViewCells.add(cell);
         }
 
+        /* Setup Animators */
         final Collection<Animator> animators = new ArrayList<>();
 
         for (int i = 0; i < mConfettiViewCells.size(); i++) {
             final View cell = mConfettiViewCells.get(i);
             final int cellSize = cell.getMeasuredHeight();
+            
             final long duration = generateRandomDuration();
             final long delay = generateRandomDelay(i);
             final int endingX = generateRandomX();
@@ -230,5 +232,35 @@ public class ConfettiView extends ViewGroup {
 
     public boolean isAnimating() {
         return mConfettiViewCells != null && mConfettiViewCells.size() > 0;
+    }
+
+    /* Public setting */
+
+    public void setMinDuration(int minDuration) {
+        this.mMinDuration = minDuration;
+    }
+
+    public void setMaxDuration(int maxDuration) {
+        this.mMaxDuration = maxDuration;
+    }
+
+    public void setConfettiCellCount(int confettiCellCount) {
+        this.mConfettiCellCount = confettiCellCount;
+    }
+
+    public void setConfettiSize(int confettiSize) {
+        this.mConfettiSize = confettiSize;
+    }
+
+    public void setConfettiDelayRatio(int confettiDelayRatio) {
+        this.mConfettiDelayRatio = confettiDelayRatio;
+    }
+
+    public void setConfettiRotation(int confettiRotation) {
+        this.mConfettiRotation = confettiRotation;
+    }
+
+    public void setSizeDiffRatio(float sizeDiffRatio) {
+        this.mSizeDiffRatio = sizeDiffRatio;
     }
 }
