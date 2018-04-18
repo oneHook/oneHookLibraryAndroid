@@ -55,13 +55,13 @@ public class MainActivity extends BaseActivity {
 
         /* for debugging */
 
-        final View view = findViewById(R.id.id_common_fragment);
-        view.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.FLOW_LAYOUT));
-            }
-        }, 100);
+//        final View view = findViewById(R.id.id_common_fragment);
+//        view.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.FLOW_LAYOUT));
+//            }
+//        }, 100);
     }
 
     @Override
