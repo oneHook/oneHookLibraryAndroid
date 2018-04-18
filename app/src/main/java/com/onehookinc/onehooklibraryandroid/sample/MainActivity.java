@@ -38,7 +38,9 @@ public class MainActivity extends BaseActivity {
                         new SampleItem("TagsView", SampleItem.SampleItemType.TAGS_VIEW),
                         new SampleItem("FlipperView", SampleItem.SampleItemType.FLIPPER_VIEW),
                         new SampleItem("ProgressViews", SampleItem.SampleItemType.PROGRESS_VIEW)
-                ));
+                ),
+                new SampleItem("Camera", SampleItem.SampleItemType.CAMERA),
+                new SampleItem("Dialogs", SampleItem.SampleItemType.DIALOG));
 
         if (getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT) == null) {
             final SampleListFragment fragment = SampleListFragment.newInstance(parent, false);

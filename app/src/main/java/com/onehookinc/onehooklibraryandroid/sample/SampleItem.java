@@ -21,7 +21,13 @@ public class SampleItem implements Parcelable {
         PROGRESS_VIEW,
 
         /* Utility */
-        DEVICE
+        DEVICE,
+
+        /* Camera */
+        CAMERA,
+
+        /* Dialog */
+        DIALOG
     }
 
     @NonNull
