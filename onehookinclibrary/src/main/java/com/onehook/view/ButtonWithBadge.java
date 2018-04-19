@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Button;
@@ -13,7 +14,7 @@ import android.widget.Button;
 /**
  * Created by EagleDiao on 2016-04-30.
  */
-public class ButtonWithBadge extends Button {
+public class ButtonWithBadge extends AppCompatButton {
 
     public ButtonWithBadge(Context context) {
         super(context);
@@ -27,12 +28,6 @@ public class ButtonWithBadge extends Button {
 
     public ButtonWithBadge(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        commonInit();
-    }
-
-    @TargetApi(21)
-    public ButtonWithBadge(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         commonInit();
     }
 
@@ -68,7 +63,7 @@ public class ButtonWithBadge extends Button {
             final float width = getMeasuredWidth();
             final float height = getMeasuredHeight();
             final float length = Math.min(width, height);
-            final float radius = length * 0.3f;
+            final float radius = length * 0.2f;
 
             Log.d("OptimityBadge", "should draw badge " + mText + " width " + width + " , height " + height);
             canvas.drawCircle(width - radius, radius, radius, mPaint);
@@ -84,12 +79,17 @@ public class ButtonWithBadge extends Button {
 
     public void setBadgeCount(final int count) {
         if (count <= 0) {
-            mText = "";
+            mText = "X";
         } else if (count > 99) {
             mText = "99+";
         } else {
             mText = String.valueOf(count);
         }
+        invalidate();
+    }
+
+    public void setBadgeText(final String text) {
+        mText = text;
         invalidate();
     }
 }

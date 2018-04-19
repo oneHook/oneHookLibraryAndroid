@@ -12,6 +12,7 @@ import com.onehookinc.onehooklibraryandroid.sample.common.StackActivity;
 import com.onehookinc.onehooklibraryandroid.sample.samples.DeviceUtilFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.FlipperViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.FlowLayoutSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.MiscViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.NotFoundFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.ProgressViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.ScaleViewSampleFragment;
@@ -36,7 +37,8 @@ public class MainActivity extends BaseActivity {
                         new SampleItem("Confetti", SampleItem.SampleItemType.CONFETTI_VIEW),
                         new SampleItem("FlipperView", SampleItem.SampleItemType.FLIPPER_VIEW),
                         new SampleItem("ProgressViews", SampleItem.SampleItemType.PROGRESS_VIEW),
-                        new SampleItem("ScaleView", SampleItem.SampleItemType.SCALE_VIEW)
+                        new SampleItem("ScaleView", SampleItem.SampleItemType.SCALE_VIEW),
+                        new SampleItem("Misc View", SampleItem.SampleItemType.MISC_VIEW)
                 ),
                 new SampleItem("Camera", SampleItem.SampleItemType.CAMERA),
                 new SampleItem("Dialogs", SampleItem.SampleItemType.DIALOG));
@@ -54,7 +56,7 @@ public class MainActivity extends BaseActivity {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.PROGRESS_VIEW));
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.MISC_VIEW));
             }
         }, 100);
     }
@@ -116,6 +118,8 @@ public class MainActivity extends BaseActivity {
                 return StackActivity.intent(this, ProgressViewSampleFragment.class);
             case SCALE_VIEW:
                 return StackActivity.intent(this, ScaleViewSampleFragment.class);
+            case MISC_VIEW:
+                return StackActivity.intent(this, MiscViewSampleFragment.class);
             default:
                 return StackActivity.intent(this, NotFoundFragment.class);
         }
