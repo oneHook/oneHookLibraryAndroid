@@ -14,13 +14,11 @@ import com.onehookinc.androidlib.R;
 /**
  * Created by EagleDiao on 15-07-26.
  */
-public class AnimatedProgressBar extends View {
+public class ProgressBar extends View {
 
     private float primaryProgress;
 
     private float secondaryProgress;
-
-    private int baseColor;
 
     private int primaryProgressColor;
 
@@ -36,17 +34,17 @@ public class AnimatedProgressBar extends View {
     private Paint mPaint;
     private RectF mRectF;
 
-    public AnimatedProgressBar(Context context) {
+    public ProgressBar(Context context) {
         super(context);
         commonInit(context, null);
     }
 
-    public AnimatedProgressBar(Context context, AttributeSet attrs) {
+    public ProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         commonInit(context, attrs);
     }
 
-    public AnimatedProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         commonInit(context, attrs);
     }
@@ -64,7 +62,6 @@ public class AnimatedProgressBar extends View {
          */
         this.primaryProgress = 0.5f;
         this.secondaryProgress = 0.75f;
-        this.baseColor = Color.WHITE;
         this.primaryProgressColor = Color.RED;
         this.secondaryProgressColor = Color.YELLOW;
         this.borderColor = Color.TRANSPARENT;
@@ -74,14 +71,13 @@ public class AnimatedProgressBar extends View {
          * Load from style if any.
          */
         if (attrs != null) {
-            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AnimatedProgressBar);
-            this.primaryProgress = a.getFloat(R.styleable.AnimatedProgressBar_oh_progress_bar_primary_progress, this.primaryProgress);
-            this.secondaryProgress = a.getFloat(R.styleable.AnimatedProgressBar_oh_progress_bar_secondary_progress, this.secondaryProgress);
-            this.baseColor = a.getColor(R.styleable.AnimatedProgressBar_oh_progress_bar_progress_base_color, this.baseColor);
-            this.primaryProgressColor = a.getColor(R.styleable.AnimatedProgressBar_oh_progress_bar_primary_progress_color, this.primaryProgressColor);
-            this.secondaryProgressColor = a.getColor(R.styleable.AnimatedProgressBar_oh_progress_bar_secondary_progress_color, this.secondaryProgressColor);
-            this.borderColor = a.getColor(R.styleable.AnimatedProgressBar_oh_progress_bar_border_color, this.borderColor);
-            this.borderThickness = a.getDimension(R.styleable.AnimatedProgressBar_oh_progress_bar_border_thickness, this.borderThickness);
+            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ProgressBar);
+            this.primaryProgress = a.getFloat(R.styleable.ProgressBar_oh_progress_bar_primary_progress, this.primaryProgress);
+            this.secondaryProgress = a.getFloat(R.styleable.ProgressBar_oh_progress_bar_secondary_progress, this.secondaryProgress);
+            this.primaryProgressColor = a.getColor(R.styleable.ProgressBar_oh_progress_bar_primary_progress_color, this.primaryProgressColor);
+            this.secondaryProgressColor = a.getColor(R.styleable.ProgressBar_oh_progress_bar_secondary_progress_color, this.secondaryProgressColor);
+            this.borderColor = a.getColor(R.styleable.ProgressBar_oh_progress_bar_border_color, this.borderColor);
+            this.borderThickness = a.getDimension(R.styleable.ProgressBar_oh_progress_bar_border_thickness, this.borderThickness);
             a.recycle();
         }
 
@@ -101,7 +97,6 @@ public class AnimatedProgressBar extends View {
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
 
 
-        mPaint.setColor(this.baseColor);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.WHITE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -159,11 +154,6 @@ public class AnimatedProgressBar extends View {
             secondaryProgress = 1;
         }
         this.secondaryProgress = secondaryProgress;
-        invalidate();
-    }
-
-    public void setBaseColor(int baseColor) {
-        this.baseColor = baseColor;
         invalidate();
     }
 

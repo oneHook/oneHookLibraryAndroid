@@ -17,7 +17,7 @@ import com.onehookinc.androidlib.R;
 /**
  * Created by odaeagle on 15-06-08.
  */
-public class AnimatedProgressRing extends View {
+public class ProgressRing extends View {
 
     /**
      * Bottom ring progress, from 0 to 1. By default it will always be 1. This value can be
@@ -86,17 +86,17 @@ public class AnimatedProgressRing extends View {
      */
     private boolean mShouldShowPercentage;
 
-    public AnimatedProgressRing(Context context) {
+    public ProgressRing(Context context) {
         super(context);
         commonInit(context, null);
     }
 
-    public AnimatedProgressRing(Context context, AttributeSet attrs) {
+    public ProgressRing(Context context, AttributeSet attrs) {
         super(context, attrs);
         commonInit(context, attrs);
     }
 
-    public AnimatedProgressRing(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ProgressRing(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         commonInit(context, attrs);
     }
@@ -122,15 +122,15 @@ public class AnimatedProgressRing extends View {
          * Load from style if any.
          */
         if (attrs != null) {
-            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AnimatedProgressRing);
-            mProgressBaseColor = a.getColor(R.styleable.AnimatedProgressRing_oh_progress_view_base_color, mProgressBaseColor);
-            mProgressColor = a.getColor(R.styleable.AnimatedProgressRing_oh_progress_view_primary_color, mProgressColor);
-            mProgressTextColor = a.getColor(R.styleable.AnimatedProgressRing_oh_progress_view_text_color, mProgressTextColor);
-            this.progress = a.getFloat(R.styleable.AnimatedProgressRing_oh_progress_view_progress, this.progress);
-            this.bottomRingProgress = a.getFloat(R.styleable.AnimatedProgressRing_oh_progress_view_bottom_ring_progress, this.bottomRingProgress);
-            mShouldShowPercentage = a.getBoolean(R.styleable.AnimatedProgressRing_oh_progress_view_show_percentage, mShouldShowPercentage);
-            mProgressRingStrokeRatio = a.getFloat(R.styleable.AnimatedProgressRing_oh_progress_view_stroke_ratio, mProgressRingStrokeRatio);
-            mCircleBackgroundColor = a.getColor(R.styleable.AnimatedProgressRing_oh_progress_view_circile_background_color, mCircleBackgroundColor);
+            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ProgressRing);
+            mProgressBaseColor = a.getColor(R.styleable.ProgressRing_oh_progress_view_base_color, mProgressBaseColor);
+            mProgressColor = a.getColor(R.styleable.ProgressRing_oh_progress_view_primary_color, mProgressColor);
+            mProgressTextColor = a.getColor(R.styleable.ProgressRing_oh_progress_view_text_color, mProgressTextColor);
+            this.progress = a.getFloat(R.styleable.ProgressRing_oh_progress_view_progress, this.progress);
+            this.bottomRingProgress = a.getFloat(R.styleable.ProgressRing_oh_progress_view_bottom_ring_progress, this.bottomRingProgress);
+            mShouldShowPercentage = a.getBoolean(R.styleable.ProgressRing_oh_progress_view_show_percentage, mShouldShowPercentage);
+            mProgressRingStrokeRatio = a.getFloat(R.styleable.ProgressRing_oh_progress_view_stroke_ratio, mProgressRingStrokeRatio);
+            mCircleBackgroundColor = a.getColor(R.styleable.ProgressRing_oh_progress_view_circle_background_color, mCircleBackgroundColor);
             a.recycle();
         }
 
@@ -140,7 +140,7 @@ public class AnimatedProgressRing extends View {
         mPaint = new Paint();
         mPaint.setColor(mProgressColor);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeCap(Paint.Cap.SQUARE);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setAntiAlias(true);
 
         mProgressRect = new RectF();

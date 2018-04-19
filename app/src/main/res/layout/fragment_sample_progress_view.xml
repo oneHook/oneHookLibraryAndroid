@@ -37,23 +37,119 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center_horizontal"
-                app:oh_icon_progress_view_icons="@array/icon_loading_view_icons"/>
+                android:textSize="30sp"
+                app:oh_icon_progress_view_icons="@array/icon_loading_view_icons" />
 
 
-            <com.onehook.view.progress.AnimatedProgressBar
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="With Border" />
+
+            <com.onehook.view.progress.ProgressBar
+                android:id="@+id/fragment_sample_progress_view_bar1"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="@dimen/common_margin_medium"
                 android:layout_marginRight="@dimen/common_margin_medium"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/common_margin_medium" />
+                android:layout_marginTop="@dimen/common_margin_medium"
+                app:oh_progress_bar_border_color="@color/gray_400"
+                app:oh_progress_bar_border_thickness="2dp"
+                app:oh_progress_bar_primary_progress="0.75"
+                app:oh_progress_bar_primary_progress_color="@color/red_900"
+                app:oh_progress_bar_secondary_progress="0.8"
+                app:oh_progress_bar_secondary_progress_color="@color/gray_50" />
 
-            <com.onehook.view.progress.AnimatedProgressRing
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/common_margin_medium" />
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="Without Border" />
 
+            <com.onehook.view.progress.ProgressBar
+                android:id="@+id/fragment_sample_progress_view_bar2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/common_margin_medium"
+                android:layout_marginRight="@dimen/common_margin_medium"
+                android:layout_marginTop="@dimen/common_margin_medium"
+                app:oh_progress_bar_primary_progress="0.75"
+                app:oh_progress_bar_primary_progress_color="@color/gray_900"
+                app:oh_progress_bar_secondary_progress="1.0"
+                app:oh_progress_bar_secondary_progress_color="@color/gray_200" />
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="Rings" />
+
+            <com.onehook.view.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:oh_flow_layout_horizontal_align_type="center">
+
+                <com.onehook.view.progress.ProgressRing
+                    android:id="@+id/fragment_sample_progress_view_ring1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/common_margin_medium"
+                    app:oh_progress_view_base_color="@color/gray_300"
+                    app:oh_progress_view_bottom_ring_progress="1"
+                    app:oh_progress_view_circle_background_color="@color/gray_50"
+                    app:oh_progress_view_primary_color="@color/red_600"
+                    app:oh_progress_view_progress="0.10"
+                    app:oh_progress_view_show_percentage="true"
+                    app:oh_progress_view_stroke_ratio="0.05"
+                    app:oh_progress_view_text_color="@color/black" />
+
+                <com.onehook.view.progress.ProgressRing
+                    android:id="@+id/fragment_sample_progress_view_ring2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/common_margin_medium"
+                    app:oh_progress_view_base_color="@color/gray_300"
+                    app:oh_progress_view_bottom_ring_progress="1"
+                    app:oh_progress_view_circle_background_color="@color/gray_50"
+                    app:oh_progress_view_primary_color="@color/red_600"
+                    app:oh_progress_view_progress="0.10"
+                    app:oh_progress_view_show_percentage="true"
+                    app:oh_progress_view_stroke_ratio="0.15"
+                    app:oh_progress_view_text_color="@color/black" />
+
+                <com.onehook.view.progress.ProgressRing
+                    android:id="@+id/fragment_sample_progress_view_ring3"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/common_margin_medium"
+                    app:oh_progress_view_base_color="@color/gray_300"
+                    app:oh_progress_view_bottom_ring_progress="1"
+                    app:oh_progress_view_circle_background_color="@color/gray_50"
+                    app:oh_progress_view_primary_color="@color/red_600"
+                    app:oh_progress_view_progress="0.10"
+                    app:oh_progress_view_show_percentage="false"
+                    app:oh_progress_view_stroke_ratio="0.15"
+                    app:oh_progress_view_text_color="@color/black" />
+
+            </com.onehook.view.FlowLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_margin_xxlarge"
+                android:layout_marginRight="@dimen/common_margin_xxlarge"
+                android:layout_marginTop="@dimen/common_margin_large"
+                android:text="Randomize Progress"
+                android:textAllCaps="false" />
 
         </LinearLayout>
 

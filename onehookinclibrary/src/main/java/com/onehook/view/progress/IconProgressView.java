@@ -3,6 +3,7 @@ package com.onehook.view.progress;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.onehookinc.androidlib.R;
 /**
  * Created by EagleDiao on 2016-05-01.
  */
-public class IconProgressView extends TextView {
+public class IconProgressView extends AppCompatTextView {
 
     public IconProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -22,12 +23,6 @@ public class IconProgressView extends TextView {
 
     public IconProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        commonInit(context, attrs);
-    }
-
-    @TargetApi(21)
-    public IconProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         commonInit(context, attrs);
     }
 
@@ -76,6 +71,7 @@ public class IconProgressView extends TextView {
             removeCallbacks(mRunnable);
             mIndex = (mIndex + 1) % mIcons.length;
             startAnimating();
+            System.out.println("oneHook okok");
         }
     };
 
