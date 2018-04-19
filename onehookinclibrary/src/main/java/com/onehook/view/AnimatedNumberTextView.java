@@ -1,16 +1,17 @@
-package com.onehook.widget;
+package com.onehook.view;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 /**
  * Created by EagleDiao on 2016-03-22.
  */
-public class AnimatedNumberTextView extends TextView {
+public class AnimatedNumberTextView extends AppCompatTextView {
 
     protected int number;
 
@@ -24,11 +25,6 @@ public class AnimatedNumberTextView extends TextView {
 
     public AnimatedNumberTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    @TargetApi(21)
-    public AnimatedNumberTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     private void commonInit() {
@@ -47,6 +43,7 @@ public class AnimatedNumberTextView extends TextView {
 
     /**
      * Child class can override this function to render the textview differently.
+     *
      * @param numberToRender number to render
      */
     protected void renderNumber(final int numberToRender) {

@@ -1,4 +1,4 @@
-package com.onehook.view.touchevent;
+package com.onehook.util.touchevent;
 
 import android.view.MotionEvent;
 import android.view.VelocityTracker;

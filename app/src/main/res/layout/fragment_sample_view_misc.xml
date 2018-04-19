@@ -142,8 +142,8 @@
                     android:background="@color/red_600"
                     android:padding="@dimen/common_margin_medium"
                     app:fit_to="width"
-                    app:width_weight="16"
-                    app:height_weight="9">
+                    app:height_weight="9"
+                    app:width_weight="16">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -152,6 +152,32 @@
 
                 </com.onehook.view.FitRatioFrameLayout>
             </com.onehook.view.FlowLayout>
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_small"
+                android:text="TextView that supports simple animation for numbers" />
+
+            <com.onehook.view.AnimatedNumberTextView
+                android:id="@+id/fragment_sample_view_misc_animated_number_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/common_margin_medium"
+                android:text="1000"
+                android:textSize="20sp" />
+
+            <com.onehook.view.ButtonWithBadge
+                android:id="@+id/fragment_sample_view_misc_random_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/common_margin_medium"
+                android:text="Randomize"
+                app:badge_background_color="@color/red_600"
+                app:badge_text="99+"
+                app:badge_text_color="@color/white" />
+
 
         </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.onehook.view;
+package com.onehook.view.deprecated;
 
 import android.content.Context;
 import android.graphics.Bitmap;
