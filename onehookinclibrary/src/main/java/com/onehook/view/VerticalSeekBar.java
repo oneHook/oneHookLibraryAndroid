@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
@@ -18,7 +19,7 @@ import com.onehookinc.androidlib.R;
 /**
  * Implementation of an easy vertical SeekBar, based on the normal SeekBar.
  */
-public class VerticalSeekBar extends SeekBar {
+public class VerticalSeekBar extends AppCompatSeekBar {
     private boolean fromUser = false;
     private boolean onlySlideOnThumb = false;
     private Drawable customThumb = null;

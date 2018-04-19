@@ -71,6 +71,20 @@
 
     </declare-styleable>
 
+    <!-- Button With Badge -->
+
+    <declare-styleable name="ButtonWithBadge">
+        <attr name="badge_background_color" format="color|reference" />
+        <attr name="badge_text_color" format="color|reference" />
+        <attr name="badge_text" format="string|reference" />
+        <attr name="badge_size_ratio" format="float|reference" />
+        <attr name="badge_alignment" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+
+    </declare-styleable>
+
 
     <!-- to be cleaned -->
 
