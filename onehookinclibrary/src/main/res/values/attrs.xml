@@ -85,6 +85,15 @@
 
     </declare-styleable>
 
+    <!-- Fit Ratio Frame Layout -->
+    <declare-styleable name="FitRatioFrameLayout">
+        <attr name="fit_to" format="enum">
+            <enum name="width" value="0" />
+            <enum name="height" value="1" />
+        </attr>
+        <attr name="width_weight" format="dimension|reference" />
+        <attr name="height_weight" format="dimension|reference" />
+    </declare-styleable>
 
     <!-- to be cleaned -->
 

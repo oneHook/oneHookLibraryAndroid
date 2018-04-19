@@ -40,67 +40,118 @@
                 android:padding="@dimen/common_margin_small"
                 android:text="Button with badge" />
 
-            <com.onehook.view.ButtonWithBadge
+            <com.onehook.view.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium">
+
+                <com.onehook.view.ButtonWithBadge
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_margin_medium"
+                    android:text="A Button"
+                    app:badge_background_color="@color/red_600"
+                    app:badge_text="99+"
+                    app:badge_text_color="@color/white" />
+
+                <com.onehook.view.ButtonWithBadge
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_margin_medium"
+                    android:text="A Button"
+                    app:badge_alignment="right"
+                    app:badge_background_color="@color/red_600"
+                    app:badge_text="Aeagle"
+                    app:badge_text_color="@color/white" />
+
+                <com.onehook.view.ButtonWithBadge
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_margin_medium"
+                    android:text="A Button"
+                    app:badge_background_color="@color/red_600"
+                    app:badge_text="A+"
+                    app:badge_text_color="@color/white" />
+
+                <com.onehook.view.ButtonWithBadge
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_margin_medium"
+                    android:text="A Button"
+                    app:badge_alignment="right"
+                    app:badge_background_color="@color/red_600"
+                    app:badge_text="OMG"
+                    app:badge_text_color="@color/white" />
+
+                <com.onehook.view.ButtonWithBadge
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/common_margin_medium"
+                    android:text="A Button"
+                    app:badge_alignment="right"
+                    app:badge_background_color="@color/red_600"
+                    app:badge_text="5"
+                    app:badge_text_color="@color/white" />
+
+
+            </com.onehook.view.FlowLayout>
+
+            <TextView
+                style="@style/OH.Title.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:badge_background_color="@color/red_600"
-                app:badge_text_color="@color/white"
-                app:badge_text="99+"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:text="A Button" />
+                android:padding="@dimen/common_margin_small"
+                android:text="FrameLayout that fit to a particular ratio" />
 
-            <com.onehook.view.ButtonWithBadge
-                android:layout_width="wrap_content"
+            <com.onehook.view.FlowLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:badge_background_color="@color/red_600"
-                app:badge_text_color="@color/white"
-                app:badge_text="Aeagle"
-                app:badge_alignment="right"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:text="A Button" />
+                android:padding="@dimen/common_margin_medium">
 
-            <com.onehook.view.ButtonWithBadge
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:badge_background_color="@color/red_600"
-                app:badge_text_color="@color/white"
-                app:badge_text="A+"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:text="A Button" />
+                <com.onehook.view.FitRatioFrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red_600"
+                    android:padding="@dimen/common_margin_medium"
+                    app:fit_to="width">
 
-            <com.onehook.view.ButtonWithBadge
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:badge_background_color="@color/red_600"
-                app:badge_text_color="@color/white"
-                app:badge_text="OMG"
-                app:badge_alignment="right"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:text="A Button" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="very long text" />
 
-            <com.onehook.view.ButtonWithBadge
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:badge_background_color="@color/red_600"
-                app:badge_text_color="@color/white"
-                app:badge_text="5"
-                app:badge_alignment="right"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:text="A Button" />
+                </com.onehook.view.FitRatioFrameLayout>
 
-            <com.onehook.view.FitHeightFrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:background="@color/red_600">
+                <com.onehook.view.FitRatioFrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red_600"
+                    android:padding="@dimen/common_margin_medium"
+                    app:fit_to="height">
 
-            </com.onehook.view.FitHeightFrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="very long text" />
 
-            <com.onehook.view.FitWidthFrameLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:background="@color/red_600">
+                </com.onehook.view.FitRatioFrameLayout>
 
-            </com.onehook.view.FitWidthFrameLayout>
+                <com.onehook.view.FitRatioFrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red_600"
+                    android:padding="@dimen/common_margin_medium"
+                    app:fit_to="width"
+                    app:width_weight="16"
+                    app:height_weight="9">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This is a 16:9 View" />
+
+                </com.onehook.view.FitRatioFrameLayout>
+            </com.onehook.view.FlowLayout>
 
             <ImageView
                 android:layout_width="64dp"
