@@ -91,21 +91,8 @@
             <enum name="width" value="0" />
             <enum name="height" value="1" />
         </attr>
-        <attr name="width_weight" format="dimension|reference" />
-        <attr name="height_weight" format="dimension|reference" />
-    </declare-styleable>
-
-    <!-- to be cleaned -->
-
-
-    <declare-styleable name="VerticalSeekBar">
-        <attr name="onlyThumb" format="boolean" />
-        <attr name="customThumb" format="reference" />
-    </declare-styleable>
-
-    <declare-styleable name="OHPagerIndicator">
-        <attr name="oh_pager_indicator_selected_color" format="color|reference"></attr>
-        <attr name="oh_pager_indicator_default_color" format="color|reference"></attr>
+        <attr name="width_weight" format="integer|reference" />
+        <attr name="height_weight" format="integer|reference" />
     </declare-styleable>
 
     <declare-styleable name="ProgressRing">
@@ -128,23 +115,8 @@
         <attr name="oh_progress_bar_border_thickness" format="dimension|reference" />
     </declare-styleable>
 
-
-    <declare-styleable name="RecyclerViewPager">
-        <attr name="oh_triggerOffset" format="float" />
-        <attr name="oh_flingFactor" format="float" />
-        <attr name="oh_singlePageFling" format="boolean" />
-        <attr name="oh_overlap_ratio" format="float" />
-        <attr name="oh_overlap_amount" format="dimension" />
-        <attr name="oh_last_item_fully_fill" format="boolean"></attr>
-    </declare-styleable>
-
     <declare-styleable name="IconProgressView">
         <attr name="oh_icon_progress_view_icons" format="reference"></attr>
-    </declare-styleable>
-
-    <declare-styleable name="CountDownTimerTextView">
-        <attr name="oh_count_down_timer_format" format="string|reference"></attr>
-        <attr name="oh_count_down_timer_interval" format="integer"></attr>
     </declare-styleable>
 
     <declare-styleable name="ShimmerFrameLayout">
@@ -175,4 +147,32 @@
         </attr>
         <attr name="tilt" format="float" />
     </declare-styleable>
+
+    <declare-styleable name="VerticalSeekBar">
+        <attr name="onlyThumb" format="boolean" />
+        <attr name="customThumb" format="reference" />
+    </declare-styleable>
+
+    <!-- to be cleaned -->
+
+    <declare-styleable name="OHPagerIndicator">
+        <attr name="oh_pager_indicator_selected_color" format="color|reference"></attr>
+        <attr name="oh_pager_indicator_default_color" format="color|reference"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="RecyclerViewPager">
+        <attr name="oh_triggerOffset" format="float" />
+        <attr name="oh_flingFactor" format="float" />
+        <attr name="oh_singlePageFling" format="boolean" />
+        <attr name="oh_overlap_ratio" format="float" />
+        <attr name="oh_overlap_amount" format="dimension" />
+        <attr name="oh_last_item_fully_fill" format="boolean"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="CountDownTimerTextView">
+        <attr name="oh_count_down_timer_format" format="string|reference"></attr>
+        <attr name="oh_count_down_timer_interval" format="integer"></attr>
+    </declare-styleable>
+
+
 </resources>

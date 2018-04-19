@@ -50,8 +50,8 @@ public class FitRatioFrameLayout extends FrameLayout {
                             @Nullable final AttributeSet attrs) {
         if (attrs != null) {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FitRatioFrameLayout);
-            mWidthWeight = a.getDimensionPixelSize(R.styleable.FitRatioFrameLayout_width_weight, mWidthWeight);
-            mHeightWeight = a.getDimensionPixelSize(R.styleable.FitRatioFrameLayout_height_weight, mHeightWeight);
+            mWidthWeight = a.getInt(R.styleable.FitRatioFrameLayout_width_weight, mWidthWeight);
+            mHeightWeight = a.getInt(R.styleable.FitRatioFrameLayout_height_weight, mHeightWeight);
             mFitTo = a.getInt(R.styleable.FitRatioFrameLayout_fit_to, mFitTo);
             a.recycle();
         }
@@ -68,6 +68,5 @@ public class FitRatioFrameLayout extends FrameLayout {
             final float width = 1.0f * getMeasuredHeight() / mHeightWeight * mWidthWeight;
             setMeasuredDimension((int) width, getMeasuredHeight());
         }
-
     }
 }

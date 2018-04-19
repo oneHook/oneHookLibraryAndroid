@@ -153,15 +153,6 @@
                 </com.onehook.view.FitRatioFrameLayout>
             </com.onehook.view.FlowLayout>
 
-            <ImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:background="@color/gray_300" />
-
-            <com.onehook.view.VerticalSeekBar
-                android:layout_width="30dp"
-                android:layout_height="100dp" />
-
         </LinearLayout>
 
     </ScrollView>

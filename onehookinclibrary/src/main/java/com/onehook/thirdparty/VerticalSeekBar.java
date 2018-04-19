@@ -1,4 +1,4 @@
-package com.onehook.view;
+package com.onehook.thirdparty;
 
 /**
  * Created by EagleDiao on 2016-09-06.
