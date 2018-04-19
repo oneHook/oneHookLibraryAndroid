@@ -1,4 +1,4 @@
-package com.onehook.widget.loadingdialog;
+package com.onehook.app;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;

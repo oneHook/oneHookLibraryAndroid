@@ -178,6 +178,18 @@
                 app:badge_text="99+"
                 app:badge_text_color="@color/white" />
 
+            <com.onehook.view.FlowLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_900"
+                android:padding="@dimen/common_margin_medium">
+
+                <com.onehook.view.AnimatedCircleToggle
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+
+            </com.onehook.view.FlowLayout>
+
 
         </LinearLayout>
 

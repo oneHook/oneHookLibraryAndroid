@@ -1,4 +1,4 @@
-package com.onehook.widget;
+package com.onehook.view;
 
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
@@ -51,6 +51,17 @@ public class AnimatedCircleToggle extends View {
         setWillNotDraw(false);
 
         mPaint = new Paint();
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (progress == 1) {
+                    setToogleOn(false, true);
+                } else {
+                    setToogleOn(true, true);
+                }
+            }
+        });
     }
 
     @Override
@@ -77,7 +88,8 @@ public class AnimatedCircleToggle extends View {
         canvas.drawCircle(width / 2, height / 2, selectionDotRadius * progress, mPaint);
     }
 
-    public void setToogleOn(final boolean toogleOn, final boolean animated) {
+    public void setToogleOn(final boolean toogleOn,
+                            final boolean animated) {
         if (animated) {
             final ObjectAnimator animation = ObjectAnimator.ofFloat(this, "progress", this.progress, toogleOn ? 1f : 0);
             animation.setDuration(200);
@@ -87,6 +99,7 @@ public class AnimatedCircleToggle extends View {
             invalidate();
         }
     }
+
 
     public void setProgress(final float progress) {
         this.progress = progress;
