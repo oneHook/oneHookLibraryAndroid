@@ -9,6 +9,7 @@ import android.view.View;
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseActivity;
 import com.onehookinc.onehooklibraryandroid.sample.common.StackActivity;
+import com.onehookinc.onehooklibraryandroid.sample.samples.ActivityOverlaySampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.DeviceUtilFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.FlipperViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.FlowLayoutSampleFragment;
@@ -18,6 +19,7 @@ import com.onehookinc.onehooklibraryandroid.sample.samples.ProgressViewSampleFra
 import com.onehookinc.onehooklibraryandroid.sample.samples.ScaleViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.StackLayoutSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.ConfettiViewSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.ViewPagerSampleFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -38,6 +40,8 @@ public class MainActivity extends BaseActivity {
                         new SampleItem("FlipperView", SampleItem.SampleItemType.FLIPPER_VIEW),
                         new SampleItem("ProgressViews", SampleItem.SampleItemType.PROGRESS_VIEW),
                         new SampleItem("ScaleView", SampleItem.SampleItemType.SCALE_VIEW),
+                        new SampleItem("Pagers", SampleItem.SampleItemType.PAGERS),
+                        new SampleItem("ActivityOverlay", SampleItem.SampleItemType.ACTIVITY_OVERLAY),
                         new SampleItem("Misc View", SampleItem.SampleItemType.MISC_VIEW)
                 ),
                 new SampleItem("Camera", SampleItem.SampleItemType.CAMERA),
@@ -120,6 +124,10 @@ public class MainActivity extends BaseActivity {
                 return StackActivity.intent(this, ScaleViewSampleFragment.class);
             case MISC_VIEW:
                 return StackActivity.intent(this, MiscViewSampleFragment.class);
+            case ACTIVITY_OVERLAY:
+                return StackActivity.intent(this, ActivityOverlaySampleFragment.class);
+            case PAGERS:
+                return StackActivity.intent(this, ViewPagerSampleFragment.class);
             default:
                 return StackActivity.intent(this, NotFoundFragment.class);
         }

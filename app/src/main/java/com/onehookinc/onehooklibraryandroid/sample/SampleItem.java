@@ -20,6 +20,8 @@ public class SampleItem implements Parcelable {
         FLIPPER_VIEW,
         PROGRESS_VIEW,
         SCALE_VIEW,
+        PAGERS,
+        ACTIVITY_OVERLAY,
         MISC_VIEW,
 
         /* Utility */
