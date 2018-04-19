@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -34,12 +35,12 @@ public class ProgressRing extends View {
     /**
      * Progress bar base colorRes (drawn underneath actual progress).
      */
-    private int mProgressBaseColor = Color.RED;
+    private int progressBaseColor = Color.RED;
 
     /**
      * Progress colorRes.
      */
-    private int mProgressColor = Color.GREEN;
+    private int progressColor = Color.GREEN;
 
     /**
      * Progress Text colorRes.
@@ -113,8 +114,8 @@ public class ProgressRing extends View {
         this.progress = 0.5f;
         this.bottomRingProgress = 1.0f;
         mProgressRingStrokeRatio = 0.05f;
-        mProgressBaseColor = Color.RED;
-        mProgressColor = Color.GREEN;
+        progressBaseColor = Color.RED;
+        progressColor = Color.GREEN;
         mProgressTextColor = Color.BLUE;
         mShouldShowPercentage = true;
 
@@ -123,8 +124,8 @@ public class ProgressRing extends View {
          */
         if (attrs != null) {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ProgressRing);
-            mProgressBaseColor = a.getColor(R.styleable.ProgressRing_oh_progress_view_base_color, mProgressBaseColor);
-            mProgressColor = a.getColor(R.styleable.ProgressRing_oh_progress_view_primary_color, mProgressColor);
+            progressBaseColor = a.getColor(R.styleable.ProgressRing_oh_progress_view_base_color, progressBaseColor);
+            progressColor = a.getColor(R.styleable.ProgressRing_oh_progress_view_primary_color, progressColor);
             mProgressTextColor = a.getColor(R.styleable.ProgressRing_oh_progress_view_text_color, mProgressTextColor);
             this.progress = a.getFloat(R.styleable.ProgressRing_oh_progress_view_progress, this.progress);
             this.bottomRingProgress = a.getFloat(R.styleable.ProgressRing_oh_progress_view_bottom_ring_progress, this.bottomRingProgress);
@@ -138,7 +139,7 @@ public class ProgressRing extends View {
          * setup all needed variables.
          */
         mPaint = new Paint();
-        mPaint.setColor(mProgressColor);
+        mPaint.setColor(progressColor);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setAntiAlias(true);
@@ -160,7 +161,7 @@ public class ProgressRing extends View {
         final float textSize = mRadius / 2;
 
         mPaint.setStrokeWidth(strokeWidth);
-        mProgressRect.left = w / 2 -  mRadius - strokeWidth / 2;
+        mProgressRect.left = w / 2 - mRadius - strokeWidth / 2;
         mProgressRect.top = h / 2 - mRadius - strokeWidth / 2;
         mProgressRect.right = w / 2 + mRadius + strokeWidth / 2;
         mProgressRect.bottom = h / 2 + mRadius + strokeWidth / 2;
@@ -180,11 +181,11 @@ public class ProgressRing extends View {
 
         /* Draw base first */
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setColor(mProgressBaseColor);
+        mPaint.setColor(progressBaseColor);
         canvas.drawArc(mProgressRect, -90, 360 * this.bottomRingProgress, false, mPaint);
 
         /* draw actual progress bar */
-        mPaint.setColor(mProgressColor);
+        mPaint.setColor(progressColor);
         canvas.drawArc(mProgressRect, -90, 360 * this.progress, false, mPaint);
 
         if (mShouldShowPercentage) {
@@ -202,22 +203,18 @@ public class ProgressRing extends View {
         invalidate();
     }
 
-    public ValueAnimator createAnimation(final float toProgress, final long duration) {
-        return ObjectAnimator.ofFloat(this, "progress", this.progress, toProgress).setDuration(duration);
-    }
-
     public void setBottomRingProgress(final float progress) {
         this.bottomRingProgress = progress;
         postInvalidate();
     }
 
-    public void setProgressBaseColor(int progressBaseColor) {
-        mProgressBaseColor = progressBaseColor;
+    public void setProgressBaseColor(@ColorInt int progressBaseColor) {
+        this.progressBaseColor = progressBaseColor;
         postInvalidate();
     }
 
-    public void setProgressColor(int progressColor) {
-        mProgressColor = progressColor;
+    public void setProgressColor(@ColorInt int progressColor) {
+        this.progressColor = progressColor;
         invalidate();
     }
 
@@ -233,4 +230,43 @@ public class ProgressRing extends View {
     public float getProgress() {
         return progress;
     }
+
+    /* Animation Handler */
+
+    public ValueAnimator createProgressAnimation(final float toProgress,
+                                                 final long duration) {
+        return createProgressAnimation(this.progress, toProgress, duration);
+    }
+
+    public ValueAnimator createProgressAnimation(final float fromProgress,
+                                                 final float toProgress,
+                                                 final long duration) {
+        return ObjectAnimator.ofFloat(this, "progress",
+                fromProgress, toProgress).setDuration(duration);
+    }
+
+    public ValueAnimator createBottomProgressAnimation(final float toProgress,
+                                                       final long duration) {
+        return createBottomProgressAnimation(this.bottomRingProgress, toProgress, duration);
+    }
+
+    public ValueAnimator createBottomProgressAnimation(final float fromProgress,
+                                                       final float toProgress,
+                                                       final long duration) {
+        return ObjectAnimator.ofFloat(this, "bottomRingProgress",
+                fromProgress, toProgress).setDuration(duration);
+    }
+
+    public ValueAnimator createRingColorAnimation(@ColorInt int ringColor,
+                                                  final long duration) {
+        return ObjectAnimator.ofInt(this, "progressColor",
+                this.progressColor, ringColor).setDuration(duration);
+    }
+
+    public ValueAnimator createBottomRingColorAnimation(@ColorInt int ringColor,
+                                                        final long duration) {
+        return ObjectAnimator.ofInt(this, "progressBaseColor",
+                this.progressBaseColor, ringColor).setDuration(duration);
+    }
+
 }

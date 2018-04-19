@@ -1,11 +1,14 @@
 package com.onehook.view.progress;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -165,5 +168,43 @@ public class ProgressBar extends View {
     public void setSecondaryProgressColor(int secondaryProgressColor) {
         this.secondaryProgressColor = secondaryProgressColor;
         invalidate();
+    }
+
+    /* Animation Handler */
+
+    public ValueAnimator createProgressAnimation(final float toProgress,
+                                                 final long duration) {
+        return createProgressAnimation(this.primaryProgress, toProgress, duration);
+    }
+
+    public ValueAnimator createProgressAnimation(final float fromProgress,
+                                                 final float toProgress,
+                                                 final long duration) {
+        return ObjectAnimator.ofFloat(this, "primaryProgress",
+                fromProgress, toProgress).setDuration(duration);
+    }
+
+    public ValueAnimator createBottomProgressAnimation(final float toProgress,
+                                                       final long duration) {
+        return createBottomProgressAnimation(this.secondaryProgress, toProgress, duration);
+    }
+
+    public ValueAnimator createBottomProgressAnimation(final float fromProgress,
+                                                       final float toProgress,
+                                                       final long duration) {
+        return ObjectAnimator.ofFloat(this, "secondaryProgress",
+                fromProgress, toProgress).setDuration(duration);
+    }
+
+    public ValueAnimator createRingColorAnimation(@ColorInt int ringColor,
+                                                  final long duration) {
+        return ObjectAnimator.ofInt(this, "primaryProgressColor",
+                this.primaryProgressColor, ringColor).setDuration(duration);
+    }
+
+    public ValueAnimator createBottomRingColorAnimation(@ColorInt int ringColor,
+                                                        final long duration) {
+        return ObjectAnimator.ofInt(this, "secondaryProgressColor",
+                this.secondaryProgressColor, ringColor).setDuration(duration);
     }
 }
