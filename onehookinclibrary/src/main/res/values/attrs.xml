@@ -86,6 +86,7 @@
     </declare-styleable>
 
     <!-- Fit Ratio Frame Layout -->
+
     <declare-styleable name="FitRatioFrameLayout">
         <attr name="fit_to" format="enum">
             <enum name="width" value="0" />
@@ -94,6 +95,8 @@
         <attr name="width_weight" format="integer|reference" />
         <attr name="height_weight" format="integer|reference" />
     </declare-styleable>
+
+    <!-- Progress Ring and Bar -->
 
     <declare-styleable name="ProgressRing">
         <attr name="oh_progress_view_primary_color" format="color|reference" />
@@ -118,6 +121,8 @@
     <declare-styleable name="IconProgressView">
         <attr name="oh_icon_progress_view_icons" format="reference"></attr>
     </declare-styleable>
+
+    <!-- Facebook shimmer effect -->
 
     <declare-styleable name="ShimmerFrameLayout">
         <attr name="auto_start" format="boolean" />
@@ -148,10 +153,20 @@
         <attr name="tilt" format="float" />
     </declare-styleable>
 
+    <!-- Vertical Seekbar -->
+
     <declare-styleable name="VerticalSeekBar">
         <attr name="onlyThumb" format="boolean" />
         <attr name="customThumb" format="reference" />
     </declare-styleable>
+
+    <!-- Circle Toggle -->
+    <declare-styleable name="AnimatedCircleToggle">
+
+
+        
+    </declare-styleable>
+
 
     <!-- to be cleaned -->
 
