@@ -125,7 +125,6 @@ public class Camera2Controller extends BaseCameraController {
     protected void createCameraPreview() {
         try {
             SurfaceTexture texture = mCameraView.getSurfaceTexture();
-            assert texture != null;
             texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
             final Surface surface = new Surface(texture);
             captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
