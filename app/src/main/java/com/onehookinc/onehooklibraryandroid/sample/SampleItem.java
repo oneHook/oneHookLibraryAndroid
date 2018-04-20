@@ -21,6 +21,7 @@ public class SampleItem implements Parcelable {
         PROGRESS_VIEW,
         SCALE_VIEW,
         PAGERS,
+        PAGERS_TRANS,
         ACTIVITY_OVERLAY,
         MISC_VIEW,
 

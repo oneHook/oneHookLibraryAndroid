@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/OH.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/id_common_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:popupTheme="@style/OH.AppBarOverlay"
+            app:contentInsetStartWithNavigation="0dp">
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="Carousel" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/fragment_sample_view_pagers_p1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:page_animation_duration="800">
+
+            </android.support.v4.view.ViewPager>
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="DepthPage" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/fragment_sample_view_pagers_p2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:page_animation_duration="800"
+                app:page_stay_duration="1000">
+
+            </android.support.v4.view.ViewPager>
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="PagerAlpha" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/fragment_sample_view_pagers_p3"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:page_animation_duration="800"
+                app:page_stay_duration="1000">
+
+            </android.support.v4.view.ViewPager>
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="Stack" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/fragment_sample_view_pagers_p4"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:page_animation_duration="800"
+                app:page_stay_duration="1000">
+
+            </android.support.v4.view.ViewPager>
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="ZoomOut" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/fragment_sample_view_pagers_p5"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:page_animation_duration="800"
+                app:page_stay_duration="1000">
+
+            </android.support.v4.view.ViewPager>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
