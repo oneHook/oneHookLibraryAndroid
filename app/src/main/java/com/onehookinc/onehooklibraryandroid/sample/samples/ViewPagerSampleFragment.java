@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.onehook.view.pager.SimpleViewPagerAdapter;
 import com.onehook.view.pager.SlideShowViewPager;
+import com.onehook.view.pager.VerticalViewPager;
+import com.onehook.view.pager.transformer.VerticalPagerDefaultTransformer;
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseFragment;
 
@@ -40,6 +42,11 @@ public class ViewPagerSampleFragment extends BaseFragment {
         p1.setAdapter(new DemoPager(getContext()));
         p1.startSlideShow();
 
+
+        final SlideShowViewPager p2 = view.findViewById(R.id.fragment_sample_view_pagers_p2);
+        p2.setPageTransformer(false, new VerticalPagerDefaultTransformer());
+        p2.setAdapter(new DemoPager(getContext()));
+        p2.startSlideShow();
     }
 
     @Override

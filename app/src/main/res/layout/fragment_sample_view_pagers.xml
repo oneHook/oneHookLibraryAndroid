@@ -38,14 +38,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/common_margin_medium"
+                android:text="Vertical Pager" />
+
+            <com.onehook.view.pager.SlideShowViewPager
+                android:id="@+id/fragment_sample_view_pagers_p2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:page_animation_duration="800">
+
+            </com.onehook.view.pager.SlideShowViewPager>
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
                 android:text="SlideShow Pager" />
 
             <com.onehook.view.pager.SlideShowViewPager
                 android:id="@+id/fragment_sample_view_pagers_p1"
                 android:layout_width="match_parent"
+                android:layout_height="200dp"
                 app:page_animation_duration="800"
-                app:page_stay_duration="1000"
-                android:layout_height="200dp">
+                app:page_stay_duration="1000">
 
             </com.onehook.view.pager.SlideShowViewPager>
 

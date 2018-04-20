@@ -5,12 +5,13 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.onehook.view.pager.transformer.DefaultTransformer;
+import com.onehook.view.pager.transformer.VerticalPagerDefaultTransformer;
 
 /**
  * Created by EagleDiao on 2016-07-12.
+ * <p>
+ * Note this pager will not work inside a nested scroll view.
  */
-
 public class VerticalViewPager extends ViewPager {
 
     public VerticalViewPager(Context context) {
@@ -19,7 +20,7 @@ public class VerticalViewPager extends ViewPager {
 
     public VerticalViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        super.setPageTransformer(false, new DefaultTransformer());
+        super.setPageTransformer(false, new VerticalPagerDefaultTransformer());
     }
 
     @Override
@@ -30,19 +31,15 @@ public class VerticalViewPager extends ViewPager {
     private MotionEvent swapTouchEvent(MotionEvent event) {
         float width = getWidth();
         float height = getHeight();
-
         float swappedX = (event.getY() / height) * width;
         float swappedY = (event.getX() / width) * height;
-
         event.setLocation(swappedX, swappedY);
-
         return event;
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
         boolean intercept = super.onInterceptTouchEvent(swapTouchEvent(event));
-        //If not intercept, touch event should not be swapped.
         swapTouchEvent(event);
         return intercept;
     }

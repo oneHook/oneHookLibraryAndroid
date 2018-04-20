@@ -29,6 +29,12 @@ public class ViewPagerUtility {
         }
     }
 
+    /**
+     * Set a new animation duration for the view pager.
+     *
+     * @param duration  duration
+     * @param viewPager view pager
+     */
     public static void setViewPagerSmoothScrollDuration(final long duration, final ViewPager viewPager) {
         try {
             Field scroller = ViewPager.class.getDeclaredField("mScroller");
