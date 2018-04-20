@@ -23,7 +23,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -38,248 +38,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/common_margin_medium"
-                android:text="Stack on each other Horizontal" />
+                android:text="Non-swipable pager" />
 
-            <com.onehook.view.StackLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:background="@color/gray_200"
-                android:padding="@dimen/common_margin_small">
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-            </com.onehook.view.StackLayout>
-
-
-            <TextView
-                style="@style/OH.Title.Bold"
+            <com.onehook.view.pager.SlideShowViewPager
+                android:id="@+id/fragment_sample_view_pagers_p1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/common_margin_medium"
-                android:text="Distribute evenly Horizontal" />
+                android:layout_height="200dp">
 
-            <com.onehook.view.StackLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:background="@color/gray_200"
-                android:padding="@dimen/common_margin_small">
+            </com.onehook.view.pager.SlideShowViewPager>
 
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-            </com.onehook.view.StackLayout>
-
-            <TextView
-                style="@style/OH.Title.Bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/common_margin_medium"
-                android:text="Distribute evenly Horizontal, to edge false" />
-
-            <com.onehook.view.StackLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:background="@color/gray_200"
-                android:padding="@dimen/common_margin_small"
-                app:distributeToEdge="false">
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-            </com.onehook.view.StackLayout>
-
-            <TextView
-                style="@style/OH.Title.Bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/common_margin_medium"
-                android:text="Distribute evenly, Different Size, Align Top" />
-
-            <com.onehook.view.StackLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:background="@color/gray_200"
-                android:padding="@dimen/common_margin_small"
-                app:alignment="left_or_top">
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-            </com.onehook.view.StackLayout>
-
-            <TextView
-                style="@style/OH.Title.Bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/common_margin_medium"
-                android:text="Distribute evenly, Different Size, Align Center" />
-
-            <com.onehook.view.StackLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:background="@color/gray_200"
-                android:padding="@dimen/common_margin_small"
-                app:alignment="center">
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-            </com.onehook.view.StackLayout>
-
-            <TextView
-                style="@style/OH.Title.Bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/common_margin_medium"
-                android:text="Distribute evenly with different size vertically" />
-
-            <com.onehook.view.StackLayout
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_margin="@dimen/common_margin_medium"
-                android:background="@color/gray_200"
-                android:padding="@dimen/common_margin_small"
-                app:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-                <ImageView
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_oda_avatar" />
-
-            </com.onehook.view.StackLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

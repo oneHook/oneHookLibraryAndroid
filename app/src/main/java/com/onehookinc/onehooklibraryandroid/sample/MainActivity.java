@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.ACTIVITY_OVERLAY));
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.PAGERS));
             }
         }, 100);
     }
