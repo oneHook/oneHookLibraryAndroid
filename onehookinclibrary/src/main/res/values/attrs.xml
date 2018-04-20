@@ -170,6 +170,12 @@
 
     </declare-styleable>
 
+    <!-- Slide show Pager -->
+
+    <declare-styleable name="SlideShowViewPager">
+        <attr name="page_animation_duration" format="integer|reference"/>
+        <attr name="page_stay_duration" format="integer|reference"/>
+    </declare-styleable>
 
     <!-- to be cleaned -->
 
