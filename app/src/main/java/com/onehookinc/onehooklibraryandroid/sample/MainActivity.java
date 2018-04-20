@@ -32,7 +32,8 @@ public class MainActivity extends BaseActivity {
 
         final SampleItem parent = new SampleItem("oneHook Samples",
                 new SampleItem("Utilities",
-                        new SampleItem("Device", SampleItem.SampleItemType.DEVICE)),
+                        new SampleItem("Device", SampleItem.SampleItemType.DEVICE),
+                        new SampleItem("Colors Utility", SampleItem.SampleItemType.COLORS)),
                 new SampleItem("View",
                         new SampleItem("StackLayout", SampleItem.SampleItemType.STACK_LAYOUT),
                         new SampleItem("FlowLayout", SampleItem.SampleItemType.FLOW_LAYOUT),

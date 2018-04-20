@@ -162,9 +162,12 @@
 
     <!-- Circle Toggle -->
     <declare-styleable name="AnimatedCircleToggle">
+        <attr name="off_color" format="color|reference" />
+        <attr name="on_color" format="color|reference" />
+        <attr name="border_thickness_ratio" format="float|reference" />
+        <attr name="internal_thickness_ratio" format="float|reference" />
+        <attr name="animation_duration" format="integer|reference"/>
 
-
-        
     </declare-styleable>
 
 

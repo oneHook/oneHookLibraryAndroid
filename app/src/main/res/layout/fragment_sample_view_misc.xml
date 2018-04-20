@@ -181,12 +181,36 @@
             <com.onehook.view.FlowLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray_900"
+                android:background="@color/gray_100"
                 android:padding="@dimen/common_margin_medium">
 
                 <com.onehook.view.AnimatedCircleToggle
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:animation_duration="100"
+                    app:border_thickness_ratio="0.1"
+                    app:internal_thickness_ratio="0.3"
+                    app:off_color="@color/gray_900"
+                    app:on_color="@color/red_600" />
+
+                <com.onehook.view.AnimatedCircleToggle
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:animation_duration="300"
+                    app:border_thickness_ratio="0.2"
+                    app:internal_thickness_ratio="0.3"
+                    app:off_color="@color/gray_200"
+                    app:on_color="@color/gray_900" />
+
+                <com.onehook.view.AnimatedCircleToggle
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:animation_duration="100"
+                    app:border_thickness_ratio="0.05"
+                    app:internal_thickness_ratio="0.1"
+                    app:off_color="@color/gray_900"
+                    app:on_color="@color/red_600" />
+
 
             </com.onehook.view.FlowLayout>
 

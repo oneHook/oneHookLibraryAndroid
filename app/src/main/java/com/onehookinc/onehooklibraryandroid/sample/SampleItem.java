@@ -26,6 +26,7 @@ public class SampleItem implements Parcelable {
 
         /* Utility */
         DEVICE,
+        COLORS,
 
         /* Camera */
         CAMERA,
