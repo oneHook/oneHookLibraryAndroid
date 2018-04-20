@@ -9,7 +9,6 @@ public abstract class AnimationEndListener implements Animator.AnimatorListener 
 
     @Override
     public void onAnimationStart(Animator animation) {
-
     }
 
     @Override
@@ -24,7 +23,6 @@ public abstract class AnimationEndListener implements Animator.AnimatorListener 
 
     @Override
     public void onAnimationRepeat(Animator animation) {
-
     }
 
     public abstract void onAnimationEndOrCanceled(Animator animation);
