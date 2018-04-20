@@ -5,7 +5,7 @@
         <item name="android:background">#00000000</item>
         <item name="colorPrimary">#280202</item>
         <item name="colorPrimaryDark">#160101</item>
-        <item name="colorAccent">#00ff00</item>
+        <item name="colorAccent">@color/red_600</item>
         <item name="android:textColorPrimary">#000000</item>
         <item name="android:textColorHint">#000000</item>
         <item name="windowActionBar">false</item>
