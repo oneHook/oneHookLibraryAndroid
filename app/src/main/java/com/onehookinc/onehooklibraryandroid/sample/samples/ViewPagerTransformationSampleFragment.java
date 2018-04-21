@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.onehook.view.pageindicator.PagerIndicator;
 import com.onehook.view.pager.SimpleViewPagerAdapter;
 import com.onehook.view.pager.SlideShowViewPager;
 import com.onehook.view.pager.transformer.CarouselTransformer;
@@ -57,6 +58,8 @@ public class ViewPagerTransformationSampleFragment extends BaseFragment {
         final InfinitePagerAdapter infiniteAdapter = new InfinitePagerAdapter<>(new DemoPager(getContext()));
         p1i.setAdapter(infiniteAdapter);
         p1i.setCurrentItem(infiniteAdapter.getMidPosition(0));
+        final PagerIndicator pagerIndicator = view.findViewById(R.id.fragment_sample_view_pagers_p1_indicator);
+        pagerIndicator.setViewPager(p1i);
 
         final ViewPager p2 = view.findViewById(R.id.fragment_sample_view_pagers_p2);
         p2.setPageTransformer(false, new DepthPageTransformer(true));
