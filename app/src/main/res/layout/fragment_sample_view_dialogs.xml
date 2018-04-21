@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/OH.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/id_common_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:popupTheme="@style/OH.AppBarOverlay"
+            app:contentInsetStartWithNavigation="0dp">
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/common_margin_xlarge"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <Button
+            android:id="@+id/fragment_dialog_sample_button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Progress Dialog" />
+
+
+        <Button
+            android:id="@+id/fragment_dialog_sample_button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_margin_medium"
+            android:text="No Rotating Dog" />
+
+
+        <Button
+            android:id="@+id/fragment_dialog_sample_button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_margin_medium"
+            android:text="X X X" />
+
+
+        <Button
+            android:id="@+id/fragment_dialog_sample_button4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_margin_medium"
+            android:text="Surprise!" />
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -9,6 +9,7 @@ import android.view.View;
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseActivity;
 import com.onehookinc.onehooklibraryandroid.sample.common.StackActivity;
+import com.onehookinc.onehooklibraryandroid.sample.samples.dialogs.DialogsDemoFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.views.ActivityOverlaySampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.utility.DeviceUtilFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.views.FlipperViewSampleFragment;
@@ -64,7 +65,7 @@ public class MainActivity extends BaseActivity {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.PAGERS_TRANS));
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.DIALOG));
             }
         }, 100);
     }
@@ -134,6 +135,8 @@ public class MainActivity extends BaseActivity {
                 return StackActivity.intent(this, ViewPagerSampleFragment.class);
             case PAGERS_TRANS:
                 return StackActivity.intent(this, ViewPagerTransformationSampleFragment.class);
+            case DIALOG:
+                return StackActivity.intent(this, DialogsDemoFragment.class);
             default:
                 return StackActivity.intent(this, NotFoundFragment.class);
         }
