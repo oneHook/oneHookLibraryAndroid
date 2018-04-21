@@ -1,4 +1,4 @@
-package com.onehookinc.onehooklibraryandroid.sample.samples;
+package com.onehookinc.onehooklibraryandroid.sample.samples.utility;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

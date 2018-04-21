@@ -1,4 +1,4 @@
-package com.onehookinc.onehooklibraryandroid.sample.samples;
+package com.onehookinc.onehooklibraryandroid.sample.samples.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

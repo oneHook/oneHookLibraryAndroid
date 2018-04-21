@@ -9,18 +9,18 @@ import android.view.View;
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseActivity;
 import com.onehookinc.onehooklibraryandroid.sample.common.StackActivity;
-import com.onehookinc.onehooklibraryandroid.sample.samples.ActivityOverlaySampleFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.DeviceUtilFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.FlipperViewSampleFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.FlowLayoutSampleFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.MiscViewSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.ActivityOverlaySampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.utility.DeviceUtilFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.FlipperViewSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.FlowLayoutSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.MiscViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.NotFoundFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.ProgressViewSampleFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.ScaleViewSampleFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.StackLayoutSampleFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.ConfettiViewSampleFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.ViewPagerSampleFragment;
-import com.onehookinc.onehooklibraryandroid.sample.samples.ViewPagerTransformationSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.ProgressViewSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.ScaleViewSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.StackLayoutSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.ConfettiViewSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.ViewPagerSampleFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.ViewPagerTransformationSampleFragment;
 
 public class MainActivity extends BaseActivity {
 
