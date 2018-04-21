@@ -25,25 +25,25 @@ import com.onehookinc.androidlib.R;
  * Created by EagleDiao on 2016-07-12.
  */
 
-public class OHPagerIndicator extends LinearLayout implements ViewPager.OnPageChangeListener {
+public class PagerIndicator extends LinearLayout implements ViewPager.OnPageChangeListener {
 
-    public OHPagerIndicator(Context context) {
+    public PagerIndicator(Context context) {
         super(context);
         commonInit(context, null);
     }
 
-    public OHPagerIndicator(Context context, AttributeSet attrs) {
+    public PagerIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         commonInit(context, attrs);
     }
 
-    public OHPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         commonInit(context, attrs);
     }
 
     @TargetApi(21)
-    public OHPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public PagerIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         commonInit(context, attrs);
     }
@@ -53,10 +53,27 @@ public class OHPagerIndicator extends LinearLayout implements ViewPager.OnPageCh
     private int mDefaultDotColor;
     private int mSelectedDotColor;
     private int mRealItemCount;
+    private int mDotSize;
+    private int mDotMargin;
+
+    private void commonInit(final Context context, final AttributeSet attributeSet) {
+        mDefaultDotColor = Color.WHITE;
+        mSelectedDotColor = Color.RED;
+        mDotSize = 24;
+        mDotMargin = 8;
+        if (attributeSet != null) {
+            final TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.PagerIndicator);
+            mDefaultDotColor = a.getColor(R.styleable.PagerIndicator_default_color, mDefaultDotColor);
+            mSelectedDotColor = a.getColor(R.styleable.PagerIndicator_selected_color, mSelectedDotColor);
+            mDotSize = a.getDimensionPixelSize(R.styleable.PagerIndicator_dot_size, mDotSize);
+            mDotMargin = a.getDimensionPixelSize(R.styleable.PagerIndicator_dot_margin, mDotMargin);
+            a.recycle();
+        }
+    }
 
     private LinearLayout.LayoutParams obtainLayoutParams() {
-        final int size = (int) getContext().getResources().getDimension(R.dimen.pager_indicator_default_length);
-        final int margin = (int) getContext().getResources().getDimension(R.dimen.common_margin_xsmall);
+        final int size = mDotSize;
+        final int margin = mDotMargin;
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size, size);
         if (getOrientation() == LinearLayout.HORIZONTAL) {
             lp.gravity = Gravity.CENTER_VERTICAL;
@@ -68,17 +85,6 @@ public class OHPagerIndicator extends LinearLayout implements ViewPager.OnPageCh
             lp.bottomMargin = margin;
         }
         return lp;
-    }
-
-    private void commonInit(final Context context, final AttributeSet attributeSet) {
-        mDefaultDotColor = Color.WHITE;
-        mSelectedDotColor = Color.RED;
-        if (attributeSet != null) {
-            final TypedArray a = context.obtainStyledAttributes(attributeSet, R.styleable.OHPagerIndicator);
-            mDefaultDotColor = a.getColor(R.styleable.OHPagerIndicator_oh_pager_indicator_default_color, Color.WHITE);
-            mSelectedDotColor = a.getColor(R.styleable.OHPagerIndicator_oh_pager_indicator_selected_color, Color.RED);
-            a.recycle();
-        }
     }
 
     public void setViewPager(final ViewPager viewPager) {

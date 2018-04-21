@@ -153,7 +153,7 @@
         <attr name="tilt" format="float" />
     </declare-styleable>
 
-    <!-- Vertical Seekbar -->
+    <!-- Vertical Seek bar -->
 
     <declare-styleable name="VerticalSeekBar">
         <attr name="onlyThumb" format="boolean" />
@@ -177,12 +177,16 @@
         <attr name="page_stay_duration" format="integer|reference"/>
     </declare-styleable>
 
-    <!-- to be cleaned -->
+    <!-- Pager Indicator -->
 
-    <declare-styleable name="OHPagerIndicator">
-        <attr name="oh_pager_indicator_selected_color" format="color|reference"></attr>
-        <attr name="oh_pager_indicator_default_color" format="color|reference"></attr>
+    <declare-styleable name="PagerIndicator">
+        <attr name="selected_color" format="color|reference"/>
+        <attr name="default_color" format="color|reference"/>
+        <attr name="dot_size" format="dimension|reference"/>
+        <attr name="dot_margin" format="dimension|reference"/>
     </declare-styleable>
+
+    <!-- to be cleaned -->
 
     <declare-styleable name="RecyclerViewPager">
         <attr name="oh_triggerOffset" format="float" />

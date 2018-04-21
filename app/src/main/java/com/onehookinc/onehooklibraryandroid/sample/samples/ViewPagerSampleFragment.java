@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,16 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.onehook.view.pageindicator.PagerIndicator;
 import com.onehook.view.pager.SimpleViewPagerAdapter;
 import com.onehook.view.pager.SlideShowViewPager;
-import com.onehook.view.pager.VerticalViewPager;
 import com.onehook.view.pager.transformer.CarouselTransformer;
 import com.onehook.view.pager.transformer.VerticalPagerDefaultTransformer;
 import com.onehook.widget.adapter.InfinitePagerAdapter;
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseFragment;
-
-import org.w3c.dom.Text;
 
 public class ViewPagerSampleFragment extends BaseFragment {
 
@@ -43,6 +39,8 @@ public class ViewPagerSampleFragment extends BaseFragment {
         final SlideShowViewPager p1 = view.findViewById(R.id.fragment_sample_view_pagers_p1);
         p1.setAdapter(new DemoPager(getContext()));
         p1.startSlideShow();
+        final PagerIndicator pagerIndicator = view.findViewById(R.id.fragment_sample_view_pagers_p1_indicator);
+        pagerIndicator.setViewPager(p1);
 
 
         final SlideShowViewPager p2 = view.findViewById(R.id.fragment_sample_view_pagers_p2);

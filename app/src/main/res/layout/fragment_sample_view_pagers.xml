@@ -55,14 +55,33 @@
                 android:padding="@dimen/common_margin_medium"
                 android:text="SlideShow Pager" />
 
-            <com.onehook.view.pager.SlideShowViewPager
-                android:id="@+id/fragment_sample_view_pagers_p1"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:page_animation_duration="800"
-                app:page_stay_duration="1000">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            </com.onehook.view.pager.SlideShowViewPager>
+                <com.onehook.view.pager.SlideShowViewPager
+                    android:id="@+id/fragment_sample_view_pagers_p1"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:page_animation_duration="800"
+                    app:page_stay_duration="1000">
+
+                </com.onehook.view.pager.SlideShowViewPager>
+
+                <com.onehook.view.pageindicator.PagerIndicator
+                    android:id="@+id/fragment_sample_view_pagers_p1_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    app:selected_color="@color/red_800"
+                    app:default_color="@color/gray_50"
+                    app:dot_margin="1dp"
+                    app:dot_size="8dp"
+                    android:layout_margin="@dimen/common_margin_medium">
+
+                </com.onehook.view.pageindicator.PagerIndicator>
+
+            </FrameLayout>
 
             <TextView
                 style="@style/OH.Title.Bold"
