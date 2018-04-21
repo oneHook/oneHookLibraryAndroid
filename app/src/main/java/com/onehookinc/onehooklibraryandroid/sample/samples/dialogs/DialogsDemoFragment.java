@@ -43,7 +43,7 @@ public class DialogsDemoFragment extends BaseFragment {
     private void onButton1Clicked() {
         final ProgressDialogFragment progressDialogFragment = new ProgressDialogFragment
                 .ProgressDialogFragmentBuilder()
-                .setMessage("A friendly Message")
+                .setMessage("I will go away in 2 seconds, I promise")
                 .setTitle("a title")
                 .build();
         progressDialogFragment.show(getChildFragmentManager(), TAG_PROGRESS_DIALOG);
