@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by eaglediaotomore on 2016-07-10.
+ * Created by Eagle Diao on 2016-07-10.
  */
 
 public class InfinitePagerAdapter<T extends PagerAdapter> extends PagerAdapter {
@@ -142,6 +142,4 @@ public class InfinitePagerAdapter<T extends PagerAdapter> extends PagerAdapter {
         }
         return Integer.MAX_VALUE;
     }
-
-
 }

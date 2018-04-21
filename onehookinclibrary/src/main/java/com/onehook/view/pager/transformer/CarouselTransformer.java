@@ -5,32 +5,39 @@ import android.view.View;
 
 public class CarouselTransformer implements ViewPager.PageTransformer {
 
-    private float mOffset;
+    /**
+     * Padding on the view pager.
+     */
+    private float mPadding;
 
-    public CarouselTransformer(final float offset) {
-        mOffset = offset;
+    /**
+     * Maximum Scale applied to previous and next page.
+     */
+    private float mScale;
+
+    /**
+     * Carousel Transformer with padding (same as in view pager) and
+     * scale (scale apply to each previous and next page).
+     *
+     * @param padding padding
+     * @param scale  scale
+     */
+    public CarouselTransformer(final int padding, final float scale) {
+        mPadding = padding;
+        mScale = scale;
     }
 
     @Override
     public void transformPage(View view, float position) {
-        position -= mOffset;
-        view.setPivotY(0.5f * view.getMeasuredHeight());
-        if (position < -0.5) {
-            view.setPivotX(1 * view.getMeasuredWidth());
-        } else if (position > 0.5) {
-            view.setPivotX(0);
-        } else {
-            view.setPivotX(0.5f * view.getMeasuredWidth());
-        }
-
+        /* offset the position to -1, 0, 1 since we may have a padding on the pager */
+        position -= (mPadding * 1.0f / view.getMeasuredWidth());
 
         if (position < -1) {
             position = -1;
         } else if (position > 1) {
             position = 1;
         }
-        final float scale = 1 - Math.abs(position) * 0.2f;
-
+        final float scale = 1 - Math.abs(position) * (1 - mScale);
         view.setScaleX(scale);
         view.setScaleY(scale);
     }

@@ -51,7 +51,7 @@ public class ViewPagerSampleFragment extends BaseFragment {
         p2.startSlideShow();
 
         final SlideShowViewPager p3 = view.findViewById(R.id.fragment_sample_view_pagers_p3);
-        p3.setPageTransformer(false, new CarouselTransformer(0));
+        p3.setPageTransformer(false, new CarouselTransformer(0, 0f));
         p3.setAdapter(new InfinitePagerAdapter<>(new DemoPager(getContext())));
         p3.startSlideShow();
     }

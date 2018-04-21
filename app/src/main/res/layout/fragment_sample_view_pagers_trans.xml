@@ -43,8 +43,21 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/fragment_sample_view_pagers_p1"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:page_animation_duration="800">
+                android:layout_height="200dp">
+
+            </android.support.v4.view.ViewPager>
+
+            <TextView
+                style="@style/OH.Title.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_medium"
+                android:text="Infinite Carousel" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/fragment_sample_view_pagers_p1_infinite"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
             </android.support.v4.view.ViewPager>
 
@@ -58,9 +71,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/fragment_sample_view_pagers_p2"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:page_animation_duration="800"
-                app:page_stay_duration="1000">
+                android:layout_height="200dp">
 
             </android.support.v4.view.ViewPager>
 
@@ -74,9 +85,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/fragment_sample_view_pagers_p3"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:page_animation_duration="800"
-                app:page_stay_duration="1000">
+                android:layout_height="200dp">
 
             </android.support.v4.view.ViewPager>
 
@@ -90,9 +99,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/fragment_sample_view_pagers_p4"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:page_animation_duration="800"
-                app:page_stay_duration="1000">
+                android:layout_height="200dp">
 
             </android.support.v4.view.ViewPager>
 
@@ -106,9 +113,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/fragment_sample_view_pagers_p5"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:page_animation_duration="800"
-                app:page_stay_duration="1000">
+                android:layout_height="200dp">
 
             </android.support.v4.view.ViewPager>
 

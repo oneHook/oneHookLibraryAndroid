@@ -22,6 +22,7 @@ import com.onehook.view.pager.transformer.PagerAlphaTransformer;
 import com.onehook.view.pager.transformer.StackTransformer;
 import com.onehook.view.pager.transformer.VerticalPagerDefaultTransformer;
 import com.onehook.view.pager.transformer.ZoomOutTransformer;
+import com.onehook.widget.adapter.InfinitePagerAdapter;
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseFragment;
 
@@ -39,10 +40,23 @@ public class ViewPagerTransformationSampleFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final int padding = getResources().getDimensionPixelSize(R.dimen.common_margin_medium);
+
         final ViewPager p1 = view.findViewById(R.id.fragment_sample_view_pagers_p1);
-        p1.setPageTransformer(false, new CarouselTransformer(0));
+        p1.setPageTransformer(false, new CarouselTransformer(padding, 1));
+        p1.setClipChildren(false);
+        p1.setClipToPadding(false);
+        p1.setPadding(padding, 0, padding, 0);
         p1.setAdapter(new DemoPager(getContext()));
 
+        final ViewPager p1i = view.findViewById(R.id.fragment_sample_view_pagers_p1_infinite);
+        p1i.setPageTransformer(false, new CarouselTransformer(padding * 2, 0.9f));
+        p1i.setPadding(padding * 2, 0, padding * 2, 0);
+        p1i.setClipChildren(false);
+        p1i.setClipToPadding(false);
+        final InfinitePagerAdapter infiniteAdapter = new InfinitePagerAdapter<>(new DemoPager(getContext()));
+        p1i.setAdapter(infiniteAdapter);
+        p1i.setCurrentItem(infiniteAdapter.getMidPosition(0));
 
         final ViewPager p2 = view.findViewById(R.id.fragment_sample_view_pagers_p2);
         p2.setPageTransformer(false, new DepthPageTransformer(true));
