@@ -9,6 +9,7 @@ import android.view.View;
 import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseActivity;
 import com.onehookinc.onehooklibraryandroid.sample.common.StackActivity;
+import com.onehookinc.onehooklibraryandroid.sample.samples.demo.dateviewpager.DateViewPaperDemo;
 import com.onehookinc.onehooklibraryandroid.sample.samples.dialogs.DialogsDemoFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.views.ActivityOverlaySampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.utility.DeviceUtilFragment;
@@ -50,7 +51,9 @@ public class MainActivity extends BaseActivity {
                         new SampleItem("Misc View", SampleItem.SampleItemType.MISC_VIEW)
                 ),
                 new SampleItem("Camera", SampleItem.SampleItemType.CAMERA),
-                new SampleItem("Dialogs", SampleItem.SampleItemType.DIALOG));
+                new SampleItem("Dialogs", SampleItem.SampleItemType.DIALOG),
+                new SampleItem("Demos",
+                        new SampleItem("DateViewPager", SampleItem.SampleItemType.DateViewPager)));
 
         if (getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT) == null) {
             final SampleListFragment fragment = SampleListFragment.newInstance(parent, false);
@@ -65,7 +68,7 @@ public class MainActivity extends BaseActivity {
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.DIALOG));
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.DateViewPager));
             }
         }, 100);
     }
@@ -137,6 +140,8 @@ public class MainActivity extends BaseActivity {
                 return StackActivity.intent(this, ViewPagerTransformationSampleFragment.class);
             case DIALOG:
                 return StackActivity.intent(this, DialogsDemoFragment.class);
+            case DateViewPager:
+                return StackActivity.intent(this, DateViewPaperDemo.class);
             default:
                 return StackActivity.intent(this, NotFoundFragment.class);
         }

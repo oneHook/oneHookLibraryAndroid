@@ -33,7 +33,12 @@ public class SampleItem implements Parcelable {
         CAMERA,
 
         /* Dialog */
-        DIALOG
+        DIALOG,
+
+        /* Demos */
+        DateViewPager
+
+
     }
 
     @NonNull
