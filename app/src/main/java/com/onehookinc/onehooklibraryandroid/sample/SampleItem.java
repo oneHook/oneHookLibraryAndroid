@@ -36,7 +36,8 @@ public class SampleItem implements Parcelable {
         DIALOG,
 
         /* Demos */
-        DateViewPager
+        DateViewPager,
+        Kotlin
 
 
     }

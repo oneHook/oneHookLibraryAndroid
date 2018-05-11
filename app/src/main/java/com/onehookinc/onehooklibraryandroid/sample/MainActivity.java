@@ -10,6 +10,7 @@ import com.onehookinc.onehooklibraryandroid.R;
 import com.onehookinc.onehooklibraryandroid.sample.common.BaseActivity;
 import com.onehookinc.onehooklibraryandroid.sample.common.StackActivity;
 import com.onehookinc.onehooklibraryandroid.sample.samples.demo.dateviewpager.DateViewPaperDemo;
+import com.onehookinc.onehooklibraryandroid.sample.samples.demo.kotlin.KotlinTryFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.dialogs.DialogsDemoFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.views.ActivityOverlaySampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.utility.DeviceUtilFragment;
@@ -53,7 +54,8 @@ public class MainActivity extends BaseActivity {
                 new SampleItem("Camera", SampleItem.SampleItemType.CAMERA),
                 new SampleItem("Dialogs", SampleItem.SampleItemType.DIALOG),
                 new SampleItem("Demos",
-                        new SampleItem("DateViewPager", SampleItem.SampleItemType.DateViewPager)));
+                        new SampleItem("DateViewPager", SampleItem.SampleItemType.DateViewPager),
+                        new SampleItem("Kotlin", SampleItem.SampleItemType.Kotlin)));
 
         if (getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT) == null) {
             final SampleListFragment fragment = SampleListFragment.newInstance(parent, false);
@@ -142,6 +144,8 @@ public class MainActivity extends BaseActivity {
                 return StackActivity.intent(this, DialogsDemoFragment.class);
             case DateViewPager:
                 return StackActivity.intent(this, DateViewPaperDemo.class);
+            case Kotlin:
+                return StackActivity.intent(this, KotlinTryFragment.class);
             default:
                 return StackActivity.intent(this, NotFoundFragment.class);
         }
