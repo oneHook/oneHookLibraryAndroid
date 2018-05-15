@@ -1,6 +1,7 @@
 *.iml
 .gradle
 /local.properties
+.idea
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
@@ -9,3 +10,6 @@
 /script/*.txt
 /script/*.h
 /script/*.m
+oneHookLibraryAndroid.iml
+app/app.iml
+onehookinclibrary/onehookinclibrary.iml
