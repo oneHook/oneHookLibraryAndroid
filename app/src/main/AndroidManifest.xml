@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".sample.common.StackActivity"></activity>
+        <activity android:name=".sample.common.StackActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>

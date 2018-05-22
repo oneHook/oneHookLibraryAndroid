@@ -24,6 +24,7 @@ public class SampleItem implements Parcelable {
         PAGERS_TRANS,
         ACTIVITY_OVERLAY,
         MISC_VIEW,
+        DIGIT_ENTERING_VIEW,
 
         /* Utility */
         DEVICE,

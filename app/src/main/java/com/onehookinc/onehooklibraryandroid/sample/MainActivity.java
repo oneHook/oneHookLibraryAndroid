@@ -14,6 +14,7 @@ import com.onehookinc.onehooklibraryandroid.sample.samples.demo.kotlin.KotlinTry
 import com.onehookinc.onehooklibraryandroid.sample.samples.dialogs.DialogsDemoFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.views.ActivityOverlaySampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.utility.DeviceUtilFragment;
+import com.onehookinc.onehooklibraryandroid.sample.samples.views.DigitEnterViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.views.FlipperViewSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.views.FlowLayoutSampleFragment;
 import com.onehookinc.onehooklibraryandroid.sample.samples.views.MiscViewSampleFragment;
@@ -49,7 +50,8 @@ public class MainActivity extends BaseActivity {
                                 new SampleItem("Pagers", SampleItem.SampleItemType.PAGERS),
                                 new SampleItem("Transformations", SampleItem.SampleItemType.PAGERS_TRANS)),
                         new SampleItem("ActivityOverlay", SampleItem.SampleItemType.ACTIVITY_OVERLAY),
-                        new SampleItem("Misc View", SampleItem.SampleItemType.MISC_VIEW)
+                        new SampleItem("Misc View", SampleItem.SampleItemType.MISC_VIEW),
+                        new SampleItem("Digit Input View", SampleItem.SampleItemType.DIGIT_ENTERING_VIEW)
                 ),
                 new SampleItem("Camera", SampleItem.SampleItemType.CAMERA),
                 new SampleItem("Dialogs", SampleItem.SampleItemType.DIALOG),
@@ -66,13 +68,13 @@ public class MainActivity extends BaseActivity {
 
         /* for debugging */
 
-//        final View view = findViewById(R.id.id_common_fragment);
-//        view.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.DateViewPager));
-//            }
-//        }, 100);
+        final View view = findViewById(R.id.id_common_fragment);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivityAsStack(createSampleIntent(SampleItem.SampleItemType.DIGIT_ENTERING_VIEW));
+            }
+        }, 100);
     }
 
     @Override
@@ -146,6 +148,8 @@ public class MainActivity extends BaseActivity {
                 return StackActivity.intent(this, DateViewPaperDemo.class);
             case Kotlin:
                 return StackActivity.intent(this, KotlinTryFragment.class);
+            case DIGIT_ENTERING_VIEW:
+                return StackActivity.intent(this, DigitEnterViewSampleFragment.class);
             default:
                 return StackActivity.intent(this, NotFoundFragment.class);
         }
